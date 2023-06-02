@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import initMongoose from "./db/db";
 import User, { UserType } from "@/model/user";
 
@@ -65,7 +67,6 @@ const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         console.log("Token: ", token);
-        // @ts-ignore
         session.user._id = token._id;
         session.user.username = token.username;
         session.user.email = token.email;
