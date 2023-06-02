@@ -1,14 +1,31 @@
-import User, { TrainerType } from "@/model/user";
+// import User, { TrainerType } from "@/model/user";
 
-export async function generateStaticParams() {
-  const trainers: TrainerType[] = await User.find({
-    isTrainer: true,
-  }).exec();
+// export async function generateStaticParams() {
+//   const trainers: TrainerType[] = await User.find({
+//     isTrainer: true,
+//   }).exec();
 
-  return trainers.map((trainer) => ({
-    slug: trainer.slug,
-  }));
-}
+//   return trainers.map((trainer) => ({
+//     slug: trainer.slug,
+//   }));
+// }
+
+// interface pageProps {
+//   params: {
+//     slug: string;
+//   };
+// }
+
+// const getTrainerData = (slug: string) => {};
+
+// const Page = ({ params }: pageProps) => {
+//   const { slug } = params;
+//   // const trainerData: TrainerDataType = await getTrainerData(slug)
+
+//   return <div>Slug: {slug}</div>;
+// };
+
+// export default Page;
 
 interface pageProps {
   params: {
@@ -16,13 +33,10 @@ interface pageProps {
   };
 }
 
-const getTrainerData = (slug: string) => {};
-
-const page = ({ params }: pageProps) => {
+const Page = ({ params }: pageProps) => {
   const { slug } = params;
-  // const trainerData: TrainerDataType = await getTrainerData(slug)
 
   return <div>Slug: {slug}</div>;
 };
 
-export default page;
+export default Page;
