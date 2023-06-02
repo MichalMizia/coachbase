@@ -52,7 +52,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.29.5-appdir.0",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react-modal": "^3.16.0",
     "@types/react-vertical-timeline-component": "^3.3.3",
