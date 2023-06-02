@@ -60,7 +60,7 @@ const OffersPage = ({ session, data }: OffersPageProps) => {
     return data.filter((trainer) =>
       trainer.roles.some((role) => currentRoles.includes(role))
     );
-  }, [city, query, sorting, roles]);
+  }, [city, query, sorting, currentRoles, data]);
   console.log(currentRoles);
 
   return (

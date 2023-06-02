@@ -11,7 +11,7 @@ import { TrainerType } from "@/model/user";
 import { getServerSession } from "next-auth";
 // auth
 
-export default async function Home() {
+export default async function Page() {
   const trainersData: TrainerType[] = await fetchAllTrainers();
 
   const session = await getServerSession();

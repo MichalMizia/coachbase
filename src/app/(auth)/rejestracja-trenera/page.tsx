@@ -20,7 +20,7 @@ import { trainerRegisterSchema } from "@/lib/validations/registerTrainerValidati
 
 type FormData = z.infer<typeof trainerRegisterSchema>;
 
-export default function page() {
+export default function Page() {
   const {
     register,
     handleSubmit,

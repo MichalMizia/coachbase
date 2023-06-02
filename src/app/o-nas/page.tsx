@@ -5,7 +5,7 @@ import workSvg from "@/../../public/assets/undraw_hiring_re_yk5n.svg";
 
 interface pageProps {}
 
-const page = ({}: pageProps) => {
+const Page = ({}: pageProps) => {
   return (
     <main>
       <div className="main-gradient gradient" />
@@ -42,4 +42,4 @@ const page = ({}: pageProps) => {
   );
 };
 
-export default page;
+export default Page;

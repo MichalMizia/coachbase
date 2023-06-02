@@ -17,8 +17,8 @@ const RolesSearch = ({ roles, setRoles }: RolesSearchProps) => {
 
   return (
     <section className="flex w-full items-center justify-start gap-10 text-black">
-      {roles.map((role) => (
-        <div className="flex items-center justify-center gap-1">
+      {roles.map((role, ind) => (
+        <div key={ind} className="flex items-center justify-center gap-1">
           <p>{role.name}</p>
           <input
             type="checkbox"

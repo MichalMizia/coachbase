@@ -18,7 +18,7 @@ import { ZodError, z } from "zod";
 
 type FormData = z.infer<typeof userRegisterSchema>;
 
-export default function page() {
+export default function Page() {
   const {
     register,
     handleSubmit,

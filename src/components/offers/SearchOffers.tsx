@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { ChevronDown, MessagesSquareIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { classNames } from "@/lib/utils";
 import { MapPinIcon } from "lucide-react";
 import cities from "../../content/data/miastaShort.json";
@@ -54,7 +54,7 @@ const SearchBarOffers = ({
       }
     });
     return cachedCities;
-  }, [cities]);
+  }, []);
   // console.log(mappedCities, `Time: ${endTime - startTime} ms`);
 
   const sortingOptions: string[] = [
