@@ -1,9 +1,7 @@
-import React from 'react'
+interface pageProps {}
 
-export default function Page() {
-  return (
-    <div>
-      Blog
-    </div>
-  )
-}
+const Page = ({}: pageProps) => {
+  return <main className="py-8">Blog</main>;
+};
+
+export default Page;
