@@ -45,7 +45,7 @@ export default function HomepageOffers({ data }: HomepageOffersProps) {
       return acc;
     }, [] as Array<TrainerType[]>);
 
-    console.log(newData);
+    // console.log(newData);
 
     return (
       <section className="latest-offers border-t-2 bg-primary py-12">

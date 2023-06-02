@@ -9,13 +9,15 @@ import { MessagesSquareIcon } from "lucide-react";
 import { fetchAllTrainers } from "@/lib/fetching/fetchTrainers";
 import { TrainerType } from "@/model/user";
 import { getServerSession } from "next-auth";
+import { getSession } from "next-auth/react";
+import authOptions from "@/lib/auth";
 // auth
 
 export default async function Page() {
   const trainersData: TrainerType[] = await fetchAllTrainers();
 
-  const session = await getServerSession();
-  console.log(session?.expires, session?.user);
+  const session = await getServerSession(authOptions);
+  console.log(session);
 
   return (
     <main>
@@ -64,7 +66,7 @@ export default async function Page() {
         </div>
       </section>
 
-      <HomepageOffers data={trainersData} />
+      <HomepageOffers data={JSON.parse(JSON.stringify(trainersData))} />
     </main>
   );
 }

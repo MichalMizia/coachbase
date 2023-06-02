@@ -7,6 +7,10 @@ import { NextAuthOptions } from "next-auth";
 const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
+    maxAge: 3 * 24 * 60 * 60,
+  },
+  jwt: {
+    maxAge: 3 * 24 * 60 * 60,
   },
   // Here we add our login providers
   providers: [
@@ -22,7 +26,8 @@ const authOptions: NextAuthOptions = {
         initMongoose();
 
         // Try to find the user and also return the password field
-        const user = await User.findOne({ email: credentials?.email }).exec();
+        const user = await User.findOne({ email: credentials?.email });
+        console.log("User when fetching: ", user);
 
         if (!user) {
           throw new Error("No user with a matching email was found.");
@@ -35,8 +40,7 @@ const authOptions: NextAuthOptions = {
           throw new Error("Your password is invalid");
         }
 
-        console.log(user);
-        return user;
+        return user._doc;
         // return user;
       },
     }),
@@ -50,12 +54,8 @@ const authOptions: NextAuthOptions = {
         console.log("User when setting token: ", user);
         token.email = user.email;
         token._id = user._id;
-        token.name = user.username;
-        if (user.isTrainer) {
-          token.role = "Trener";
-        } else {
-          token.role = "User";
-        }
+        token.username = user.username;
+        token.isTrainer = user.isTrainer;
         token.picture = user.image;
       }
 
@@ -66,10 +66,10 @@ const authOptions: NextAuthOptions = {
       if (token) {
         console.log("Token: ", token);
         session.user._id = token._id;
-        session.user.name = token.name;
+        session.user.username = token.username;
         session.user.email = token.email;
         session.user.image = token.picture;
-        session.user.role = token.role;
+        session.user.isTrainer = token.isTrainer;
       }
       return session;
     },

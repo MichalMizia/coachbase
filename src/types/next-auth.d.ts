@@ -1,27 +1,20 @@
-import { Session, User } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { DefaultSession, DefaultUser, Session, User } from "next-auth";
+import { DefaultJWT, JWT } from "next-auth/jwt";
+
+interface IUser extends Omit<DefaultUser, "name" | "id"> {
+  isTrainer: boolean;
+  _id: string;
+  username: string;
+}
 
 declare module "next-auth" {
-  interface Session {
-    user: User & {
-      /** The user's id and role */
-      _id: string;
-      role: "Trener" | "User";
-    };
-  }
+  interface User extends IUser {}
 
-  interface User {
-    isTrainer: boolean;
-    username: string;
-    _id: string;
+  interface Session extends DefaultSession {
+    user: User;
   }
 }
 
 declare module "next-auth/JWT" {
-  interface JWT {
-    /** The user's id and role */
-    _id: string;
-    username: string;
-    role: "Trener" | "User";
-  }
+  interface JWT extends IUser {}
 }

@@ -31,7 +31,6 @@ const UserSchema = new Schema(
 );
 
 UserSchema.methods.comparePassword = async function (enteredPassword: string) {
-  console.log(enteredPassword);
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

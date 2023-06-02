@@ -22,7 +22,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
     return acc;
   }, [] as Array<TrainerType[]>);
 
-  console.log(newData);
+  // console.log(newData);
 
   return (
     <section className="latest-offers bg-primary py-12">
