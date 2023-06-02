@@ -1,9 +1,7 @@
-import UserData from "@/model/userData";
-import { TrainerDataType } from "@/model/userData";
-import { TrainerType } from "@/model/user";
+import User, { TrainerType } from "@/model/user";
 
 export async function generateStaticParams() {
-  const trainers: TrainerType[] = await UserData.find({
+  const trainers: TrainerType[] = await User.find({
     isTrainer: true,
   }).exec();
 
