@@ -10,7 +10,7 @@ async function initMongoose() {
   // await mongoose.connection.close();
 
   // if we are in dev mode
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.APP_ENV === "development") {
     let cached = global.mongoose;
 
     if (!cached) {
