@@ -1,5 +1,5 @@
 {
-  "name": "fit_base_pl",
+  "name": "coachbase",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -52,6 +52,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.36.1",
     "@types/lodash.debounce": "^4.0.7",
     "@types/react-modal": "^3.16.0",
     "@types/react-vertical-timeline-component": "^3.3.3",

@@ -23,7 +23,7 @@ export default async function Page() {
     <main>
       <section className="hero relative flex min-h-[calc(100vh-67px)] lg:h-[calc(100vh-67px)]">
         <div className="flex-1 py-10 lg:bg-white">
-          <div className="flex h-full flex-col items-start gap-20 px-10 xs:justify-between lg:gap-0">
+          <div className="flex h-full max-h-[450px] flex-col items-start self-center gap-20 px-10 xs:justify-between lg:gap-0">
             <h1 className="z-[5] max-w-xl text-center text-2xl font-[500] tracking-[101%] text-gray-100 xs:text-4xl md:text-5xl lg:w-[150%] lg:text-left lg:text-black">
               Twoje cele, nasza pasja - znajdź idealnego trenera już teraz!
             </h1>
