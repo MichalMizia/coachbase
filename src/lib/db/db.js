@@ -10,7 +10,7 @@ async function initMongoose() {
   // await mongoose.connection.close();
 
   // if we are in dev mode
-  if (process.env.APP_ENV === "development") {
+  if (process.env.NODE_ENV === "development") {
     let cached = global.mongoose;
 
     if (!cached) {
@@ -41,7 +41,6 @@ async function initMongoose() {
       return mongoose.connection.asPromise();
     }
 
-    console.log("connecting");
     return mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

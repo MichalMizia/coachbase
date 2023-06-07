@@ -23,6 +23,10 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    image: {
+      type: String,
+      default: null,
+    },
     summary: String,
     roles: Array,
     slug: String,
@@ -45,6 +49,7 @@ export interface UserType {
   email: string;
   password: string;
   isTrainer: boolean;
+  image: string | null;
 }
 export interface TrainerType extends UserType {
   roles: UserRolesType[];

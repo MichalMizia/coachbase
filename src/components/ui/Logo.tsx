@@ -11,7 +11,7 @@ const Logo = ({ className }: LogoProps) => {
       href="/"
       className={classNames(
         className!,
-        "group right-2 flex items-center justify-center text-3xl font-bold text-white decoration-solid transition-colors duration-500"
+        "group relative -top-1 right-2 flex items-center justify-center text-3xl font-bold text-white decoration-solid transition-colors duration-500"
       )}
     >
       <ActivityIcon className="group:hover relative left-[8px] top-[17px] text-secondary" />

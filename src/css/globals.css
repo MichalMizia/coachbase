@@ -15,7 +15,7 @@ body {
 }
 
 .container-md {
-  width: min(90%, 1080px);
+  width: 90%;
   margin-inline: auto;
 }
 .container-sm {
@@ -26,9 +26,11 @@ body {
   width: min(92%, 1280px);
   margin-inline: auto;
 }
-.container-nav {
-  width: min(84%, 1280px);
-  margin-inline: auto;
+@media (min-width: 1080px) {
+  .container-md {
+    width: 85%;
+    max-width: 1280px;
+  }
 }
 
 .gradient {

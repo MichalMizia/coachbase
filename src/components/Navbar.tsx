@@ -48,30 +48,26 @@ const homeConfig: HomeConfig = {
 };
 
 export default function Navbar({ session }: NavbarProps) {
-  const isMobile = useMediaQuery("(max-width: 900px)");
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const isMobile = useMediaQuery("(max-width: 800px)");
 
   return (
     <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 py-4 text-white shadow-sm shadow-slate-400">
-      <div className="mx-auto flex w-[95%] max-w-7xl items-end justify-between gap-8 lg:w-[90%]">
-        <Logo />
+      <div className="container-md mx-auto flex w-[95%] items-end justify-between gap-4 lg:gap-8">
+        <Logo className="scale-90" />
 
         <nav
           className={classNames(
             isMobile
-              ? "fixed bottom-0 right-0 top-0 z-10 flex h-screen w-screen max-w-xl items-center justify-center bg-white bg-gradient-to-br from-violet-100 via-white to-rose-100 backdrop-blur-[2px] transition-transform duration-500"
-              : "flex !translate-x-0 items-end justify-center",
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
+              ? "fixed bottom-0 left-0 right-0 w-full bg-gradient-to-r from-blue-100 to-violet-100"
+              : "flex !translate-x-0 items-end justify-center"
           )}
         >
           <ul
             className={classNames(
-              "flex list-none items-center justify-center gap-2 tracking-tight",
-              isMobile ? "flex-col gap-[15vh] px-4" : "mr-4"
+              !isMobile
+                ? "justify-center tracking-tight lg:gap-2"
+                : "w-full border-t border-black",
+              "flex list-none items-center"
             )}
           >
             {homeConfig.mainNav.map((navEl) => {
@@ -82,7 +78,7 @@ export default function Navbar({ session }: NavbarProps) {
                   className={classNames(
                     navEl.disabled ? "text-gray-300" : "text-white",
                     isMobile
-                      ? "text-2xl font-semibold"
+                      ? "flex-1 rounded-none text-xl text-black even:border-x even:border-black"
                       : "text-[17px] font-[400]",
                     "hover:bg-[#00000010]"
                   )}
@@ -108,7 +104,7 @@ export default function Navbar({ session }: NavbarProps) {
           <LoginButton session={session} />
         </section>
 
-        {!isMobile ? null : (
+        {/* {!isMobile ? null : (
           <button
             onClick={handleMenuToggle}
             className={classNames(
@@ -118,7 +114,7 @@ export default function Navbar({ session }: NavbarProps) {
           >
             <span></span>
           </button>
-        )}
+        )} */}
       </div>
     </header>
   );

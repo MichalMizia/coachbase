@@ -27,20 +27,20 @@ export default function LoginButton({ session, className }: LoginButtonProps) {
       <Button
         className={classNames(
           className!,
-          "rounded-xl px-4 flex justify-center items-center gap-1 relative top-[1px]"
+          "relative top-[1px] flex items-center justify-center gap-1 rounded-xl px-4"
         )}
         onClick={() => handleSignOut()}
       >
-        Wyloguj
+        <span className="hidden lg:block">Wyloguj</span>
         <LogOut size={20} />
       </Button>
     );
   } else {
     return (
       <Button
-        className={classNames(className!, "rounded-xl px-4 relative top-[1px]")}
+        className={classNames(className!, "relative top-[1px] rounded-xl px-4")}
       >
-        <a href="/login" className="flex justify-center items-center gap-1">
+        <a href="/login" className="flex items-center justify-center gap-1">
           Zaloguj
           <LogIn size={20} className="relative top-[1px] text-white" />
         </a>

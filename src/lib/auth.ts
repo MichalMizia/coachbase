@@ -53,7 +53,6 @@ const authOptions: NextAuthOptions = {
     // This could be avatars, role, display name, etc...
     async jwt({ token, user }) {
       if (user) {
-        console.log("User when setting token: ", user);
         token.email = user.email;
         token._id = user._id;
         token.username = user.username;
@@ -66,7 +65,6 @@ const authOptions: NextAuthOptions = {
     // If we want to access our extra user info from sessions we have to pass it the token here to get them in sync:
     async session({ session, token }) {
       if (token) {
-        console.log("Token: ", token);
         session.user._id = token._id;
         session.user.username = token.username;
         session.user.email = token.email;

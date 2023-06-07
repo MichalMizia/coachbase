@@ -15,14 +15,15 @@ module.exports = {
       screens: {
         xs: "420px",
         md: "670px",
-        lg: "900px",
+        lg: "960px",
         xl: "1080px",
+        xxl: "1260px",
         // => @media (min-width: 992px) { ... }
       },
       colors: {
         primary: "#EDF5FF",
         text: "#73879e",
-        secondary: "#2dd4bf",
+        secondary: "#2acbb6",
       },
     },
   },

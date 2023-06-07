@@ -4,7 +4,7 @@ import { classNames } from "@/lib/utils";
 import { ButtonHTMLAttributes } from "react";
 
 const buttonVariants = cva(
-  "active:scale-95 rounded-lg items-center justify-center text-sm font-medium transition-all duration-300 inline-flex focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-5 disabled:pointer-events-none",
+  "active:scale-95 rounded-lg items-center justify-center text-sm font-medium transition-all duration-300 inline-flex focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-75 disabled:brightness-90 disabled:pointer-events-none",
   {
     variants: {
       variant: {
@@ -50,7 +50,14 @@ export default function Button({
       disabled={isLoading}
       {...props}
     >
-      {isLoading ? <Loader2 className="animate-spin h-4 w-4" /> : children}
+      {isLoading ? (
+        <>
+          <Loader2 className="h-4 w-4 animate-spin" />
+          {children}
+        </>
+      ) : (
+        children
+      )}
     </button>
   );
 }

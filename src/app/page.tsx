@@ -9,7 +9,6 @@ import { MessagesSquareIcon } from "lucide-react";
 import { fetchAllTrainers } from "@/lib/fetching/fetchTrainers";
 import { TrainerType } from "@/model/user";
 import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
 import authOptions from "@/lib/auth";
 // auth
 
@@ -17,25 +16,31 @@ export default async function Page() {
   const trainersData: TrainerType[] = await fetchAllTrainers();
 
   const session = await getServerSession(authOptions);
-  console.log(session);
+
+  //
 
   return (
     <main>
-      <section className="hero relative flex min-h-[calc(100vh-67px)] lg:h-[calc(100vh-67px)]">
-        <div className="flex-1 py-10 lg:bg-white">
-          <div className="flex h-full max-h-[450px] flex-col items-start self-center gap-20 px-10 xs:justify-between lg:gap-0">
-            <h1 className="z-[5] max-w-xl text-center text-2xl font-[500] tracking-[101%] text-gray-100 xs:text-4xl md:text-5xl lg:w-[150%] lg:text-left lg:text-black">
-              Twoje cele, nasza pasja - znajdź idealnego trenera już teraz!
-            </h1>
-            <p className="xs:text-md relative z-[5] mx-auto w-[115%] max-w-[600px] text-center text-[15px] text-gray-300 after:absolute after:left-0 after:top-0 after:h-1 after:w-1/2 after:max-w-[100px] after:rounded after:bg-secondary lg:ml-7 lg:max-w-md lg:text-left lg:text-[17px] lg:text-text lg:after:-left-7 lg:after:top-[1px] lg:after:h-[100%] lg:after:w-[6px]">
-              Coach Base pozwala Ci znaleźć idealnego trenera personalnego,
-              który dopasuje się do Twoich celów, preferencji i stylu życia.
-              Niezależnie od tego, czy chcesz zrzucić zbędne kilogramy, zbudować
-              mięśnie, poprawić wydolność czy po prostu zdrowo się odżywiać,
-              mamy dla Ciebie odpowiedniego eksperta.
-            </p>
-            <div className="flex items-stretch justify-center gap-4 pl-2">
-              <Button variant="primary" className="xs:text-[18px]">
+      <section className="hero relative flex lg:h-[calc(100dvh-67px)] lg:min-h-[calc(100dvh-67px)]">
+        <div className="h-full flex-1 self-center px-5 py-16 xs:px-10 lg:self-stretch lg:bg-white lg:py-10">
+          <div className="mx-auto flex  w-[92%] max-w-2xl flex-col items-center justify-between lg:h-full">
+            <header className="w-full">
+              <h1 className="mx-auto text-center text-3xl font-semibold text-white sm:text-5xl lg:mx-0 lg:w-[120%] lg:text-left lg:text-black xxl:text-6xl">
+                Twoje cele, nasza pasja - znajdź idealnego trenera już teraz!
+              </h1>
+              <p className="relative mt-8 text-center text-sm text-gray-300 sm:text-lg lg:ml-5 lg:mt-10 lg:max-w-[600px] lg:text-left lg:text-text lg:after:absolute lg:after:-left-5 lg:after:top-[2px] lg:after:h-full lg:after:w-[6px] lg:after:rounded-xl lg:after:bg-secondary ">
+                Coach Base pozwala Ci znaleźć idealnego trenera personalnego,
+                który dopasuje się do Twoich celów, preferencji i stylu życia.
+                Niezależnie od tego, czy chcesz zrzucić zbędne kilogramy,
+                zbudować mięśnie, poprawić wydolność czy po prostu zdrowo się
+                odżywiać, mamy dla Ciebie odpowiedniego eksperta.
+              </p>
+            </header>
+            <div className="mt-20 flex items-stretch justify-center gap-4 p-2 lg:mt-0 lg:flex-1 lg:items-end lg:self-start">
+              <Button
+                variant="primary"
+                className="xs:text-[18px] lg:text-xl xl:text-2xl"
+              >
                 <a
                   href="/oferty"
                   title="oferty"
@@ -45,7 +50,10 @@ export default async function Page() {
                   Oferty
                 </a>
               </Button>
-              <Button variant="primary_outlined" className="xs:text-[18px]">
+              <Button
+                variant="primary_outlined"
+                className="xs:text-[18px] lg:text-xl xl:text-2xl"
+              >
                 <a href="/blog" title="baza wiedzy">
                   Baza wiedzy
                 </a>
