@@ -12,7 +12,7 @@ export async function fetchAllTrainers() {
   console.log("Mongoose connected");
   try {
     const trainers = await User.find({ isTrainer: true }).lean().exec();
-    console.log(trainers);
+    // console.log(trainers);
     return trainers;
   } catch (e) {
     // return null

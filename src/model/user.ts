@@ -31,7 +31,7 @@ const UserSchema = new Schema(
     roles: Array,
     slug: String,
   },
-  { collection: "Users", timestamps: true }
+  { collection: "Users", timestamps: { createdAt: true, updatedAt: false } }
 );
 
 UserSchema.methods.comparePassword = async function (enteredPassword: string) {
@@ -50,6 +50,7 @@ export interface UserType {
   password: string;
   isTrainer: boolean;
   image: string | null;
+  // createdAt: Date;
 }
 export interface TrainerType extends UserType {
   roles: UserRolesType[];

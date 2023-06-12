@@ -15,7 +15,7 @@ import RolesSearch from "@/components/offers/RolesSearch";
 
 interface OffersPageProps {
   session: Session | null;
-  data: TrainerType[];
+  jsonData: string;
 }
 
 export type SortingType = "Najlepiej oceniane" | "Najnowsze" | "Najbliżej";
@@ -27,7 +27,8 @@ export interface RolesType {
 
 export const sortingOptions = ["Najnowsze", "Najlepiej oceniane", "Najbliżej"];
 
-const OffersPage = ({ session, data }: OffersPageProps) => {
+const OffersPage = ({ session, jsonData }: OffersPageProps) => {
+  const data: TrainerType[] = JSON.parse(jsonData);
   const [sorting, setSorting] = useState<SortingType>("Najlepiej oceniane");
   const [roles, setRoles] = useState<RolesType[]>([
     {

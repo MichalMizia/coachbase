@@ -50,7 +50,10 @@ const TrainerDataSchema = new Schema(
       },
     ],
   },
-  { collection: "TrainerData", timestamps: true }
+  {
+    collection: "TrainerData",
+    timestamps: { createdAt: true, updatedAt: false },
+  }
 );
 
 const TrainerData =

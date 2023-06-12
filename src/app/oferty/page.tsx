@@ -5,14 +5,24 @@ import OffersPage from "./OffersPage";
 
 interface pageProps {}
 
+export interface mongooseTrainersData extends TrainerType {
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
 const Page = async ({}: pageProps) => {
   const trainersData: TrainerType[] = await fetchAllTrainers();
-  console.log(trainersData);
-  // const session = await getServerSession();
-  // console.log(session);
+  // const serializedTrainersData: TrainerType[] = trainersData.map((trainer) => {
+  //   const { __v, createdAt, updatedAt, ...newTrainer } = trainer;
+  //   return newTrainer;
+  // });
+  const session = await getServerSession();
+  // console.log(serializedTrainersData);
 
-  // return <OffersPage session={session} data={trainersData} />;
-  return <main>Hello</main>;
+  return (
+    <OffersPage session={session} jsonData={JSON.stringify(trainersData)} />
+  );
 };
 
 export default Page;
