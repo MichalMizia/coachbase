@@ -59,10 +59,15 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     doloremque ratione qui odio recusandae.
                   </p>
                   <div className="flex w-full items-start justify-between gap-2">
-                    <button className="flex items-center justify-center gap-2 rounded-sm px-2 py-1 text-sm text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1">
-                      <SendIcon size={18} className="relative -mb-[2px]" />
-                      Zobacz ofertę
-                    </button>
+                    <a
+                      href={`oferty/${trainer.slug}`}
+                      title={`Profil ${trainer.username}`}
+                    >
+                      <button className="flex items-center justify-center gap-2 rounded-sm px-2 py-1 text-sm text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1">
+                        <SendIcon size={18} className="relative -mb-[2px]" />
+                        Zobacz ofertę
+                      </button>
+                    </a>
                     {/* <StarsRating rating={3.7} /> */}
                   </div>
                 </div>
