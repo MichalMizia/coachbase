@@ -207,6 +207,10 @@ body {
   overflow: visible !important;
 }
 
+.carousel-status {
+  display: none !important;
+}
+
 .slide {
   display: flex;
   align-items: center;

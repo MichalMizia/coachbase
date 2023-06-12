@@ -1,43 +1,27 @@
 import Button from "@/components/ui/Button";
+import { Globe2Icon, MessagesSquareIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import workSvg from "@/../../public/assets/undraw_hiring_re_yk5n.svg";
+import barbell from "../../../public/assets/barbell2.jpg";
 
 interface pageProps {}
 
 const Page = ({}: pageProps) => {
   return (
     <main>
-      <div className="main-gradient gradient" />
-      <div className="container-sm w-full flex items-center justify-center gap-8 flex-col border-b border-indigo-100  min-h-[calc(100vh-66px)] py-4">
-        <div className="flex flex-col gap-4 justify-center items-center">
-          <h1 className="text-3xl text-center leading-12 max-w-[800px] font-bold md:text-5xl md:leading-20">
-            Coach Base pomoże Ci osiągnąć Twój{" "}
-            <span className="text-transparent bg-gradient-to-r bg-clip-text from-indigo-500 to-fuchsia-500">
-              cel treningowy.
-            </span>{" "}
-            Nie szukaj, my zrobimy to za Ciebie.
-          </h1>
-          {/* <FakeBtn /> */}
-          <p className="text-slate-700 text-lg text-center max-w-xl">
-            Przeglądaj oferty najlepszych trenerów, dietetyków i fizjoterapeutów
-            w Polsce, wszystko w jednym miejscu.
-          </p>
-        </div>
-        <div className="flex items-center justify-evenly w-full flex-wrap gap-4">
-          <Button size="large" className="text-lg">
-            <Link href="/oferty">Zobacz Oferty</Link>
-          </Button>
-          <Image alt="workers" src={workSvg} height={100} />
-          {/* <FakeBtn /> */}
-        </div>
-      </div>
-      <div className="gradient secondary-gradient top-[100vh!important]" />
-      <div className="py-20 container-md relative">
-        {/* <HomepageTabs data={trainersData} /> */}
-        {/* <button onClick={async () => handleClick()}>POST</button> */}
-      </div>
-      {/* <RulesHomepage /> */}
+      <section className="container-md flex flex-col py-16 lg:py-24">
+        <div className="main-gradient absolute inset-0 -z-10 h-[100dvh] w-[100dvw]"></div>
+        <div className="circle-gradient absolute inset-0 -z-[5] h-[100dvh] w-[100dvw]"></div>
+        <h1 className="mx-auto max-w-4xl text-center text-3xl font-bold text-black sm:text-5xl xxl:text-6xl">
+          Twoje cele, nasza pasja - znajdź idealnego trenera już teraz!
+        </h1>
+        <p className="relative mx-auto mt-8 sm:text-lg lg:mt-16 lg:max-w-[600px] lg:after:absolute lg:after:-left-5 lg:after:top-[2px] lg:after:h-full lg:after:w-[6px] lg:after:rounded-xl lg:after:bg-secondary xxl:mt-20 ">
+          Coach Base pozwala Ci znaleźć idealnego trenera personalnego, który
+          dopasuje się do Twoich celów, preferencji i stylu życia. Niezależnie
+          od tego, czy chcesz zrzucić zbędne kilogramy, zbudować mięśnie,
+          poprawić wydolność czy po prostu zdrowo się odżywiać, mamy dla Ciebie
+          odpowiedniego eksperta.
+        </p>
+      </section>
     </main>
   );
 };

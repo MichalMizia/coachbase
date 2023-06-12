@@ -78,7 +78,7 @@ export default function Navbar({ session }: NavbarProps) {
                   className={classNames(
                     navEl.disabled ? "text-gray-300" : "text-white",
                     isMobile
-                      ? "flex-1 rounded-none text-xl text-black even:border-x even:border-black"
+                      ? "text-md flex-1 rounded-none text-black even:border-x even:border-black md:text-xl"
                       : "text-[17px] font-[400]",
                     "hover:bg-[#00000010]"
                   )}

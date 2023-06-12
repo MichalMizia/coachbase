@@ -3,6 +3,7 @@
 import {
   ChangeEvent,
   Dispatch,
+  FormEvent,
   SetStateAction,
   useMemo,
   useRef,
@@ -16,6 +17,7 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import "../../css/search.css";
 import { SortingType } from "@/app/oferty/OffersPage";
 import debounce from "lodash.debounce";
+import useMediaQuery from "@/lib/useMediaQuery";
 
 interface MappedCity {
   name: string;
@@ -28,7 +30,7 @@ interface SearchBarOffersProps {
   city: string;
   setCity: Dispatch<SetStateAction<string>>;
   sorting: SortingType;
-  setSorting: (sorting: SortingType) => void;
+  setSorting: Dispatch<SetStateAction<SortingType>>;
 }
 
 const SearchBarOffers = ({
@@ -41,6 +43,7 @@ const SearchBarOffers = ({
 }: SearchBarOffersProps) => {
   const categoriesRef = useRef<HTMLButtonElement>(null);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState<boolean>(false);
+  const isMobile = useMediaQuery("(max-width: 600px)");
 
   const mappedCities = useMemo(() => {
     let cachedCities: MappedCity[] = [];
@@ -63,8 +66,19 @@ const SearchBarOffers = ({
     "Najbliżej",
   ];
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  const debouncedSetQuery = debounce(function (newQuery: string) {
+    setQuery(newQuery);
+  }, 600);
+
   return (
-    <form className="max-w-2xl flex-1 self-end">
+    <form
+      className="w-full max-w-2xl flex-1 lg:self-end"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <div className="relative flex">
         <button
           aria-label={
@@ -73,7 +87,7 @@ const SearchBarOffers = ({
               : "Otwórz menu kategorii"
           }
           onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
-          className="z-10 inline-flex flex-shrink-0 items-center rounded-l-lg border border-slate-500 bg-gray-100 px-4 py-2.5 text-center text-lg font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+          className="text-md z-10 inline-flex flex-shrink-0 items-center rounded-l-lg border border-slate-500 bg-gray-100 px-3 py-1.5 text-center font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-gray-100 lg:px-4 lg:py-2.5 lg:text-lg"
           type="button"
         >
           Sortuj{" "}
@@ -88,12 +102,12 @@ const SearchBarOffers = ({
         <div
           id="dropdown"
           className={classNames(
-            "absolute -left-1 top-12 z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700",
+            "absolute -left-1 top-12 z-10 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow",
             isCategoryMenuOpen ? "" : "hidden"
           )}
         >
           <ul
-            className="py-2 text-sm text-gray-700 dark:text-gray-200"
+            className="py-2 text-sm text-gray-700"
             aria-labelledby="dropdown-button"
           >
             {sortingOptions.map((category) => (
@@ -111,28 +125,31 @@ const SearchBarOffers = ({
           <input
             type="search"
             id="search-dropdown"
-            className="z-20 w-[60%] flex-grow border border-l-2 border-slate-400 border-l-gray-50 bg-gray-50 p-2.5 text-lg text-gray-900 outline-none hover:border-slate-500 hover:border-l-gray-50 hover:shadow-md focus:border-slate-500 focus:border-l-gray-50 focus:shadow-inner"
-            placeholder="Wyszukaj po nazwie użytkownika"
+            autoComplete="off"
+            className="text-md z-20 w-[60%] flex-grow self-stretch rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 bg-gray-50 p-2.5 text-gray-900 outline-none placeholder:text-gray-500 hover:border-slate-500 hover:border-l-gray-50 hover:shadow-md focus:border-slate-500 focus:border-l-gray-50 focus:shadow-inner md:rounded-r-none lg:text-lg"
+            placeholder="Imię i Nazwisko Trenera"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              debounce(function (e) {
-                setCity(e.target.value);
-              }, 1000)
+              debouncedSetQuery(e.target.value)
             }
           />
-          <ReactSearchAutocomplete
-            className="right-[2%] z-20 w-[38%] flex-grow-0 !rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 !bg-gray-50 p-2.5 pl-8 text-lg text-gray-900"
-            styling={{ borderRadius: "0" }}
-            items={mappedCities}
-            placeholder="Lokalizacja"
-            inputDebounce={200}
-            onSearch={setCity}
-          />
-          <div className="absolute bottom-0 right-[34.5%] top-0 z-30 flex h-full items-center justify-center">
-            <MapPinIcon size={24} className="text-slate-400" />
-          </div>
+          {!isMobile ? (
+            <>
+              <ReactSearchAutocomplete
+                className="text-md relative right-[2%] top-0.5 z-20 w-[38%] flex-grow-0 self-stretch !rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 !bg-gray-50 p-1.5 pl-8 text-gray-900 lg:p-2.5 lg:text-lg"
+                styling={{ borderRadius: "0" }}
+                items={mappedCities}
+                placeholder="Lokalizacja"
+                inputDebounce={200}
+                onSelect={(MappedCity) => setCity(MappedCity.name)}
+              />
+              <div className="absolute bottom-0 right-[34.5%] top-0 z-30 flex h-full items-center justify-center">
+                <MapPinIcon size={24} className="text-slate-400" />
+              </div>
+            </>
+          ) : null}
           <button
             type="submit"
-            className="absolute bottom-0 right-0 top-0 z-30 flex aspect-square items-center justify-center rounded-r-lg border border-blue-700 bg-blue-700 p-2.5 text-lg font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="absolute bottom-0 right-0 top-0 z-30 flex aspect-square items-center justify-center rounded-r-lg border border-blue-700 bg-blue-700 p-2.5 text-lg font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
             <svg
               aria-hidden="true"
@@ -153,6 +170,21 @@ const SearchBarOffers = ({
           </button>
         </div>
       </div>
+      {isMobile ? (
+        <>
+          <ReactSearchAutocomplete
+            items={mappedCities}
+            className="text-md relative -top-0.5 rounded-b"
+            styling={{ borderRadius: "0" }}
+            placeholder="Lokalizacja"
+            inputDebounce={200}
+            onSelect={(MappedCity) => setCity(MappedCity.name)}
+          />
+          {/* <div className="absolute bottom-0 right-[34.5%] top-0 z-30 flex h-full items-center justify-center">
+                <MapPinIcon size={24} className="text-slate-400" />
+              </div> */}
+        </>
+      ) : null}
     </form>
   );
 };

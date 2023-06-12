@@ -41,7 +41,7 @@ async function initMongoose() {
       return mongoose.connection.asPromise();
     }
 
-    return mongoose.connect(process.env.MONGODB_URI, {
+    return mongoose.connect(process.env.MONGODB_URI_PROD, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

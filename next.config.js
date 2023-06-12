@@ -3,6 +3,15 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["mongoose"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/oferty",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

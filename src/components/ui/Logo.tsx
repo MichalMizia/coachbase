@@ -8,7 +8,7 @@ interface LogoProps {
 const Logo = ({ className }: LogoProps) => {
   return (
     <a
-      href="/"
+      href="/oferty"
       className={classNames(
         className!,
         "group relative -top-1 right-2 flex items-center justify-center text-3xl font-bold text-white decoration-solid transition-colors duration-500"

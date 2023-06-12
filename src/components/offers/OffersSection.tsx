@@ -4,7 +4,6 @@
 import { TrainerType } from "@/model/user";
 // components
 import { SendIcon } from "lucide-react";
-import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import StarsRating from "../ui/StarsRating";
 import PersonAvatar from "../../../public/assets/undraw_personal_info_re_ur1n.svg";
@@ -15,24 +14,25 @@ interface OffersSectionProps {
 }
 
 const OffersSection = ({ data }: OffersSectionProps) => {
-  const newData = data.reduce((acc, curr, index) => {
-    if (index && (index + 1) % 2 === 0) {
-      acc.push([data[index - 1], data[index]]);
-    }
-    return acc;
-  }, [] as Array<TrainerType[]>);
-
-  // console.log(newData);
+  if (!data || !data.length) {
+    return (
+      <section className="bg-primary py-12">
+        <div className="container-md">
+          <h2 className="text-4xl text-black">Brak wyników...</h2>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="latest-offers bg-primary py-12">
       <div className="container-md">
-        <ul className="grid grid-flow-row grid-cols-1 justify-between gap-x-5 lg:grid-cols-2">
+        <ul className="grid grid-flow-row grid-cols-1 justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
           {data.map((trainer) => {
             return (
               <li
                 key={trainer.username}
-                className="relative my-4 flex w-full max-w-3xl rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md lg:flex-col-reverse"
+                className="relative my-4 flex w-full max-w-3xl flex-col-reverse rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:flex-col-reverse"
               >
                 <div className="flex-1 px-8 pb-8 pt-6 lg:px-6 lg:pb-6 lg:pt-4">
                   <header className="mb-2 flex items-center justify-between text-black lg:mb-1">
@@ -58,12 +58,12 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     Consequatur eligendi quod excepturi optio cupiditate! Nemo
                     doloremque ratione qui odio recusandae.
                   </p>
-                  <div className="flex w-full items-end justify-between">
+                  <div className="flex w-full items-start justify-between gap-2">
                     <button className="flex items-center justify-center gap-2 rounded-sm px-2 py-1 text-sm text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1">
                       <SendIcon size={18} className="relative -mb-[2px]" />
                       Zobacz ofertę
                     </button>
-                    <StarsRating rating={3.7} />
+                    {/* <StarsRating rating={3.7} /> */}
                   </div>
                 </div>
                 <div className="m-auto h-full flex-1">
