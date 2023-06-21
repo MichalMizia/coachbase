@@ -15,6 +15,7 @@ const PendingRequestSchema = new Schema(
       type: String,
       required: true,
     },
+    city: String,
     summary: String,
     roles: Array,
   },
@@ -30,6 +31,7 @@ export interface PendingRequestType {
   roles: UserRolesType[];
   summary: string;
   link: string;
+  city: string;
 }
 
 export default PendingRequest;

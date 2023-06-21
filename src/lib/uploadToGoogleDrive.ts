@@ -1,6 +1,5 @@
 import { google } from "googleapis";
 import * as fs from "fs";
-import axios from "axios";
 
 const authClient = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
@@ -11,6 +10,7 @@ const authClient = new google.auth.OAuth2(
 authClient.setCredentials({
   refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
+
 
 export default async function uploadToGoogleDrive(
   filePath: string,
@@ -29,6 +29,7 @@ export default async function uploadToGoogleDrive(
         body: fs.createReadStream(filePath),
       },
     });
+    console.log(res)
 
     const id = res.data.id;
     if (!id) {

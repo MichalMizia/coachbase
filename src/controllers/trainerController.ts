@@ -4,7 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import PendingRequest from "@/model/pendindRequest";
 
 interface TrainerRequestType extends TrainerType {
-  link: string;
+  link?: string;
+  city: string;
 }
 
 const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -15,6 +16,7 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
     roles,
     summary,
     link,
+    city,
   }: TrainerRequestType = req.body;
   console.log(
     "User data from trainer controller: \n",
@@ -23,10 +25,11 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
     password,
     summary,
     roles,
-    link
+    link,
+    city
   );
 
-  if (!username || !email || !password) {
+  if (!username || !email || !password || !city) {
     return res.status(400).json({ message: "Wszystkie pola są wymagane" });
   }
 
@@ -51,7 +54,7 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ message: "Konto trenera musi mieć podane role" });
   }
 
-  if (!summary || summary.length < 20) {
+  if (!summary || summary.length < 40 || summary.length > 250) {
     return res
       .status(400)
       .json({ message: "Konto trenera musi mieć krótki opis" });
@@ -72,6 +75,7 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
     summary,
     link,
     roles,
+    city,
   });
 
   console.log(userPromise, pendingRequestPromise);

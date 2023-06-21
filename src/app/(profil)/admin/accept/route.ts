@@ -27,6 +27,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { roles: roles, summary: summary, isTrainer: true }
     );
     await PendingRequest.deleteOne({ email: email });
+
+    return NextResponse.json({
+      status: 200,
+    });
   } catch (e) {
     return NextResponse.json({
       status: 400,

@@ -12,6 +12,7 @@ interface RequestCardProps {
   email: string;
   link: string;
   roles: UserRolesType[];
+  city: string;
 }
 
 const RequestCard = ({
@@ -20,6 +21,7 @@ const RequestCard = ({
   email,
   link,
   roles,
+  city
 }: RequestCardProps) => {
   async function handleAccept(e: FormEvent) {
     e.preventDefault();
@@ -30,6 +32,7 @@ const RequestCard = ({
         email: email,
         description: description,
         roles: roles,
+        city: city,
       });
       return toast.success("Zaakceptowano trenera");
     } catch (e) {
@@ -50,11 +53,11 @@ const RequestCard = ({
           <p className="text-lg">{email}</p>
         </header>
         <p className="mb-1 text-sm">
-          <span className="text-md font-bold tracking-wide">Opis: </span>
+          <span className="text-md font-bold tracking-wide text-gray-800">Opis: </span>
           {description}
         </p>
         <p className="mb-1 text-sm">
-          <span className="text-md font-bold tracking-wide">
+          <span className="text-md font-bold tracking-wide text-gray-800">
             Link weryfikacyjny:{" "}
           </span>
           <a
@@ -64,6 +67,12 @@ const RequestCard = ({
           >
             {link}
           </a>
+        </p>
+        <p className="mb-1 text-sm">
+          <span className="text-md font-bold tracking-wide text-gray-800">
+            Role:{" "}
+          </span>
+          {JSON.stringify(roles)}
         </p>
       </div>
       <div className="buttons mt-2 flex items-center justify-center gap-3">

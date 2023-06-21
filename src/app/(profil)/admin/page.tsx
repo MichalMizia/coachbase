@@ -38,6 +38,7 @@ const Page = async ({}: pageProps) => {
               name={request.username}
               email={request.email}
               link={request.link}
+              city={request.city}
             />
           ))}
         </ul>

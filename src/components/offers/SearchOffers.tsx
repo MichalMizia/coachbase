@@ -19,7 +19,7 @@ import { SortingType } from "@/app/oferty/OffersPage";
 import debounce from "lodash.debounce";
 import useMediaQuery from "@/lib/useMediaQuery";
 
-interface MappedCity {
+export interface MappedCity {
   name: string;
   id: string;
 }
@@ -140,7 +140,7 @@ const SearchBarOffers = ({
                 items={mappedCities}
                 placeholder="Lokalizacja"
                 inputDebounce={200}
-                onSelect={(MappedCity) => setCity(MappedCity.name)}
+                onSelect={(MappedCity: MappedCity) => setCity(MappedCity.name)}
               />
               <div className="absolute bottom-0 right-[34.5%] top-0 z-30 flex h-full items-center justify-center">
                 <MapPinIcon size={24} className="text-slate-400" />

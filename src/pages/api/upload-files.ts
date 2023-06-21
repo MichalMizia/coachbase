@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import multiparty from "multiparty";
+import axios, { AxiosResponse } from "axios";
+import uploadToGoogleDrive from "@/lib/uploadToGoogleDrive";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,10 +16,24 @@ export default async function handler(
         resolve({ fields, files });
       });
     });
-    console.log(`data: `, JSON.stringify(data));
-    const files = data?.files;
+    console.log(data)
+    const path = data.files.image[0].path;
+    const fileName = data.files.image[0].originalFilename;
 
-    return res.status(200).json({ message: "Hello" });
+    if (!path || !fileName) {
+      return res.status(400).json({ message: "Brak pliku lub nazwy pliku" });
+    }
+    console.log(`Path`, path);
+    console.log(`Name`, fileName);
+
+    const resultURL: string | void = await uploadToGoogleDrive(path, fileName);
+    if (!resultURL) {
+      return res.status(400).json({ message: "Błąd przy dodawaniu pliku" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Zdjęcie dodane pomyślnie", resultURL });
   }
 
   return res

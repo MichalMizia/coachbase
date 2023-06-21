@@ -1,37 +1,45 @@
 import * as z from "zod";
+import { fileSchema } from "./fileUploadValidation";
 
-const MAX_FILE_SIZE = 500000;
-const ACCEPTED_FILE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-  "pdf",
-  "docx",
-];
-
-export const trainerRegisterSchema = z.object({
+export const trainerRegisterSchemaPart1 = z.object({
   username: z.string(),
   email: z.string().email(),
   password: z.string(),
-  description: z.string().max(200).min(20),
+  description: z
+    .string()
+    .max(200, "Opis powinien zawierać maksimum 200 znaków")
+    .min(40, "Opis powinien zawierać minimum 40 znaków"),
+  isFormInInitialStateCurrently: z.literal(true),
+});
+
+export const trainerRegisterSchemaPart2 = z.object({
+  username: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  description: z
+    .string()
+    .max(200, "Opis powinien zawierać maksimum 200 znaków")
+    .min(40, "Opis powinien zawierać minimum 40 znaków"),
   verification: z
     .object({
-      link: z.string().url(),
+      link: z.string().url({message: "Nieprawidłowy link"}).or(z.literal("")),
       // zod file verification
-      file: z
-        .any()
-        .refine((files) => files?.length === 0, "Image is required.") // if no file files?.length === 0, if file files?.length === 1
-        .refine(
-          (files) => files?.[0]?.size >= MAX_FILE_SIZE,
-          `Max file size is 5MB.`
-        ) // this should be greater than or equals (>=) not less that or equals (<=)
-        .refine(
-          (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
-          ".jpg, .jpeg, .png and .webp files are accepted."
-        ),
+      file: z.instanceof(FileList).optional(),
     })
     .partial()
-    .refine((data) => data.link || data.file, "Link albo plik do weryfikacji"),
-  roles: z.array(z.enum(["Trener", "Dietetyk", "Fizjoterapeuta"])).optional(),
+    .refine(
+      (data) => !!data.link || fileSchema.parse(data.file),
+      "Link albo plik jest wymagany do weryfikacji"
+    ),
+  // roles: z.array(z.enum(["Trener", "Dietetyk", "Fizjoterapeuta"])).optional(),
+  city: z.string().min(3).max(20),
+  isTrainer: z.boolean().default(true),
+  isPhysio: z.boolean().default(false),
+  isDietician: z.boolean().default(false),
+  isFormInInitialStateCurrently: z.literal(false),
 });
+
+export const trainerRegisterSchema = z.discriminatedUnion(
+  "isFormInInitialStateCurrently",
+  [trainerRegisterSchemaPart1, trainerRegisterSchemaPart2]
+);
