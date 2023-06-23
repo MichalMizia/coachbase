@@ -27,12 +27,12 @@ const OffersSection = ({ data }: OffersSectionProps) => {
   return (
     <section className="latest-offers bg-primary py-12">
       <div className="container-md">
-        <ul className="grid grid-flow-row grid-cols-1 justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
+        <ul className="grid grid-flow-row grid-cols-1 items-start justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
           {data.map((trainer) => {
             return (
               <li
                 key={trainer.username}
-                className="relative my-4 flex w-full max-w-3xl flex-col-reverse rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:flex-col-reverse"
+                className="group relative my-4 flex w-full max-w-3xl flex-col-reverse rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:flex-col-reverse"
               >
                 <div className="flex-1 px-8 pb-8 pt-6 lg:px-6 lg:pb-6 lg:pt-4">
                   <header className="mb-2 flex items-center justify-between text-black lg:mb-1">
@@ -54,9 +54,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     id="description"
                     className="lg:text-[15px mb-5 mt-4 line-clamp-4 text-left leading-tight"
                   >
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Consequatur eligendi quod excepturi optio cupiditate! Nemo
-                    doloremque ratione qui odio recusandae.
+                    {trainer.summary}
                   </p>
                   <div className="flex w-full items-start justify-between gap-2">
                     <a
@@ -71,12 +69,22 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     {/* <StarsRating rating={3.7} /> */}
                   </div>
                 </div>
-                <div className="m-auto h-full flex-1">
-                  <Image
-                    className="h-full w-full object-cover"
-                    alt={`Zdjęcie profilowe ${trainer.username}`}
-                    src={PersonAvatar}
-                  />
+                <div className="m-auto h-full flex-1 overflow-hidden">
+                  {trainer.image ? (
+                    <img
+                      src={trainer.image}
+                      loading="lazy"
+                      alt={`Zdjęcie profilowe ${trainer.username}`}
+                      className="h-full w-full rounded-t object-cover transition-all duration-500 group-hover:scale-[1.07]"
+                    />
+                  ) : (
+                    <Image
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                      alt={`Zdjęcie profilowe ${trainer.username}`}
+                      src={PersonAvatar}
+                    />
+                  )}
                 </div>
               </li>
             );

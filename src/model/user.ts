@@ -27,9 +27,13 @@ const UserSchema = new Schema(
       type: String,
       default: null,
     },
+    city: {
+      type: String,
+      required: true,
+    },
+    slug: String,
     summary: String,
     roles: Array,
-    slug: String,
   },
   { collection: "Users", timestamps: { createdAt: true, updatedAt: false } }
 );
@@ -56,6 +60,7 @@ export interface TrainerType extends UserType {
   roles: UserRolesType[];
   summary: string;
   slug: string;
+  city: string;
 }
 
 export default User;

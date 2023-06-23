@@ -8,9 +8,17 @@ const TrainerDataSchema = new Schema(
       required: true,
       ref: "User",
     },
-    content: {
-      type: String,
+    heroSection: {
+      image: String,
+      content: {
+        type: String,
+        required: true,
+      },
+    },
+    tags: {
+      type: [String],
       required: true,
+      default: [],
     },
     offers: [
       {
@@ -28,25 +36,33 @@ const TrainerDataSchema = new Schema(
         },
       },
     ],
-    roles: Array,
-    testimonials: [
+    // testimonials: [
+    //   {
+    //     testimonialRating: {
+    //       type: Number,
+    //     },
+    //     testimonialDescription: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     testimonialPhotoUrl: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     testimonialPostedById: {
+    //       type: Schema.Types.ObjectId,
+    //       required: true,
+    //       ref: "User",
+    //     },
+    //   },
+    // ],
+    socialMedia: [
       {
-        testimonialRating: {
-          type: Number,
-        },
-        testimonialDescription: {
+        mediaType: {
           type: String,
-          required: true,
+          enum: ["Instagram", "Facebook", "Email"],
         },
-        testimonialPhotoUrl: {
-          type: String,
-          required: true,
-        },
-        testimonialPostedById: {
-          type: Schema.Types.ObjectId,
-          required: true,
-          ref: "User",
-        },
+        link: String,
       },
     ],
   },
@@ -72,11 +88,22 @@ export interface TrainerTestimonialType {
   testimonialPhotoUrl: string;
   testimonialPostedById: string;
 }
+export type SocialMediaOptions = "Instagram" | "Facebook" | "Email";
+export interface SocialMediaType {
+  mediaType: SocialMediaOptions;
+  link: string;
+}
+
+export interface HeroSectionType {
+  image?: string;
+  content: string;
+}
 
 export interface TrainerDataType {
   userId: string;
-  content: string;
+  heroSection: HeroSectionType;
   offers?: TrainerOfferType[];
-  roles: UserRolesType;
-  testimonials?: TrainerTestimonialType[];
+  socialMedia: SocialMediaOptions;
+  tags: string[];
+  // testimonials?: TrainerTestimonialType[]
 }

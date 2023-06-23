@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main>
-      <section className="hero flex h-[calc(100vh-67px)] items-center">
-        <div className="flex flex-1 items-center self-stretch bg-white py-10">
+      <section className="hero flex h-[calc(100vh-67px)] items-center bg-primary">
+        <div className="flex flex-1 items-center self-stretch py-10">
           <div className="mx-auto flex w-full flex-col justify-center space-y-4 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-3xl font-semibold tracking-tight">
+              <h1 className="text-3xl font-semibold tracking-tight text-black">
                 Witaj spowrotem!
               </h1>
               <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -41,7 +41,7 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-        <div className="relative isolate -z-10 flex-1 self-stretch">
+        {/* <div className="relative isolate -z-10 flex-1 self-stretch">
           <div className="absolute left-0 top-0 z-[2] h-20 w-20 bg-[#FFFFFF99] after:absolute after:left-full after:top-full after:h-20 after:w-20 after:bg-[#FFFFFF20]" />
           <div className="absolute left-20 top-0 z-[2] h-20 w-20 bg-[#FFFFFF70] after:absolute after:left-full after:top-0 after:h-20 after:w-20 after:bg-[#FFFFFF20]" />
           <div className="absolute left-0 top-20 z-[2] h-20 w-20 bg-[#FFFFFF70] after:absolute after:left-0 after:top-full after:h-20 after:w-20 after:bg-[#FFFFFF20]" />
@@ -50,7 +50,7 @@ export default function LoginPage() {
             alt="Sztanga z obciążeniem"
             className="h-full w-full object-cover brightness-90"
           />
-        </div>
+        </div> */}
       </section>
     </main>
   );

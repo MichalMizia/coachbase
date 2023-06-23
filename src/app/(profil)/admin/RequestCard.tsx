@@ -2,9 +2,10 @@
 
 import { UserRolesType } from "@/model/user";
 import axios, { AxiosError } from "axios";
-import { CheckIcon, XIcon } from "lucide-react";
-import { FormEvent } from "react";
+import { CheckIcon, Loader2, XIcon } from "lucide-react";
+import { FormEvent, useState } from "react";
 import { toast } from "react-hot-toast";
+import slugify from "slugify";
 
 interface RequestCardProps {
   name: string;
@@ -21,23 +22,30 @@ const RequestCard = ({
   email,
   link,
   roles,
-  city
+  city,
 }: RequestCardProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const slug = slugify(name);
+
   async function handleAccept(e: FormEvent) {
     e.preventDefault();
+    setIsLoading(true);
     console.log("accepting");
 
     try {
       await axios.post("/admin/accept", {
         email: email,
-        description: description,
+        summary: description,
         roles: roles,
         city: city,
+        slug: slug,
       });
       return toast.success("Zaakceptowano trenera");
     } catch (e) {
       toast.error("Coś poszło nie tak podczas akceptacji");
       return null;
+    } finally {
+      setIsLoading(false);
     }
   }
   async function handleReject(e: FormEvent) {
@@ -45,7 +53,12 @@ const RequestCard = ({
   }
 
   return (
-    <li className="min-h-40 flex w-full flex-col items-start justify-between rounded-sm border border-text bg-white p-4 shadow shadow-[#00000030]">
+    <li className="min-h-40 relative flex w-full flex-col items-start justify-between rounded-sm border border-text bg-white p-4 shadow shadow-[#00000030]">
+      {isLoading ? (
+        <div className="absolute inset-0 z-10 flex h-full w-full items-center justify-center bg-[#ffffff30]">
+          <Loader2 className="animate-spin" size={60} />
+        </div>
+      ) : null}
       <div className="">
         <header className="mb-2 flex w-fit items-center justify-center gap-3 text-black">
           <p className="text-lg capitalize">{name}</p>
@@ -53,7 +66,9 @@ const RequestCard = ({
           <p className="text-lg">{email}</p>
         </header>
         <p className="mb-1 text-sm">
-          <span className="text-md font-bold tracking-wide text-gray-800">Opis: </span>
+          <span className="text-md font-bold tracking-wide text-gray-800">
+            Opis:{" "}
+          </span>
           {description}
         </p>
         <p className="mb-1 text-sm">

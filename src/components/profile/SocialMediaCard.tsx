@@ -31,7 +31,11 @@ const SocialMediaCard = ({}: SocialMediaCardProps) => {
             Michał Mizia
           </p>
         </ul>
-        <Button className="font-sm bg-secondary py-[6px] tracking-[102%]">
+        <Button
+          // onClick={() => setIsOpen(true)}
+          aria-label="Otwórz edycję social mediów"
+          className="font-sm hover-circle-overlay bg-secondary py-[6px] tracking-[102%] hover:bg-secondary"
+        >
           Edit
         </Button>
       </div>

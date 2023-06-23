@@ -43,6 +43,9 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 
     console.log(signInResult);
     if (!signInResult?.ok) {
+      if (signInResult?.error) {
+        return toast.error(signInResult.error);
+      }
       return toast.error("Coś poszło nie tak podczas logowania");
     }
 
@@ -66,7 +69,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             autoComplete="email"
             autoCorrect="off"
             disabled={isLoading || isGoogleLoading}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             required
           />
           {errors?.email && (
@@ -86,7 +89,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             autoComplete="off"
             autoCorrect="off"
             disabled={isLoading || isGoogleLoading}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             required
           />
           {errors?.password && (
@@ -109,7 +112,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           <span className="w-full border-t border-slate-300" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 text-slate-600">
+          <span className="bg-primary px-2 text-slate-600">
             lub zaloguj się przez
           </span>
         </div>
@@ -118,9 +121,10 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
         variant="outlined"
         isLoading={isGoogleLoading || isLoading}
         type="button"
-        className="max-w-sm mx-auto w-full"
+        className="mx-auto w-full max-w-sm"
         // onClick={loginWithGoogle}
-        disabled={isLoading || isGoogleLoading}
+        // disabled={isLoading || isGoogleLoading}
+        disabled={true}
       >
         {isGoogleLoading ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -155,7 +159,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             <path d="M1 1h22v22H1z" fill="none" />
           </svg>
         )}{" "}
-        Google
+        Google(not yet)
       </Button>
     </div>
   );

@@ -76,9 +76,11 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
       <section className="border-b-2 border-gray-300 pb-6 pt-8">
         <div className="container-md flex flex-col items-stretch justify-between gap-5">
           <section className="flex w-full flex-col items-center justify-center gap-4 lg:flex-row lg:justify-between">
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-2">
               <MessagesSquareIcon size={26} className="text-blue-600" />
-              <h1 className="text-3xl font-semibold">Oferty</h1>
+              <h1 className="text-[32px] font-semibold text-slate-800">
+                Oferty
+              </h1>
             </div>
             <SearchBarOffers
               city={city}

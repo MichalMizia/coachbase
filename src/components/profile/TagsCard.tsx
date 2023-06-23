@@ -10,7 +10,7 @@ const TagsCard = ({}: TagsCardProps) => {
         <TagsIcon className="relative top-[1px] text-green-600" />
         <h4>Tagi</h4>
       </header>
-      <div className="mt-4 flex w-full flex-col items-start gap-2">
+      <div className="mt-4 flex w-full flex-1 flex-col items-start justify-between gap-2">
         <ul className=" flex flex-wrap gap-x-1 text-sm text-text">
           <p className="">Trójbój,</p>
           <p className="">Lekkoatletyka,</p>

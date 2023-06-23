@@ -2,6 +2,7 @@ import initMongoose from "@/lib/db/db";
 import PendingRequest from "@/model/pendindRequest";
 import User, { UserRolesType } from "@/model/user";
 import { NextRequest, NextResponse } from "next/server";
+import slugify from "slugify";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -19,12 +20,26 @@ export async function POST(req: NextRequest, res: NextResponse) {
     email,
     roles,
     summary,
-  }: { email: string; roles: UserRolesType[]; summary: string } =
-    await req.json();
+    city,
+    slug,
+  }: {
+    email: string;
+    roles: UserRolesType[];
+    summary: string;
+    slug: string;
+    city: string;
+  } = await req.json();
+
   try {
     await User.updateOne(
       { email: email },
-      { roles: roles, summary: summary, isTrainer: true }
+      {
+        roles: roles,
+        summary: summary,
+        city: city,
+        slug: slug,
+        isTrainer: true,
+      }
     );
     await PendingRequest.deleteOne({ email: email });
 
