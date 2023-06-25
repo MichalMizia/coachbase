@@ -14,19 +14,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  console.log("Mongoose connected while registering a trainer");
-  const {
-    email,
-    roles,
-    summary,
-  }: { email: string; roles: UserRolesType[]; summary: string } =
-    await req.json();
+  const { email }: { email: string } = await req.json();
   try {
-    await User.updateOne(
-      { email: email },
-      { roles: roles, summary: summary, isTrainer: true }
-    );
     await PendingRequest.deleteOne({ email: email });
+
+    return NextResponse.json({ status: 200 });
   } catch (e) {
     return NextResponse.json({
       status: 400,

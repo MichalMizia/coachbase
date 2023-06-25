@@ -1,7 +1,12 @@
-import { trainerController } from "@/controllers/trainerController";
-import { registerController } from "@/controllers/userController";
+import {
+  TrainerRequestType,
+  trainerController,
+} from "@/controllers/trainerController";
 import initMongoose from "@/lib/db/db";
+import PendingRequest from "@/model/pendindRequest";
+import User from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";
+const bcrypt = require("bcrypt");
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,11 +22,90 @@ export default async function handler(
     }
 
     console.log("Mongoose connected while registering a trainer");
-    try {
-      await trainerController.addNewTrainer(req, res);
+    await trainerController.addNewTrainer(req, res);
+    const {
+      username,
+      email,
+      password,
+      roles,
+      summary,
+      link,
+      city,
+    }: TrainerRequestType = req.body;
+    console.log(
+      "User data from trainer controller: \n",
+      username,
+      email,
+      password,
+      summary,
+      roles,
+      link,
+      city
+    );
+
+    if (!username || !email || !password || !city) {
+      return res.status(400).json({ message: "Wszystkie pola są wymagane" });
+    }
+
+    if (!roles || roles.length === 0 || !Array.isArray(roles)) {
       return res
-        .status(201)
-        .json({ message: `Utworzono konto trenera ${req.body.username}` });
+        .status(400)
+        .json({ message: "Konto trenera musi mieć podane role" });
+    }
+
+    if (!summary || summary.length < 40 || summary.length > 250) {
+      return res
+        .status(400)
+        .json({ message: "Konto trenera musi mieć krótki opis" });
+    }
+
+    const duplicateUsername = await User.findOne({ username: username })
+      .lean()
+      .exec();
+    if (duplicateUsername) {
+      return res.status(409).json({ message: "Konto z tą nazwą już istnieje" });
+    }
+    const duplicateEmail = await User.findOne({ email: email }).lean().exec();
+    if (duplicateEmail) {
+      return res
+        .status(409)
+        .json({ message: "Do tego adresu email przypisane jest już konto" });
+    }
+
+    const hashedPwd = await bcrypt.hash(password, 10); //10 is the number of hash salts
+
+    try {
+      const userPromise = User.create({
+        username,
+        email,
+        password: hashedPwd,
+        isTrainer: false,
+        emailVerified: false,
+      });
+      // when accepting the request the summary, roles, isTrainer is added to the user profile
+
+      const pendingRequestPromise = PendingRequest.create({
+        username,
+        email,
+        summary,
+        link,
+        roles,
+        city,
+      });
+
+      const [user, pendindRequest] = await Promise.all([
+        userPromise,
+        pendingRequestPromise,
+      ]);
+      console.log(user, pendindRequest);
+
+      if (user && pendindRequest) {
+        return res
+          .status(201)
+          .json({ message: `Utworzono konto trenera: ${username}` });
+      } else {
+        return res.status(400).json({ message: "Nieudało się utworzyć konta" });
+      }
     } catch (e) {
       return res.status(400).json({ message: "Błąd przy tworzeniu konta" });
     }

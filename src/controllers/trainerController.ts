@@ -3,7 +3,7 @@ import User, { TrainerType } from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";
 import PendingRequest from "@/model/pendindRequest";
 
-interface TrainerRequestType extends TrainerType {
+export interface TrainerRequestType extends TrainerType {
   link?: string;
   city: string;
 }

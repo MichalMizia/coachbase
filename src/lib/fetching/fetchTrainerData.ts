@@ -1,4 +1,4 @@
-import TrainerData from "@/model/trainerData";
+import TrainerData, { TrainerDataType } from "@/model/trainerData";
 import initMongoose from "../db/db";
 
 export async function fetchTrainerData(slug: string) {
@@ -11,7 +11,9 @@ export async function fetchTrainerData(slug: string) {
 
   console.log("Mongoose connected");
   try {
-    const trainerData = await TrainerData.find({ slug: slug }).exec();
+    const trainerData: TrainerDataType = await TrainerData.findOne({
+      userSlug: slug,
+    }).exec();
     return trainerData;
   } catch (e) {
     // return null

@@ -11,7 +11,7 @@ export async function fetchTrainer(slug: string) {
 
   console.log("Mongoose connected");
   try {
-    const trainer = await User.find({
+    const trainer: TrainerType = await User.findOne({
       isTrainer: true,
       slug: slug,
     }).exec();

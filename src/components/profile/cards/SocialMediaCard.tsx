@@ -5,11 +5,17 @@ import {
   InstagramIcon,
   LinkedinIcon,
 } from "lucide-react";
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
+import { SocialMediaType } from "@/model/trainerData";
+import { Dispatch, SetStateAction } from "react";
 
-interface SocialMediaCardProps {}
+type MenuType = "" | "SocialMedia" | "Location" | "Tags";
+interface SocialMediaCardProps {
+  setOpenMenu: Dispatch<SetStateAction<MenuType>>;
+  media: SocialMediaType[];
+}
 
-const SocialMediaCard = ({}: SocialMediaCardProps) => {
+const SocialMediaCard = ({ media, setOpenMenu }: SocialMediaCardProps) => {
   return (
     <div className="flex flex-1 flex-col self-stretch border-r border-r-text px-6 py-2 last-of-type:border-r-0">
       <header className="flex items-end gap-3">
@@ -32,9 +38,9 @@ const SocialMediaCard = ({}: SocialMediaCardProps) => {
           </p>
         </ul>
         <Button
-          // onClick={() => setIsOpen(true)}
+          onClick={() => setOpenMenu("SocialMedia")}
           aria-label="Otwórz edycję social mediów"
-          className="font-sm hover-circle-overlay bg-secondary py-[6px] tracking-[102%] hover:bg-secondary"
+          className="font-sm hover-circle-overlay mt-2 bg-secondary py-[6px] tracking-[102%] hover:bg-secondary"
         >
           Edit
         </Button>

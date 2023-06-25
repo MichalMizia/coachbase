@@ -27,7 +27,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
   return (
     <section className="latest-offers bg-primary py-12">
       <div className="container-md">
-        <ul className="grid grid-flow-row grid-cols-1 items-start justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
+        <ul className="grid grid-flow-row grid-cols-1 items-center justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
           {data.map((trainer) => {
             return (
               <li
@@ -69,13 +69,13 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     {/* <StarsRating rating={3.7} /> */}
                   </div>
                 </div>
-                <div className="m-auto h-full flex-1 overflow-hidden">
+                <div className="m-auto aspect-video w-full flex-1 overflow-hidden">
                   {trainer.image ? (
                     <img
                       src={trainer.image}
                       loading="lazy"
                       alt={`Zdjęcie profilowe ${trainer.username}`}
-                      className="h-full w-full rounded-t object-cover transition-all duration-500 group-hover:scale-[1.07]"
+                      className="aspect-[] w-full rounded-t object-cover transition-all duration-500 group-hover:scale-[1.07]"
                     />
                   ) : (
                     <Image

@@ -23,14 +23,8 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    image: {
-      type: String,
-      default: null,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
+    image: String,
+    city: String,
     slug: String,
     summary: String,
     roles: Array,

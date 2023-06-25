@@ -25,7 +25,7 @@ const RequestCard = ({
   city,
 }: RequestCardProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const slug = slugify(name);
+  const slug = slugify(name.toLocaleLowerCase());
 
   async function handleAccept(e: FormEvent) {
     e.preventDefault();
@@ -50,6 +50,21 @@ const RequestCard = ({
   }
   async function handleReject(e: FormEvent) {
     e.preventDefault();
+
+    setIsLoading(true);
+    console.log("rejecting");
+
+    try {
+      await axios.post("/admin/reject", {
+        email: email,
+      });
+      return toast.success("Odrzucono trenera");
+    } catch (e) {
+      toast.error("Coś poszło nie tak podczas odrzucania");
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

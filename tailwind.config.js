@@ -25,6 +25,9 @@ module.exports = {
         text: "#73879e",
         secondary: "#2acbb6",
       },
+      boxShadow: {
+        cover: "0 0 100px 4000px rgba(0, 0, 0, 0.2)",
+      },
     },
   },
   plugins: [],

@@ -25,20 +25,37 @@ export default function LoginPage() {
               <h1 className="text-3xl font-semibold tracking-tight text-black">
                 Witaj spowrotem!
               </h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-sm text-slate-500">
                 Zaloguj się przy użyciu emaila.
               </p>
             </div>
             <LoginForm />
 
-            <p className="px-8 text-center text-sm text-slate-500 dark:text-slate-400">
+            <p className="mt-2 px-8 text-center text-sm text-slate-500">
               <Link
                 href="/rejestracja"
                 className="hover:text-brand underline underline-offset-4"
+                title="Rejestracja"
               >
                 Nie masz konta? Zarejestruj się
               </Link>
             </p>
+            <div className="relative my-2">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-slate-300" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-primary px-2 text-slate-600">albo</span>
+              </div>
+            </div>
+            <Button variant="default">
+              <Link
+                href="/rejestracja-trenera"
+                title="Rejestracja Konta Trenera"
+              >
+                Utwórz Konto Trenera
+              </Link>
+            </Button>
           </div>
         </div>
         {/* <div className="relative isolate -z-10 flex-1 self-stretch">

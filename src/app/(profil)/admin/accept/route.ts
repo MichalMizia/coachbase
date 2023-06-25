@@ -1,8 +1,9 @@
+import { TrainerDataType } from "./../../../../model/trainerData";
+import TrainerData from "@/model/trainerData";
 import initMongoose from "@/lib/db/db";
 import PendingRequest from "@/model/pendindRequest";
 import User, { UserRolesType } from "@/model/user";
 import { NextRequest, NextResponse } from "next/server";
-import slugify from "slugify";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -15,7 +16,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  console.log("Mongoose connected while registering a trainer");
   const {
     email,
     roles,
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } = await req.json();
 
   try {
-    await User.updateOne(
+    const user = await User.findOneAndUpdate(
       { email: email },
       {
         roles: roles,
@@ -40,7 +40,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
         slug: slug,
         isTrainer: true,
       }
-    );
+    ).exec();
+    const TrainerDataProps: TrainerDataType = {
+      userId: user._id,
+      heroSection: {
+        content: summary,
+      },
+      socialMedia: [],
+      tags: roles,
+    };
+    await TrainerData.create(TrainerDataProps);
     await PendingRequest.deleteOne({ email: email });
 
     return NextResponse.json({

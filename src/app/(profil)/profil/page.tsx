@@ -1,13 +1,14 @@
 import ChangeNameForm from "@/components/auth/ChangeNameForm";
-import LocationCard from "@/components/profile/LocationCard";
+import LocationCard from "@/components/profile/cards/LocationCard";
 import ProfileInfoSection from "@/components/profile/ProfileInfoSection";
-import SocialMediaCard from "@/components/profile/SocialMediaCard";
-import TagsCard from "@/components/profile/TagsCard";
+import SocialMediaCard from "@/components/profile/cards/SocialMediaCard";
+import TagsCard from "@/components/profile/cards/TagsCard";
 import Button from "@/components/ui/Button";
 import authOptions from "@/lib/auth";
 import { ChevronRightIcon, HeartIcon, HomeIcon, LogIn } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import HeaderCards from "@/components/profile/HeaderCards";
 
 interface pageProps {}
 
@@ -51,11 +52,7 @@ const page = async ({}: pageProps) => {
       <section className="py-6 text-gray-800">
         <div className="container-md">
           {/* <h1 className="mb-6 text-3xl font-semibold">Profil</h1> */}
-          <section className="[&>*:nth-child(4)]:border-r-none mb-4 flex w-full items-center justify-center rounded-sm bg-white py-2 shadow shadow-[#00000030]">
-            <LocationCard />
-            <TagsCard />
-            <SocialMediaCard />
-          </section>
+          <HeaderCards />
           <ProfileInfoSection session={session} />
         </div>
       </section>

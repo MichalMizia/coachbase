@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
 // assets
 // components
-import Button from "@/components/ui/Button"
-import { ChevronRightIcon, Loader2, MapPinIcon } from "lucide-react"
-import { toast } from "react-hot-toast"
-import TextareaAutosize from "react-textarea-autosize"
+import Button from "@/components/ui/Button";
+import { ChevronRightIcon, Loader2, MapPinIcon } from "lucide-react";
+import { toast } from "react-hot-toast";
+import TextareaAutosize from "react-textarea-autosize";
 // utils
-import { zodResolver } from "@hookform/resolvers/zod"
-import Link from "next/link"
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 // lib
-import axios, { AxiosError, AxiosResponse } from "axios"
-import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
-import { useForm } from "react-hook-form"
-import { ZodError, z } from "zod"
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { ZodError, z } from "zod";
 // validation
-import { trainerRegisterSchema } from "@/lib/validations/registerTrainerValidation"
+import { trainerRegisterSchema } from "@/lib/validations/registerTrainerValidation";
 // city data
-import cities from "../../../content/data/miastaShort.json"
-import { MappedCity } from "@/components/offers/SearchOffers"
-import { ReactSearchAutocomplete } from "react-search-autocomplete"
-import { classNames } from "@/lib/utils"
-import RegistrationStatus from "@/components/auth/RegistrationStatus"
-import { UserRolesType } from "@/model/user"
-import { fileSchema } from "@/lib/validations/fileUploadValidation"
+import cities from "../../../content/data/miastaShort.json";
+import { MappedCity } from "@/components/offers/SearchOffers";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { classNames } from "@/lib/utils";
+import RegistrationStatus from "@/components/auth/RegistrationStatus";
+import { UserRolesType } from "@/model/user";
+import { fileSchema } from "@/lib/validations/fileUploadValidation";
 
-type FormData = z.infer<typeof trainerRegisterSchema>
+type FormData = z.infer<typeof trainerRegisterSchema>;
 
 export default function Page() {
   const {
@@ -36,67 +36,67 @@ export default function Page() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(trainerRegisterSchema),
-  })
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  });
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFormInInitialState, setIsFormInInitialState] =
-    useState<boolean>(true)
+    useState<boolean>(true);
 
   const mappedCities = useMemo(() => {
-    let cachedCities: MappedCity[] = []
+    let cachedCities: MappedCity[] = [];
     cities.forEach((region) => {
       if (region.cities) {
         region.cities.forEach((city) => {
           if (city?.text_simple) {
-            cachedCities.push({ name: city.text_simple, id: city.id })
+            cachedCities.push({ name: city.text_simple, id: city.id });
           }
-        })
+        });
       }
-    })
-    return cachedCities
-  }, [])
+    });
+    return cachedCities;
+  }, []);
 
   async function onSubmit(data: FormData) {
     if (isFormInInitialState && data.isFormInInitialStateCurrently) {
-      setIsFormInInitialState(false)
-      setValue("isFormInInitialStateCurrently", false)
-      return
+      setIsFormInInitialState(false);
+      setValue("isFormInInitialStateCurrently", false);
+      return;
     }
 
-    setIsLoading(true)
-    console.log("Submitting")
+    setIsLoading(true);
+    console.log("Submitting");
 
     try {
       if (!data.isFormInInitialStateCurrently) {
-        let link: string = ""
+        let link: string = "";
         if (
           data.verification.file &&
           data.verification.file.length !== 0 &&
           !data.verification.link
         ) {
-          const currFile = data.verification.file[0]
-          const formData = new FormData()
-          formData.append("image", currFile)
+          const currFile = data.verification.file[0];
+          const formData = new FormData();
+          formData.append("image", currFile);
 
-          let res1: AxiosResponse | null = null
+          let res1: AxiosResponse | null = null;
           try {
             res1 = await axios.post("/api/upload-files", formData, {
               headers: { "Content-Type": "multipart/form-data" },
-            })
+            });
           } catch (e) {
-            return toast.error("Coś poszło nie tak")
+            return toast.error("Coś poszło nie tak");
           }
-          console.log(res1)
+          console.log(res1);
         }
-        console.log(data.verification.file)
+        console.log(data.verification.file);
 
-        let roles: UserRolesType[] = []
-        if (data.isTrainer) roles.push("Trener")
-        if (data.isPhysio) roles.push("Fizjoterapeuta")
-        if (data.isDietician) roles.push("Dietetyk")
-        console.log("Roles: ", roles)
+        let roles: UserRolesType[] = [];
+        if (data.isTrainer) roles.push("Trener");
+        if (data.isPhysio) roles.push("Fizjoterapeuta");
+        if (data.isDietician) roles.push("Dietetyk");
+        console.log("Roles: ", roles);
         if (roles.length === 0) {
-          return toast.error("Przynajmniej jedna rola musi być wybrana")
+          return toast.error("Przynajmniej jedna rola musi być wybrana");
         }
         await axios.post("/api/rejestracja-trenera", {
           username: data.username,
@@ -106,9 +106,9 @@ export default function Page() {
           link: data.verification.link,
           city: data.city,
           roles: roles,
-        })
+        });
       } else {
-        throw new Error("Ye")
+        throw new Error("Ye");
       }
     } catch (e) {
       if (
@@ -116,33 +116,33 @@ export default function Page() {
         e.response?.status?.toString()[0] === "4" &&
         e.response?.data?.message
       ) {
-        toast.error(e.response.data.message)
-        return null
+        toast.error(e.response.data.message);
+        return null;
       } else if (e instanceof ZodError) {
-        toast.error("Formularz wypełniony niepoprawnie")
-        return null
+        toast.error("Formularz wypełniony niepoprawnie");
+        return null;
       }
-      toast.error("Coś poszło nie tak podczas rejestracji")
-      return null
+      toast.error("Coś poszło nie tak podczas rejestracji");
+      return null;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
 
-    toast.success("Zarejestrowano użytkownika")
+    toast.success("Zarejestrowano użytkownika");
     router.push("/login");
   }
 
   const onSecondButtonClick = (): void => {
     if (!isFormInInitialState) {
-      return
+      return;
     }
 
-    handleSubmit(onSubmit)
-  }
+    handleSubmit(onSubmit);
+  };
   const onFirstButtonClick = (): void => {
-    setIsFormInInitialState(true)
-    setValue("isFormInInitialStateCurrently", true)
-  }
+    setIsFormInInitialState(true);
+    setValue("isFormInInitialStateCurrently", true);
+  };
 
   return (
     <main>
@@ -281,7 +281,7 @@ export default function Page() {
                   Krótki Opis &#40;max 200 znaków&#41;
                 </label>
                 <TextareaAutosize
-                  defaultValue="Nazywam się Michał Mizia i jestem potęznym trenerem personalnym"
+                  // defaultValue="Nazywam się Michał Mizia i jestem potęznym trenerem personalnym"
                   maxLength={200}
                   {...register("description")}
                   id="description"
@@ -317,7 +317,7 @@ export default function Page() {
                 </label>
                 <input
                   type="url"
-                  defaultValue="https://www.instagram.com/michalmizia_/"
+                  // defaultValue="https://www.instagram.com/michalmizia_/"
                   {...register("verification.link")}
                   id="link"
                   placeholder="Link weryfikacyjny"
@@ -374,7 +374,8 @@ export default function Page() {
                 {/* <pre>{JSON.stringify(errors)}</pre> */}
               </div>
               <ReactSearchAutocomplete
-                className="mb-4 block w-full rounded-lg bg-gray-50 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                // className="mb-4 block w-full rounded-lg bg-gray-50 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                className="mb-4"
                 styling={{ borderRadius: "8px" }}
                 items={mappedCities}
                 placeholder="Lokalizacja"
@@ -456,5 +457,5 @@ export default function Page() {
         </div> */}
       </form>
     </main>
-  )
+  );
 }

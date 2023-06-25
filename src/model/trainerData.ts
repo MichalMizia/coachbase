@@ -1,10 +1,11 @@
 import { Schema, model, models } from "mongoose";
 import { UserRolesType } from "./user";
+import { string } from "zod";
 
 const TrainerDataSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
+    userSlug: {
+      type: Schema.Types.String,
       required: true,
       ref: "User",
     },
@@ -56,19 +57,24 @@ const TrainerDataSchema = new Schema(
     //     },
     //   },
     // ],
-    socialMedia: [
-      {
-        mediaType: {
-          type: String,
-          enum: ["Instagram", "Facebook", "Email"],
-        },
-        link: String,
+    socialMedia: {
+      instagram: {
+        type: String,
+        default: "",
       },
-    ],
+      facebook: {
+        type: String,
+        default: "",
+      },
+      email: {
+        type: String,
+        default: "",
+      },
+    },
   },
   {
     collection: "TrainerData",
-    timestamps: { createdAt: true, updatedAt: false },
+    timestamps: false,
   }
 );
 
@@ -90,8 +96,9 @@ export interface TrainerTestimonialType {
 }
 export type SocialMediaOptions = "Instagram" | "Facebook" | "Email";
 export interface SocialMediaType {
-  mediaType: SocialMediaOptions;
-  link: string;
+  instagram: string;
+  facebook: string;
+  email: string;
 }
 
 export interface HeroSectionType {
@@ -103,7 +110,7 @@ export interface TrainerDataType {
   userId: string;
   heroSection: HeroSectionType;
   offers?: TrainerOfferType[];
-  socialMedia: SocialMediaOptions;
+  socialMedia?: SocialMediaType;
   tags: string[];
   // testimonials?: TrainerTestimonialType[]
 }

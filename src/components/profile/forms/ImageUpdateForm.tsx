@@ -80,7 +80,11 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
         <>
           <img
             className="absolute inset-auto -z-10 h-full w-full rounded-sm object-cover p-2"
-            src={currentFiles ? URL.createObjectURL(currentFiles[0]) : imgSrc}
+            src={
+              currentFiles && currentFiles.length
+                ? URL.createObjectURL(currentFiles[0])
+                : imgSrc
+            }
             alt="Zdjęcie Profilowe"
           />
           <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000015]" />
