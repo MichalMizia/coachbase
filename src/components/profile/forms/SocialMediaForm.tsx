@@ -41,7 +41,7 @@ const SocialMediaForm = ({ media }: SocialMediaFormProps) => {
   return (
     <form className="my-auto mt-8 flex w-full flex-col justify-start gap-2">
       {availableMedia.map((med) => (
-        <div className="flex w-full justify-center gap-2">
+        <div className="flex w-full justify-center gap-2" key={med.mediaType}>
           <input
             type="text"
             placeholder={`${med.mediaType} link`}
