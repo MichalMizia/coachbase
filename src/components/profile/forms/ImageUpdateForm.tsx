@@ -99,7 +99,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
               accept="image/*"
               type="file"
               {...register("files")}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             />
             {errors?.files && (
               <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">
@@ -145,7 +145,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
               accept="image/*"
               type="file"
               {...register("files")}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             />
             {errors?.files && (
               <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">

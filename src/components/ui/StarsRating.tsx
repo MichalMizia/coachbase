@@ -51,7 +51,7 @@ const StarsRating = ({ rating, size, className }: StarsRatingProps) => {
         <span
           className={classNames(
             size === "small" ? "mx-1" : "mx-2",
-            "rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-gray-800 dark:bg-blue-200 dark:text-blue-800"
+            "rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-gray-800"
           )}
         >
           {rating}
@@ -96,7 +96,7 @@ const StarsRating = ({ rating, size, className }: StarsRatingProps) => {
           strokeWidth="2"
           stroke="#facc15"
         />
-        <span className="mx-2 rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-200 dark:text-blue-800">
+        <span className="mx-2 rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
           ??
         </span>
       </div>

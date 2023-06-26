@@ -46,7 +46,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
       heroSection: {
         content: summary,
       },
-      socialMedia: [],
+      socialMedia: {
+        instagram: "",
+        facebook: "",
+        email: "",
+      },
       tags: roles,
     };
     await TrainerData.create(TrainerDataProps);

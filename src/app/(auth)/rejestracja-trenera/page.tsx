@@ -162,7 +162,7 @@ export default function Page() {
                 <h1 className="text-4xl font-semibold tracking-tight text-black">
                   Tworzenie Konta Trenerskiego
                 </h1>
-                <p className="px-8 text-center text-sm text-slate-500 dark:text-slate-400">
+                <p className="px-8 text-center text-sm text-slate-500">
                   <Link
                     href="/rejestracja"
                     className="hover:text-brand flex items-center justify-center gap-1 underline underline-offset-4"
@@ -213,7 +213,7 @@ export default function Page() {
                   autoComplete="name"
                   autoCorrect="off"
                   disabled={isLoading}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
                 {errors?.username && (
@@ -235,7 +235,7 @@ export default function Page() {
                   autoComplete="email"
                   autoCorrect="off"
                   disabled={isLoading}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
                 {errors?.email && (
@@ -257,7 +257,7 @@ export default function Page() {
                   autoComplete="off"
                   autoCorrect="off"
                   disabled={isLoading}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   required
                 />
                 {errors?.password && (
@@ -290,7 +290,7 @@ export default function Page() {
                   autoComplete="off"
                   autoCorrect="off"
                   disabled={isLoading}
-                  className="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
                 {errors?.description && (
                   <p className="px-1 text-xs text-red-600">
@@ -325,7 +325,7 @@ export default function Page() {
                   autoComplete="off"
                   autoCorrect="off"
                   disabled={isLoading}
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   tabIndex={isFormInInitialState ? -1 : 0}
                 />
                 {/* @ts-expect-error */}
@@ -443,7 +443,7 @@ export default function Page() {
             </Button>
           </div>
 
-          <p className="px-8 text-center text-sm text-slate-500 dark:text-slate-400">
+          <p className="px-8 text-center text-sm text-slate-500">
             <Link
               href="/login"
               className="hover:text-brand underline underline-offset-4"
