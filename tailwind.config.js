@@ -23,7 +23,9 @@ module.exports = {
       colors: {
         primary: "#EDF5FF",
         text: "#73879e",
+        text_readable: "#5E6E81",
         secondary: "#2acbb6",
+        secondary_light: "#95E5DB",
       },
       boxShadow: {
         cover: "0 0 100px 4000px rgba(0, 0, 0, 0.2)",

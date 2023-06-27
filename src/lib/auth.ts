@@ -5,6 +5,7 @@ import User, { UserType } from "@/model/user";
 
 import Credentials from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
+import { GetSessionParams } from "next-auth/react";
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -81,3 +82,7 @@ const authOptions: NextAuthOptions = {
 };
 
 export default authOptions;
+
+export const getSessionParams: GetSessionParams = {
+  req: authOptions,
+};

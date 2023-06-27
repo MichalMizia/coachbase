@@ -3,10 +3,10 @@
 // types
 import { TrainerType } from "@/model/user";
 // components
-import { SendIcon } from "lucide-react";
+import { LucideUser, SendIcon } from "lucide-react";
 import Image from "next/image";
 import StarsRating from "../ui/StarsRating";
-import PersonAvatar from "../../../public/assets/undraw_personal_info_re_ur1n.svg";
+import PersonAvatar from "../../../public/assets/undraw_person.png";
 import useMediaQuery from "@/lib/useMediaQuery";
 
 interface OffersSectionProps {
@@ -14,6 +14,8 @@ interface OffersSectionProps {
 }
 
 const OffersSection = ({ data }: OffersSectionProps) => {
+  const isLarge = useMediaQuery("(min-width: 960px)");
+
   if (!data || !data.length) {
     return (
       <section className="bg-primary py-12">
@@ -25,25 +27,25 @@ const OffersSection = ({ data }: OffersSectionProps) => {
   }
 
   return (
-    <section className="latest-offers bg-primary py-12">
-      <div className="container-md">
-        <ul className="grid grid-flow-row grid-cols-1 items-center justify-between gap-x-5 lg:grid-cols-2 xxl:grid-cols-3">
+    <section className="latest-offers bg-primary py-4 md:py-6 lg:py-12">
+      <div className="mx-auto w-[96%] max-w-[1280px] lg:w-[92%]">
+        <ul className="grid grid-flow-row grid-cols-1 items-start justify-between gap-x-4 lg:grid-cols-2 xxl:grid-cols-3">
           {data.map((trainer) => {
             return (
               <li
                 key={trainer.username}
-                className="group relative my-4 flex w-full max-w-3xl flex-col-reverse rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:flex-col-reverse"
+                className="group relative mx-auto my-2 flex w-full max-w-3xl items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
               >
-                <div className="flex-1 px-8 pb-8 pt-6 lg:px-6 lg:pb-6 lg:pt-4">
-                  <header className="mb-2 flex items-center justify-between text-black lg:mb-1">
+                <div className="flex-1 self-center py-4 pl-5 pr-3 lg:self-start lg:px-6 lg:pb-6 lg:pt-4">
+                  <header className="mb-0.5 flex items-center justify-between text-black lg:mb-1">
                     <h3 className="text-xl font-bold capitalize">
                       {trainer.username}
                     </h3>
                   </header>
-                  <ul className="tags flex w-fit items-center justify-center gap-2">
+                  <ul className="tags flex w-fit flex-wrap items-center justify-start gap-1 md:gap-2">
                     {trainer.roles?.map((role, ind) => (
                       <li
-                        className="rounded-sm bg-blue-100 px-2 py-[2px] text-[12px] font-bold uppercase text-gray-700 lg:text-[10px]"
+                        className="rounded-sm bg-blue-100 px-2 py-[2px] text-[11px] font-[600] uppercase text-gray-800 md:text-xs md:font-bold md:text-gray-700 lg:text-[10px]"
                         key={ind}
                       >
                         {role}
@@ -52,7 +54,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                   </ul>
                   <p
                     id="description"
-                    className="lg:text-[15px mb-5 mt-4 line-clamp-4 text-left leading-tight"
+                    className="mt-3 line-clamp-4 pb-3 text-left text-sm leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
                   >
                     {trainer.summary}
                   </p>
@@ -69,21 +71,23 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                     {/* <StarsRating rating={3.7} /> */}
                   </div>
                 </div>
-                <div className="m-auto aspect-video w-full flex-1 overflow-hidden">
+                <div className="mx-auto flex w-full flex-1 border-spacing-1 items-center justify-center overflow-hidden border-2 border-b-0 border-l-0 border-secondary_light bg-slate-50 lg:m-auto lg:aspect-[16/10] lg:border-0">
                   {trainer.image ? (
                     <img
                       src={trainer.image}
                       loading="lazy"
                       alt={`Zdjęcie profilowe ${trainer.username}`}
-                      className="aspect-[] w-full rounded-t object-cover transition-all duration-500 group-hover:scale-[1.07]"
+                      className="aspect-[16/10] w-full object-cover transition-all duration-500 group-hover:scale-[1.07] lg:aspect-auto lg:rounded-t"
                     />
-                  ) : (
+                  ) : isLarge ? (
                     <Image
-                      className="h-full w-full object-cover"
+                      className="h-auto w-full object-cover"
                       loading="lazy"
                       alt={`Zdjęcie profilowe ${trainer.username}`}
                       src={PersonAvatar}
                     />
+                  ) : (
+                    <LucideUser size={30} className="my-10 text-gray-800" />
                   )}
                 </div>
               </li>

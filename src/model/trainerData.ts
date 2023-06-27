@@ -107,7 +107,7 @@ export interface HeroSectionType {
 }
 
 export interface TrainerDataType {
-  userId: string;
+  userSlug: string;
   heroSection: HeroSectionType;
   offers?: TrainerOfferType[];
   socialMedia?: SocialMediaType;

@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="bg-primary text-text">
-        <div id="modals" className="modalss" />
+        <div id="modals" className="modals" />
         <Providers>
           <Navbar session={session} />
           {children}

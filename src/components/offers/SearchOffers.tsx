@@ -126,7 +126,7 @@ const SearchBarOffers = ({
             type="search"
             id="search-dropdown"
             autoComplete="off"
-            className="text-md z-20 w-[60%] flex-grow self-stretch rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 bg-gray-50 p-2.5 text-gray-900 outline-none placeholder:text-gray-500 hover:border-slate-500 hover:border-l-gray-50 hover:shadow-md focus:border-slate-500 focus:border-l-gray-50 focus:shadow-inner md:rounded-r-none lg:text-lg"
+            className="text-md z-20 w-[60%] flex-grow self-stretch rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 bg-gray-50 p-2.5 pr-6 text-gray-900 outline-none placeholder:text-gray-500 hover:border-slate-500 hover:border-l-gray-50 hover:shadow-md focus:border-slate-500 focus:border-l-gray-50 focus:shadow-inner md:rounded-r-none lg:text-lg"
             placeholder="Imię i Nazwisko Trenera"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               debouncedSetQuery(e.target.value)
@@ -135,7 +135,7 @@ const SearchBarOffers = ({
           {!isMobile ? (
             <>
               <ReactSearchAutocomplete
-                className="text-md relative right-[2%] top-0.5 z-20 w-[38%] flex-grow-0 self-stretch !rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 !bg-gray-50 p-1.5 pl-8 text-gray-900 lg:p-2.5 lg:text-lg"
+                className="text-md offers-search relative right-[2%] top-0.5 z-20 w-[38%] flex-grow-0 self-stretch !rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 !bg-gray-50 p-1.5 text-gray-900 lg:p-2.5 lg:text-lg"
                 styling={{ borderRadius: "0" }}
                 items={mappedCities}
                 placeholder="Lokalizacja"
@@ -174,8 +174,8 @@ const SearchBarOffers = ({
         <>
           <ReactSearchAutocomplete
             items={mappedCities}
-            className="text-md relative -top-0.5 rounded-b"
-            styling={{ borderRadius: "0" }}
+            className="text-md relative -top-1.5 pt-1"
+            styling={{ borderRadius: "4px" }}
             placeholder="Lokalizacja"
             inputDebounce={200}
             onSelect={(MappedCity) => setCity(MappedCity.name)}

@@ -3,11 +3,6 @@ import { UserRolesType } from "./user";
 
 const PendingRequestSchema = new Schema(
   {
-    userID: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
     username: {
       type: String,
       required: true,

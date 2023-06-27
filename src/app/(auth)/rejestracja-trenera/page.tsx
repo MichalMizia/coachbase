@@ -272,17 +272,17 @@ export default function Page() {
                 </div>
                 <div className="relative my-4 flex justify-center text-xs uppercase">
                   <span className="bg-primary px-2 text-slate-600">
-                    Krótki Opis &#40;max 200 znaków&#41;
+                    Krótki Opis &#40;max 250 znaków&#41;
                   </span>
                 </div>
               </div>
               <div>
                 <label htmlFor="description" className="sr-only">
-                  Krótki Opis &#40;max 200 znaków&#41;
+                  Krótki Opis &#40;max 250 znaków&#41;
                 </label>
                 <TextareaAutosize
                   // defaultValue="Nazywam się Michał Mizia i jestem potęznym trenerem personalnym"
-                  maxLength={200}
+                  maxLength={250}
                   {...register("description")}
                   id="description"
                   placeholder="Opis"

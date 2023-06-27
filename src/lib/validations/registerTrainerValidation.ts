@@ -7,7 +7,7 @@ export const trainerRegisterSchemaPart1 = z.object({
   password: z.string(),
   description: z
     .string()
-    .max(200, "Opis powinien zawierać maksimum 200 znaków")
+    .max(250, "Opis powinien zawierać maksimum 250 znaków")
     .min(40, "Opis powinien zawierać minimum 40 znaków"),
   isFormInInitialStateCurrently: z.literal(true),
 });
@@ -18,11 +18,11 @@ export const trainerRegisterSchemaPart2 = z.object({
   password: z.string(),
   description: z
     .string()
-    .max(200, "Opis powinien zawierać maksimum 200 znaków")
+    .max(250, "Opis powinien zawierać maksimum 250 znaków")
     .min(40, "Opis powinien zawierać minimum 40 znaków"),
   verification: z
     .object({
-      link: z.string().url({message: "Nieprawidłowy link"}).or(z.literal("")),
+      link: z.string().url({ message: "Nieprawidłowy link" }).or(z.literal("")),
       // zod file verification
       file: z.instanceof(FileList).optional(),
     })

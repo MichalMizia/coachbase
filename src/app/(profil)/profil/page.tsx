@@ -15,26 +15,26 @@ interface pageProps {}
 const page = async ({}: pageProps) => {
   const session = await getServerSession(authOptions);
   if (!session?.user) {
-    redirect("/login");
+    redirect("/rejestracja");
   }
 
-  if (!session) {
-    return (
-      <main className="bg-gray-100">
-        <section className="container-md flex flex-col items-center justify-center bg-gray-100 py-[15vh]">
-          <h1 className="text-5xl font-semibold">
-            Zaloguj się aby zobaczyć swój profil
-          </h1>
-          <Button className="relative top-[1px] mt-8 rounded-xl px-4 text-lg">
-            <a href="/login" className="flex items-center justify-center gap-1">
-              Zaloguj
-              <LogIn size={20} className="relative top-[1px] text-white" />
-            </a>
-          </Button>
-        </section>
-      </main>
-    );
-  }
+  // if (!session) {
+  //   return (
+  //     <main className="bg-gray-100">
+  //       <section className="container-md flex flex-col items-center justify-center bg-gray-100 py-[15vh]">
+  //         <h1 className="text-5xl font-semibold">
+  //           Zaloguj się aby zobaczyć swój profil
+  //         </h1>
+  //         <Button className="relative top-[1px] mt-8 rounded-xl px-4 text-lg">
+  //           <a href="/login" className="flex items-center justify-center gap-1">
+  //             Zaloguj
+  //             <LogIn size={20} className="relative top-[1px] text-white" />
+  //           </a>
+  //         </Button>
+  //       </section>
+  //     </main>
+  //   );
+  // }
   // when the user is logged in
   return (
     <main className="bg-primary">

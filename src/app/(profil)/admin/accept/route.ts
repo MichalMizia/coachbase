@@ -42,7 +42,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     ).exec();
     const TrainerDataProps: TrainerDataType = {
-      userId: user._id,
+      userSlug: slug,
       heroSection: {
         content: summary,
       },
@@ -53,16 +53,18 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
       tags: roles,
     };
-    await TrainerData.create(TrainerDataProps);
-    await PendingRequest.deleteOne({ email: email });
-
-    return NextResponse.json({
-      status: 200,
-    });
+    await Promise.all([
+      PendingRequest.deleteOne({ email: email }),
+      TrainerData.create(TrainerDataProps),
+    ]);
   } catch (e) {
     return NextResponse.json({
       status: 400,
       message: "Błąd przy zapisywaniu konta",
     });
   }
+
+  return NextResponse.json({
+    status: 200,
+  });
 }

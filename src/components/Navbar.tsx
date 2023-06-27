@@ -22,6 +22,7 @@ import { HomeConfig } from "@/types";
 // styles
 import "../css/nav.css";
 import Button from "./ui/Button";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   session: Session | null;
@@ -32,7 +33,13 @@ const homeConfig: HomeConfig = {
     {
       title: "Oferty",
       href: "/oferty",
-      icon: <MessagesSquareIcon className="mr-2 mt-[2px]" size={20} />,
+      icon: (
+        <MessagesSquareIcon
+          className="mr-2 mt-[2px]"
+          size={20}
+          // stroke="#5E6E81"
+        />
+      ),
     },
     {
       title: "Artykuły",
@@ -49,6 +56,7 @@ const homeConfig: HomeConfig = {
 
 export default function Navbar({ session }: NavbarProps) {
   const isMobile = useMediaQuery("(max-width: 800px)");
+  const pathname = usePathname();
 
   return (
     <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 py-4 text-white shadow-sm shadow-slate-400">
@@ -58,7 +66,7 @@ export default function Navbar({ session }: NavbarProps) {
         <nav
           className={classNames(
             isMobile
-              ? "fixed bottom-0 left-0 right-0 w-full bg-gradient-to-r from-blue-100 to-violet-100"
+              ? "fixed bottom-0 left-0 right-0 w-full bg-white"
               : "flex !translate-x-0 items-end justify-center"
           )}
         >
@@ -66,7 +74,7 @@ export default function Navbar({ session }: NavbarProps) {
             className={classNames(
               !isMobile
                 ? "justify-center tracking-tight lg:gap-2"
-                : "w-full border-t border-black",
+                : "w-full border-t border-text",
               "flex list-none items-center"
             )}
           >
@@ -78,13 +86,24 @@ export default function Navbar({ session }: NavbarProps) {
                   className={classNames(
                     navEl.disabled ? "text-gray-300" : "text-white",
                     isMobile
-                      ? "text-md flex-1 rounded-none text-black even:border-x even:border-black md:text-xl"
+                      ? pathname?.includes(navEl.href)
+                        ? "flex-1 rounded-none bg-blue-100 text-sm text-gray-800 even:border-x even:border-text_readable md:text-lg"
+                        : "flex-1 rounded-none text-sm text-gray-800 even:border-x even:border-text_readable md:text-lg"
                       : "text-[17px] font-[400]",
                     "hover:bg-[#00000010]"
                   )}
                 >
-                  {navEl.icon}
-                  <a href={navEl.href}>{navEl.title}</a>
+                  <Link
+                    className={classNames(
+                      "flex h-full w-full items-center justify-center",
+                      isMobile ? "flex-col gap-0.5" : ""
+                    )}
+                    title={navEl.title}
+                    href={navEl.href}
+                  >
+                    {navEl.icon}
+                    {navEl.title}
+                  </Link>
                 </Button>
               );
             })}
@@ -95,9 +114,9 @@ export default function Navbar({ session }: NavbarProps) {
           id="profile"
           className="flex items-center justify-center gap-4"
         >
-          <Link href="/">
+          {/* <Link href="/">
             <HeartIcon />
-          </Link>
+          </Link> */}
           <Link href="/profil">
             <UserIcon />
           </Link>

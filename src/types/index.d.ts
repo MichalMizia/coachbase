@@ -1,15 +1,15 @@
-import { LucideIcon } from "lucide-react";
+import { ReactElement } from "react";
 
-export type NavItem = {
+export interface NavItem {
   title: string;
   href: string;
+  icon: ReactElement;
   disabled?: boolean;
-  icon: LucideIcon;
-};
+}
 
-export type HomeConfig = {
-  mainNav: navItem[];
-};
+export interface HomeConfig {
+  mainNav: NavItem[];
+}
 
 // "id": "21325",
 //         "text": "Bielany Wroc\u0142awskie, gm. Kobierzyce, wroc\u0142awski, Dolno\u015bl\u0105skie",

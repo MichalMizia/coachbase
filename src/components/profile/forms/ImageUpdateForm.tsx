@@ -90,7 +90,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
           <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000015]" />
           <div className="flex items-stretch justify-center">
             <label htmlFor="file" className="sr-only">
-              Plik weryfikacyjny
+              Zdjęcie profilowe
             </label>
             <input
               multiple={false}
