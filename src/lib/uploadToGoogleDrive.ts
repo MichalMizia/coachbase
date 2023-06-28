@@ -11,11 +11,10 @@ authClient.setCredentials({
   refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
 
-
 export default async function uploadToGoogleDrive(
   filePath: string,
   name: string
-): Promise<void | string> {
+): Promise<null | string> {
   const drive = google.drive({ version: "v3", auth: authClient });
 
   try {
@@ -29,7 +28,7 @@ export default async function uploadToGoogleDrive(
         body: fs.createReadStream(filePath),
       },
     });
-    console.log(res)
+    console.log(res);
 
     const id = res.data.id;
     if (!id) {
@@ -58,5 +57,6 @@ export default async function uploadToGoogleDrive(
     return resultURL;
   } catch (e) {
     console.log("Error when creating new file");
+    return null;
   }
 }

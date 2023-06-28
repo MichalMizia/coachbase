@@ -1,59 +1,47 @@
 import ChangeNameForm from "@/components/auth/ChangeNameForm";
-import LocationCard from "@/components/profile/cards/LocationCard";
 import ProfileInfoSection from "@/components/profile/ProfileInfoSection";
-import SocialMediaCard from "@/components/profile/cards/SocialMediaCard";
-import TagsCard from "@/components/profile/cards/TagsCard";
-import Button from "@/components/ui/Button";
 import authOptions from "@/lib/auth";
-import { ChevronRightIcon, HeartIcon, HomeIcon, LogIn } from "lucide-react";
+import { ChevronRightIcon, HeartIcon, HomeIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import HeaderCards from "@/components/profile/HeaderCards";
+import {
+  fetchTrainer,
+  fetchTrainerFromEmail,
+} from "@/lib/fetching/fetchTrainer";
+import { TrainerType } from "@/model/user";
+import { fetchTrainerData } from "@/lib/fetching/fetchTrainerData";
+import { TrainerDataType } from "@/model/trainerData";
 
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
   const session = await getServerSession(authOptions);
-  if (!session?.user) {
+  if (!session?.user?.email) {
     redirect("/rejestracja");
   }
 
-  // if (!session) {
-  //   return (
-  //     <main className="bg-gray-100">
-  //       <section className="container-md flex flex-col items-center justify-center bg-gray-100 py-[15vh]">
-  //         <h1 className="text-5xl font-semibold">
-  //           Zaloguj się aby zobaczyć swój profil
-  //         </h1>
-  //         <Button className="relative top-[1px] mt-8 rounded-xl px-4 text-lg">
-  //           <a href="/login" className="flex items-center justify-center gap-1">
-  //             Zaloguj
-  //             <LogIn size={20} className="relative top-[1px] text-white" />
-  //           </a>
-  //         </Button>
-  //       </section>
-  //     </main>
-  //   );
-  // }
+  const user: TrainerType = await fetchTrainerFromEmail(session.user?.email);
+  const userData: TrainerDataType = await fetchTrainerData(user.slug);
+
   // when the user is logged in
   return (
     <main className="bg-primary">
-      <header className="w-full bg-white pb-4 pt-6 shadow">
-        <div className="container-md px-2">
-          <nav className="flex w-fit items-center justify-center gap-3">
+      <header className="w-full bg-white shadow">
+        <div className="container-md flex items-center justify-between px-2">
+          <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
             <a href="/">
               <HomeIcon size={20} className="text-blue-600" />
             </a>
             <ChevronRightIcon size={20} />
             <h1 className="font-semibold text-blue-600">Profil</h1>
           </nav>
+          <HeaderCards user={user} userData={userData} />
         </div>
       </header>
       <section className="py-6 text-gray-800">
         <div className="container-md">
-          {/* <h1 className="mb-6 text-3xl font-semibold">Profil</h1> */}
-          <HeaderCards />
-          <ProfileInfoSection session={session} />
+          <ProfileInfoSection user={user} />
         </div>
       </section>
     </main>

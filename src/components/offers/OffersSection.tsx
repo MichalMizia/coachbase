@@ -54,7 +54,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                   </ul>
                   <p
                     id="description"
-                    className="mt-3 line-clamp-4 pb-3 text-left text-sm leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
+                    className="mb-[11px] mt-3 line-clamp-5 pb-[1px] text-left text-xs leading-normal tracking-[0.005em] md:line-clamp-4 md:text-sm md:leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
                   >
                     {trainer.summary}
                   </p>
@@ -63,8 +63,8 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                       href={`oferty/${trainer.slug}`}
                       title={`Profil ${trainer.username}`}
                     >
-                      <button className="flex items-center justify-center gap-2 rounded-sm px-2 py-1 text-sm text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1">
-                        <SendIcon size={18} className="relative -mb-[2px]" />
+                      <button className="flex items-center justify-center gap-1 rounded-sm px-2 py-1 text-xs text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1 md:gap-2 md:text-sm">
+                        <SendIcon size={16} className="relative -mb-[2px]" />
                         Zobacz ofertę
                       </button>
                     </a>
@@ -77,7 +77,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                       src={trainer.image}
                       loading="lazy"
                       alt={`Zdjęcie profilowe ${trainer.username}`}
-                      className="aspect-[16/10] w-full object-cover transition-all duration-500 group-hover:scale-[1.07] lg:aspect-auto lg:rounded-t"
+                      className="h-full w-full object-cover transition-all duration-500 group-hover:scale-[1.07] lg:aspect-[16/10] lg:rounded-t"
                     />
                   ) : isLarge ? (
                     <Image

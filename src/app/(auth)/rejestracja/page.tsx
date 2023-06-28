@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-// assets
-import barbell from "@/../../public/assets/barbell2.jpg"
 // components
-import Button from "@/components/ui/Button"
-import { userRegisterSchema } from "@/lib/validations/registerUserValidation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import axios, { AxiosError } from "axios"
-import { ChevronRightIcon, Loader2 } from "lucide-react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "react-hot-toast"
-import { ZodError, z } from "zod"
+import Button from "@/components/ui/Button";
+import Link from "next/link";
+import { toast } from "react-hot-toast";
+import { ChevronRightIcon, Loader2 } from "lucide-react";
+// types
+import { userRegisterSchema } from "@/lib/validations/registerUserValidation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ZodError, z } from "zod";
+// utils
+import axios, { AxiosError } from "axios";
+// hooks
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-type FormData = z.infer<typeof userRegisterSchema>
+type FormData = z.infer<typeof userRegisterSchema>;
 
 export default function Page() {
   const {
@@ -25,48 +25,48 @@ export default function Page() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(userRegisterSchema),
-  })
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false)
+  });
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
       const res = await axios.post("/api/rejestracja", {
         username: data.username,
         email: data.email.toLowerCase(),
         password: data.password,
-      })
-      console.log(res)
+      });
+      console.log(res);
     } catch (e) {
       if (
         e instanceof AxiosError &&
         e.response?.status?.toString()[0] === "4" &&
         e.response?.data?.message
       ) {
-        toast.error(e.response.data.message)
-        return null
+        toast.error(e.response.data.message);
+        return null;
       } else if (e instanceof ZodError) {
-        toast.error("Formularz wypełniony niepoprawnie")
-        return null
+        toast.error("Formularz wypełniony niepoprawnie");
+        return null;
       }
-      toast.error("Coś poszło nie tak podczas rejestracji")
-      return null
+      toast.error("Coś poszło nie tak podczas rejestracji");
+      return null;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
 
-    toast.success("Zarejestrowano użytkownika")
-    router.push("/login")
+    toast.success("Zarejestrowano użytkownika");
+    router.push("/login");
   }
 
   return (
     <main>
       <section className="hero flex h-[calc(100vh-67px)] items-center">
         <div className="flex-1 self-center py-10">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-4 sm:w-[350px]">
+          <div className="mx-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-3xl font-semibold tracking-tight text-black">
                 Tworzenie Konta
@@ -224,5 +224,5 @@ export default function Page() {
         </div>
       </section>
     </main>
-  )
+  );
 }

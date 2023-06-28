@@ -110,7 +110,13 @@ export interface TrainerDataType {
   userSlug: string;
   heroSection: HeroSectionType;
   offers?: TrainerOfferType[];
-  socialMedia?: SocialMediaType;
+  socialMedia: SocialMediaType;
   tags: string[];
   // testimonials?: TrainerTestimonialType[]
+}
+
+export interface TrainerMediaType {
+  socialMedia: SocialMediaType;
+  tags: string[];
+  city?: string;
 }

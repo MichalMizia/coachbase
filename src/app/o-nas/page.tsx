@@ -1,8 +1,3 @@
-import Button from "@/components/ui/Button";
-import { Globe2Icon, MessagesSquareIcon } from "lucide-react";
-import Image from "next/image";
-import barbell from "../../../public/assets/barbell2.jpg";
-
 interface pageProps {}
 
 const Page = ({}: pageProps) => {

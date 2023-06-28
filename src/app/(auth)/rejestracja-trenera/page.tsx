@@ -68,7 +68,7 @@ export default function Page() {
 
     try {
       if (!data.isFormInInitialStateCurrently) {
-        let link: string = "";
+        let link: string | null = null;
         if (
           data.verification.file &&
           data.verification.file.length !== 0 &&
@@ -78,7 +78,7 @@ export default function Page() {
           const formData = new FormData();
           formData.append("image", currFile);
 
-          let res1: AxiosResponse | null = null;
+          let res1 = null;
           try {
             res1 = await axios.post("/api/upload-files", formData, {
               headers: { "Content-Type": "multipart/form-data" },
@@ -86,9 +86,11 @@ export default function Page() {
           } catch (e) {
             return toast.error("Coś poszło nie tak");
           }
-          console.log(res1);
+          console.log(res1.data);
+          if (res1.data.resultURL) {
+            link = res1.data.resultURL;
+          }
         }
-        console.log(data.verification.file);
 
         let roles: UserRolesType[] = [];
         if (data.isTrainer) roles.push("Trener");
@@ -103,12 +105,10 @@ export default function Page() {
           email: data.email.toLowerCase(),
           password: data.password,
           summary: data.description,
-          link: data.verification.link,
+          link: link ? link : data.verification.link,
           city: data.city,
           roles: roles,
         });
-      } else {
-        throw new Error("Ye");
       }
     } catch (e) {
       if (
@@ -150,7 +150,7 @@ export default function Page() {
         onSubmit={handleSubmit(onSubmit)}
         className="hero flex min-h-[calc(100vh-67px)] items-center"
       >
-        <div className="mx-auto flex w-full flex-col justify-center space-y-4 py-10 transition-all sm:w-[350px]">
+        <div className="mx-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4 py-10 transition-all">
           <RegistrationStatus
             isFormInInitialState={isFormInInitialState}
             onSecondButtonClick={onSecondButtonClick}

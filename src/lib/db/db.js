@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI =
+  process.env.NODE_ENV === "development"
+    ? process.env.MONGODB_URI_DEV
+    : process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable");
@@ -10,42 +13,40 @@ async function initMongoose() {
   // await mongoose.connection.close();
 
   // if we are in dev mode
-  if (process.env.NODE_ENV === "development") {
-    let cached = global.mongoose;
+  let cached = global.mongoose;
 
-    if (!cached) {
-      global.mongoose = { conn: null, promise: null };
-      cached = global.mongoose;
-    }
-
-    if (cached.conn) {
-      return cached.conn;
-    }
-
-    if (!cached.promise) {
-      cached.promise = mongoose
-        .connect(MONGODB_URI, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        })
-        .then((mongoose) => {
-          return mongoose;
-        });
-    }
-
-    cached.conn = await cached.promise;
-    return cached.conn;
-  } else {
-    // in production
-    if (mongoose.connection.readyState === 1) {
-      return mongoose.connection.asPromise();
-    }
-
-    return mongoose.connect(process.env.MONGODB_URI_PROD, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+  if (!cached) {
+    global.mongoose = { conn: null, promise: null };
+    cached = global.mongoose;
   }
+
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then((mongoose) => {
+        return mongoose;
+      });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
+
+// // in production
+// if (mongoose.connection.readyState === 1) {
+//   return mongoose.connection.asPromise();
+// }
+
+// return mongoose.connect(process.env.MONGODB_URI_PROD, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 export default initMongoose;

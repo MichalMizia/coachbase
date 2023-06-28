@@ -13,7 +13,9 @@ export async function fetchTrainerData(slug: string) {
   try {
     const trainerData: TrainerDataType = await TrainerData.findOne({
       userSlug: slug,
-    }).exec();
+    })
+      .lean()
+      .exec();
     return trainerData;
   } catch (e) {
     // return null

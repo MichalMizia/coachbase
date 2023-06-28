@@ -16,7 +16,6 @@ export default async function handler(
         resolve({ fields, files });
       });
     });
-    console.log(data)
     const path = data.files.image[0].path;
     const fileName = data.files.image[0].originalFilename;
 
@@ -26,14 +25,14 @@ export default async function handler(
     console.log(`Path`, path);
     console.log(`Name`, fileName);
 
-    const resultURL: string | void = await uploadToGoogleDrive(path, fileName);
+    const resultURL: string | null = await uploadToGoogleDrive(path, fileName);
     if (!resultURL) {
       return res.status(400).json({ message: "Błąd przy dodawaniu pliku" });
     }
 
     return res
       .status(200)
-      .json({ message: "Zdjęcie dodane pomyślnie", resultURL });
+      .json({ message: "Zdjęcie dodane pomyślnie", resultURL: resultURL });
   }
 
   return res
