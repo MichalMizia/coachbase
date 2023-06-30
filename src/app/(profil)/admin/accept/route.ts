@@ -49,7 +49,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       socialMedia: {
         instagram: "",
         facebook: "",
-        email: "",
+        email: email,
       },
       tags: roles,
     };

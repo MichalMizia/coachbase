@@ -9,16 +9,43 @@ import {
   fetchTrainer,
   fetchTrainerFromEmail,
 } from "@/lib/fetching/fetchTrainer";
-import { TrainerType } from "@/model/user";
+import { TrainerType, UserType } from "@/model/user";
 import { fetchTrainerData } from "@/lib/fetching/fetchTrainerData";
 import { TrainerDataType } from "@/model/trainerData";
 
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     redirect("/rejestracja");
+  }
+
+  if (!session.user.isTrainer) {
+    return (
+      <main className="bg-primary">
+        <header className="w-full bg-white shadow">
+          <div className="container-md flex items-center justify-between px-2">
+            <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
+              <a href="/">
+                <HomeIcon size={20} className="text-blue-600" />
+              </a>
+              <ChevronRightIcon size={20} />
+              <h1 className="font-semibold text-blue-600">Profil</h1>
+            </nav>
+          </div>
+        </header>
+        <h1 className="text-2xl font-semibold text-black">
+          Witaj spowrotem, {session.user.username}
+        </h1>
+        {/* <ProfileInfoSection
+          user={session.user}
+          isTrainer={session.user.isTrainer}
+        /> */}
+      </main>
+    );
   }
 
   const user: TrainerType = await fetchTrainerFromEmail(session.user?.email);
@@ -39,11 +66,10 @@ const page = async ({}: pageProps) => {
           <HeaderCards user={user} userData={userData} />
         </div>
       </header>
-      <section className="py-6 text-gray-800">
-        <div className="container-md">
-          <ProfileInfoSection user={user} />
-        </div>
-      </section>
+      <ProfileInfoSection
+        user={user}
+        heroContent={userData.heroSection.content}
+      />
     </main>
   );
 };

@@ -47,8 +47,8 @@ const homeConfig: HomeConfig = {
       icon: <NewspaperIcon className="mr-2 mt-[2px]" size={20} />,
     },
     {
-      title: "O nas",
-      href: "/o-nas",
+      title: "FAQ",
+      href: "/faq",
       icon: <AlbumIcon className="mr-2 mt-[2px]" size={20} />,
     },
   ],

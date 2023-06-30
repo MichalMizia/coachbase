@@ -87,10 +87,30 @@ export function classNames(...classNames: string[]) {
 // ];
 
 // export function arrayContainsAnyFromOtherArray = (arr1: any[], arr2: any[]): boolean => {
-//   return 
+//   return
 // }
-
 
 export function roundHalf(number: number): number {
   return Math.round(number * 2) / 2;
+}
+
+export function isStringUnsafe(text: string | string[]): boolean {
+  const regex: RegExp = /[<>\//]/;
+  if (typeof text == "string") {
+    return regex.test(text);
+  }
+
+  var state: boolean = false;
+  text.forEach((str) => {
+    if (regex.test(str)) state = true;
+  });
+  return state;
+}
+export function isEmailUnsafe(email: string) {
+  const regex: RegExp = /[<>]/;
+  return regex.test(email);
+}
+
+export function copyToClipboard(text: string): void {
+  navigator.clipboard.writeText(text);
 }

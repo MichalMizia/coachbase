@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 import User, { TrainerType } from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";
 import PendingRequest from "@/model/pendindRequest";
+import { isStringUnsafe } from "@/lib/utils";
 
 export interface TrainerRequestType extends TrainerType {
   link?: string;
@@ -22,7 +23,6 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
     "User data from trainer controller: \n",
     username,
     email,
-    password,
     summary,
     roles,
     link,
@@ -31,6 +31,9 @@ const addNewTrainer = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!username || !email || !password || !city) {
     return res.status(400).json({ message: "Wszystkie pola są wymagane" });
+  }
+  if (isStringUnsafe([username, city, summary, ...roles])) {
+    return res.status(400).json({ message: "No hack here buddy" });
   }
 
   const duplicateUsername = await User.findOne({ username: username })

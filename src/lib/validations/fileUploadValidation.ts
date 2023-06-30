@@ -8,7 +8,7 @@ export const fileSchema = z
   .refine((files) => files.length === 1, "Zdjęcie jest wymagane.") // if no file files?.length === 0, if file files?.length === 1
   .refine(
     (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-    `Makasymalny rozmiar to 3MB.`
+    `Maksymalny rozmiar to 3MB.`
   ) // this should be greater than or equals (>=) not less that or equals (<=)
   .refine(
     (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
@@ -19,7 +19,7 @@ export const optionalFileSchema = z
   .refine((files) => files.length === 1, "Zdjęcie jest wymagane.") // if no file files?.length === 0, if file files?.length === 1
   .refine(
     (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-    `Makasymalny rozmiar to 3MB.`
+    `Maksymalny rozmiar to 3MB.`
   ) // this should be greater than or equals (>=) not less that or equals (<=)
   .refine(
     (files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),

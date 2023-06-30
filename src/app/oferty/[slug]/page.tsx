@@ -34,9 +34,7 @@ const Page = async ({ params }: pageProps) => {
         instagram="x"
         facebook="x"
         email="x"
-        // instagram={trainerData.socialMedia?.instagram}
-        // facebook={trainerData.socialMedia?.facebook}
-        // email={trainerData.socialMedia?.email}
+        
       /> */}
 
       <div className="relative mx-auto max-w-[1280px] lg:w-[90%] xl:w-[85%]">
@@ -67,9 +65,9 @@ const Page = async ({ params }: pageProps) => {
               </div>
               <SocialMediaDisplay
                 className="relative -left-2 -top-1 xl:left-0"
-                instagram="x"
-                facebook="x"
-                email="x"
+                instagram={trainerData.socialMedia?.instagram}
+                facebook={trainerData.socialMedia?.facebook}
+                email={trainerData.socialMedia?.email}
               />
             </header>
 

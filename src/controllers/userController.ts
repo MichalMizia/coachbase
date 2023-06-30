@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+import { isEmailUnsafe, isStringUnsafe } from "@/lib/utils";
 import User from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -20,6 +21,9 @@ const addNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: "Wszystkie pola są wymagane" });
+  }
+  if (isStringUnsafe(username) || isEmailUnsafe(email)) {
+    return res.status(400).json({ message: "No hack here buddy" });
   }
 
   const duplicateUsername = await User.findOne({ username: username })

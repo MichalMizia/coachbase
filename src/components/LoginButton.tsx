@@ -31,7 +31,7 @@ export default function LoginButton({ session, className }: LoginButtonProps) {
         )}
         onClick={() => handleSignOut()}
       >
-        <span className="hidden lg:block">Wyloguj</span>
+        Wyloguj
         <LogOut size={20} />
       </Button>
     );

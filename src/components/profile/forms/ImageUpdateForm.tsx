@@ -73,7 +73,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
   return (
     <form
       action=""
-      className="after: after:bg-blue group relative isolate z-10 flex h-full w-full flex-col items-center justify-center overflow-hidden bg-white p-4 shadow shadow-[#00000030] transition-shadow after:absolute after:left-1/2 after:top-0 after:z-[2] after:w-6 after:rotate-45 after:bg-blue-50 hover:shadow-lg"
+      className="after:bg-blue group relative isolate z-10 flex aspect-[16/10] h-full w-full flex-col items-center justify-center overflow-hidden bg-white p-4 shadow shadow-[#00000030] transition-shadow after:absolute after:left-1/2 after:top-0 after:z-[2] after:w-6 after:rotate-45 after:bg-blue-50 hover:shadow-lg"
       onSubmit={handleSubmit(onSubmit)}
     >
       {imgSrc ? (

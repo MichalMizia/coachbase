@@ -25,6 +25,7 @@ module.exports = {
         text: "#73879e",
         text_readable: "#5E6E81",
         secondary: "#2acbb6",
+        secondary_dark: "#1C8779",
         secondary_light: "#95E5DB",
       },
       boxShadow: {
