@@ -51,7 +51,7 @@ const SidebarItem = ({
   );
 };
 
-const page = ({}) => {
+const Page = ({}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
     if (window.innerWidth >= 900) {
       return true;
@@ -61,7 +61,7 @@ const page = ({}) => {
   const [active, setActive] = useState<string>("O Projekcie");
   const allItems: FaqItem[] = useMemo(() => {
     return faqItemsHeader.concat(faqItemsMain);
-  }, [faqItemsHeader, faqItemsMain]);
+  }, []);
 
   return (
     <main className="min-h-screen bg-white py-6 text-gray-800 lg:py-10">
@@ -115,4 +115,4 @@ const page = ({}) => {
   );
 };
 
-export default page;
+export default Page;

@@ -66,9 +66,6 @@ const MediaForm = ({
 
   useEffect(() => {
     setValue("city", city);
-    setValue("instagram", media.instagram);
-    setValue("facebook", media.facebook);
-    setValue("email", media.email);
   }, []);
 
   // city list
@@ -130,6 +127,7 @@ const MediaForm = ({
             autoComplete="off"
             autoCorrect="off"
             disabled={isLoading}
+            defaultValue={media.instagram}
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           />
           <div className="flex w-10 items-center justify-center">
@@ -149,6 +147,7 @@ const MediaForm = ({
             autoComplete="off"
             autoCorrect="off"
             disabled={isLoading}
+            defaultValue={media.facebook}
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           />
           <div className="flex w-10 items-center justify-center">
@@ -162,10 +161,11 @@ const MediaForm = ({
           <input
             type="text"
             {...register("email")}
-            placeholder={`Email link`}
+            placeholder={`Contact email`}
             autoComplete="off"
             autoCorrect="off"
             disabled={isLoading}
+            defaultValue={media.email}
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           />
           <div className="flex w-10 items-center justify-center">
@@ -204,7 +204,6 @@ const MediaForm = ({
           onClear={() => setValue("city", "")}
         />
       </div>
-      <pre>{JSON.stringify(errors)}</pre>
       <Button
         isLoading={isLoading}
         type="submit"
