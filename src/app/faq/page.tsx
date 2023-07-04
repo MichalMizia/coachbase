@@ -24,9 +24,6 @@ const SidebarItem = ({
   active,
   setActive,
 }: SidebarItemProps) => {
-  const { isMobile } = useQueryStore();
-  console.log(isMobile);
-
   return (
     <button
       onClick={() => setActive(name)}
