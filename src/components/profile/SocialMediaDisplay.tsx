@@ -1,6 +1,6 @@
 "use client";
 
-import useMediaQuery from "@/lib/useMediaQuery";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { classNames } from "@/lib/utils";
 import { FacebookIcon, InstagramIcon, MailIcon } from "lucide-react";
 

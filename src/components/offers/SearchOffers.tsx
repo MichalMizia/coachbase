@@ -17,7 +17,7 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import "../../css/search.css";
 import { SortingType } from "@/app/oferty/OffersPage";
 import debounce from "lodash.debounce";
-import useMediaQuery from "@/lib/useMediaQuery";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 export interface MappedCity {
   name: string;

@@ -51,7 +51,7 @@ const page = async ({}: pageProps) => {
   const user: TrainerType = await fetchTrainerFromEmail(session.user?.email);
   const userData: TrainerDataType = await fetchTrainerData(user.slug);
 
-  // when the user is logged in
+  // when the user is logged in as a trainer
   return (
     <main className="bg-primary">
       <header className="w-full bg-white shadow">

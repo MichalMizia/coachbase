@@ -7,7 +7,7 @@ import { LucideUser, SendIcon } from "lucide-react";
 import Image from "next/image";
 import StarsRating from "../ui/StarsRating";
 import PersonAvatar from "../../../public/assets/undraw_person.png";
-import useMediaQuery from "@/lib/useMediaQuery";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 interface OffersSectionProps {
   data: TrainerType[];
@@ -36,7 +36,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                 key={trainer.username}
                 className="group relative mx-auto my-2 flex w-full max-w-3xl items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
               >
-                <div className="flex-1 z-[2] self-center py-4 pl-5 pr-3 lg:self-start lg:px-6 lg:pb-6 lg:pt-4">
+                <div className="z-[2] flex-1 self-center py-4 pl-5 pr-3 lg:self-start lg:px-6 lg:pb-6 lg:pt-4">
                   <header className="mb-0.5 flex items-center justify-between text-black lg:mb-1">
                     <h3 className="text-xl font-bold capitalize">
                       {trainer.username}
@@ -54,7 +54,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                   </ul>
                   <p
                     id="description"
-                    className="mx-auto mb-[11px] mt-3 line-clamp-5 w-[105%] pb-[1px] text-left text-[13.5px] leading-normal tracking-[0.005em] md:line-clamp-4 md:w-full md:text-sm md:leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
+                    className="mx-auto mb-[11px] mt-3 line-clamp-6 w-[105%] pb-[1px] text-left text-[13.5px] leading-normal tracking-[0.005em] md:w-full md:text-sm md:leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
                   >
                     {trainer.summary}
                   </p>

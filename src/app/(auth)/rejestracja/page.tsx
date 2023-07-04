@@ -15,6 +15,7 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLoadingStore } from "@/lib/state/loading-generation";
 
 type FormData = z.infer<typeof userRegisterSchema>;
 
@@ -27,7 +28,7 @@ export default function Page() {
     resolver: zodResolver(userRegisterSchema),
   });
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isLoading, setIsLoading } = useLoadingStore();
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
 
   async function onSubmit(data: FormData) {

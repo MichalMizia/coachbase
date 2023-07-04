@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Toast } from "react-hot-toast";
 
 export interface NavItem {
   title: string;

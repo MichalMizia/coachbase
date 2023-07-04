@@ -48,7 +48,7 @@ export const faqItemsMain: FaqItem[] = [
   {
     item: "Edycja Profilu",
     id: 4,
-    content: "Kiedyś tu coś będzie",
+  content: "Kiedyś tu coś będzie",
     icon: (props) => <LayoutDashboardIcon {...props} />,
   },
 ];

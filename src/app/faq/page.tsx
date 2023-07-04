@@ -2,10 +2,12 @@
 
 // data
 import { FaqItem, faqItemsHeader, faqItemsMain } from "@/content/faq";
+import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 // types
 import { LucideProps, SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
 import { Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface SidebarItemProps {
   name: string;
@@ -22,6 +24,9 @@ const SidebarItem = ({
   active,
   setActive,
 }: SidebarItemProps) => {
+  const { isMobile } = useQueryStore();
+  console.log(isMobile);
+
   return (
     <button
       onClick={() => setActive(name)}
@@ -31,6 +36,7 @@ const SidebarItem = ({
           ? "bg-slate-200"
           : "hover:bg-slate-100 focus:border-blue-500 focus:bg-slate-100"
       )}
+      title={name}
     >
       {icon({
         className: !active ? "text-text_readable" : "text-secondary_dark",
@@ -69,6 +75,14 @@ const Page = ({}) => {
         <button
           className="relative w-full border-b bg-primary p-2 transition-all hover:bg-slate-300 lg:px-4"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          aria-haspopup="menu"
+          aria-controls="sidebar"
+          aria-label={
+            isSidebarOpen ? "Zamknij pasek nawigacji" : "Otwórz pasek nawigacji"
+          }
+          title={
+            isSidebarOpen ? "Zamknij pasek nawigacji" : "Otwórz pasek nawigacji"
+          }
         >
           <SidebarOpenIcon
             className={classNames(
@@ -77,7 +91,10 @@ const Page = ({}) => {
             )}
           />
         </button>
-        <div className="flex w-full flex-col justify-center border-b">
+        <div
+          className="flex w-full flex-col justify-center border-b"
+          id="sidebar"
+        >
           {faqItemsHeader.map((item) => (
             <SidebarItem
               setActive={setActive}

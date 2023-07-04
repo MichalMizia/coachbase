@@ -73,13 +73,13 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
   return (
     <form
       action=""
-      className="after:bg-blue group relative isolate z-10 flex aspect-[16/10] h-full w-full flex-col items-center justify-center overflow-hidden bg-white p-4 shadow shadow-[#00000030] transition-shadow after:absolute after:left-1/2 after:top-0 after:z-[2] after:w-6 after:rotate-45 after:bg-blue-50 hover:shadow-lg"
+      className="after:bg-blue group relative isolate z-10 flex aspect-[16/10] h-full w-full flex-col items-center justify-center overflow-hidden bg-white shadow shadow-[#00000030] transition-shadow after:absolute after:left-1/2 after:top-0 after:z-[2] after:w-6 after:rotate-45 after:bg-blue-50 hover:shadow-lg lg:p-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       {imgSrc ? (
         <>
           <img
-            className="absolute inset-auto -z-10 h-full w-full rounded-sm object-cover p-2"
+            className="absolute inset-auto -z-10 h-full w-full object-cover lg:rounded-sm lg:p-2"
             src={
               currentFiles && currentFiles.length
                 ? URL.createObjectURL(currentFiles[0])
@@ -87,8 +87,8 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
             }
             alt="Zdjęcie Profilowe"
           />
-          <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000015]" />
-          <div className="flex items-stretch justify-center">
+          <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000012]" />
+          <div className="mt-auto flex h-auto origin-bottom-left scale-[.8] cursor-pointer items-stretch justify-center self-start justify-self-end md:scale-[.9] lg:scale-100">
             <label htmlFor="file" className="sr-only">
               Zdjęcie profilowe
             </label>
@@ -99,7 +99,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
               accept="image/*"
               type="file"
               {...register("files")}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              className="block w-full rounded-l-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             />
             {errors?.files && (
               <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">
@@ -108,6 +108,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
             )}
             <Button
               type="submit"
+              className="rounded-l-none"
               isLoading={isLoading}
               disabled={currentFiles === null}
             >

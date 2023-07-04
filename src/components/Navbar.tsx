@@ -14,7 +14,7 @@ import Link from "next/link";
 import LoginButton from "./LoginButton";
 // hooks / utils
 import { Session } from "next-auth";
-import useMediaQuery from "@/lib/useMediaQuery";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { useState } from "react";
 import { classNames } from "@/lib/utils";
 // ts
@@ -23,6 +23,7 @@ import { HomeConfig } from "@/types";
 import "../css/nav.css";
 import Button from "./ui/Button";
 import { usePathname } from "next/navigation";
+import ProfileLink from "./ProfileLink";
 
 interface NavbarProps {
   session: Session | null;
@@ -56,6 +57,7 @@ const homeConfig: HomeConfig = {
 
 export default function Navbar({ session }: NavbarProps) {
   const isMobile = useMediaQuery("(max-width: 800px)");
+  const isLarge = useMediaQuery("(min-width: 1120px)");
   const pathname = usePathname();
 
   return (
@@ -112,14 +114,12 @@ export default function Navbar({ session }: NavbarProps) {
 
         <section
           id="profile"
-          className="flex items-center justify-center gap-4"
+          className="flex items-center justify-center gap-2 lg:gap-4"
         >
           {/* <Link href="/">
             <HeartIcon />
           </Link> */}
-          <Link href="/profil">
-            <UserIcon />
-          </Link>
+          <ProfileLink username={session?.user.username} isLarge={isLarge} />
           <LoginButton session={session} />
         </section>
 

@@ -4,7 +4,7 @@
 import { SocialMediaType } from "@/model/trainerData";
 import { MenuType } from "../HeaderCards";
 // icons
-import { FacebookIcon, InstagramIcon, MailIcon } from "lucide-react";
+import { FacebookIcon, InstagramIcon, LucideSidebarClose, MailIcon } from "lucide-react";
 // hooks
 import { useForm } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
@@ -114,105 +114,120 @@ const MediaForm = ({
   }
 
   return (
-    <form
-      className="flex w-full flex-col items-stretch justify-start"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div className="flex w-full flex-col justify-start gap-2 border-b-2 pb-6 pt-2">
-        <div className="flex w-full justify-center gap-2">
-          <input
-            type="text"
-            {...register("instagram")}
-            placeholder={`Instagram link`}
-            autoComplete="off"
-            autoCorrect="off"
-            disabled={isLoading}
-            defaultValue={media.instagram}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          />
-          <div className="flex w-10 items-center justify-center">
-            <InstagramIcon className="text-gray-800" strokeWidth={2.25} />
-          </div>
-        </div>
-        {errors?.instagram && (
-          <p className="px-1 text-xs text-red-600">
-            {errors.instagram.message}
-          </p>
-        )}
-        <div className="flex w-full justify-center gap-2">
-          <input
-            type="text"
-            {...register("facebook")}
-            placeholder={`Facebook link`}
-            autoComplete="off"
-            autoCorrect="off"
-            disabled={isLoading}
-            defaultValue={media.facebook}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          />
-          <div className="flex w-10 items-center justify-center">
-            <FacebookIcon className="text-gray-800" strokeWidth={2.25} />
-          </div>
-        </div>
-        {errors?.facebook && (
-          <p className="px-1 text-xs text-red-600">{errors.facebook.message}</p>
-        )}
-        <div className="flex w-full justify-center gap-2">
-          <input
-            type="text"
-            {...register("email")}
-            placeholder={`Contact email`}
-            autoComplete="off"
-            autoCorrect="off"
-            disabled={isLoading}
-            defaultValue={media.email}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          />
-          <div className="flex w-10 items-center justify-center">
-            <MailIcon className="text-gray-800" strokeWidth={2.25} />
-          </div>
-        </div>
-        {errors?.email && (
-          <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
-        )}
-      </div>
-      <div className="flex flex-col items-stretch justify-center gap-2 pt-6">
-        <h4 className="mb-4 self-end text-xl font-semibold tracking-[0.00125em] text-gray-800">
-          Tagi
+    <>
+      <header className="mt-6 flex w-full items-center justify-between text-gray-800">
+        <button
+          onClick={() => setOpenMenu("")}
+          className="p-2 transition-all hover:scale-105 focus:scale-105 focus:border focus:border-blue-500"
+        >
+          <LucideSidebarClose />
+        </button>
+        <h4 className="text-xl font-semibold tracking-[0.00125em]">
+          Social Media
         </h4>
-        <MultiSelect
-          disableSearch={true}
-          value={selectedTags}
-          onChange={setSelectedTags}
-          options={tagOptions}
-          labelledBy="Select"
-          hasSelectAll={false}
-        />
-      </div>
-      <div className="flex flex-col items-stretch justify-center gap-2 pt-6">
-        <h4 className="mb-4 self-end text-xl font-semibold tracking-[0.00125em] text-gray-800">
-          Lokalizacja
-        </h4>
-        <ReactSearchAutocomplete
-          className="mb-4"
-          styling={{ borderRadius: "8px" }}
-          items={mappedCities}
-          placeholder="Lokalizacja"
-          inputDebounce={200}
-          inputSearchString={city}
-          onSelect={(city) => setValue("city", city.name)}
-          onClear={() => setValue("city", "")}
-        />
-      </div>
-      <Button
-        isLoading={isLoading}
-        type="submit"
-        variant="default"
-        className="mt-2 text-lg"
+      </header>
+      <form
+        className="flex w-full flex-col items-stretch justify-start"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        Save
-      </Button>
-    </form>
+        <div className="flex w-full flex-col justify-start gap-2 border-b-2 pb-6 pt-2">
+          <div className="flex w-full justify-center gap-2">
+            <input
+              type="text"
+              {...register("instagram")}
+              placeholder={`Instagram link`}
+              autoComplete="off"
+              autoCorrect="off"
+              disabled={isLoading}
+              defaultValue={media.instagram}
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+            />
+            <div className="flex w-10 items-center justify-center">
+              <InstagramIcon className="text-gray-800" strokeWidth={2.25} />
+            </div>
+          </div>
+          {errors?.instagram && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.instagram.message}
+            </p>
+          )}
+          <div className="flex w-full justify-center gap-2">
+            <input
+              type="text"
+              {...register("facebook")}
+              placeholder={`Facebook link`}
+              autoComplete="off"
+              autoCorrect="off"
+              disabled={isLoading}
+              defaultValue={media.facebook}
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+            />
+            <div className="flex w-10 items-center justify-center">
+              <FacebookIcon className="text-gray-800" strokeWidth={2.25} />
+            </div>
+          </div>
+          {errors?.facebook && (
+            <p className="px-1 text-xs text-red-600">
+              {errors.facebook.message}
+            </p>
+          )}
+          <div className="flex w-full justify-center gap-2">
+            <input
+              type="text"
+              {...register("email")}
+              placeholder={`Contact email`}
+              autoComplete="off"
+              autoCorrect="off"
+              disabled={isLoading}
+              defaultValue={media.email}
+              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+            />
+            <div className="flex w-10 items-center justify-center">
+              <MailIcon className="text-gray-800" strokeWidth={2.25} />
+            </div>
+          </div>
+          {errors?.email && (
+            <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
+          )}
+        </div>
+        <div className="flex flex-col items-stretch justify-center gap-2 pt-6">
+          <h4 className="mb-4 self-end text-xl font-semibold tracking-[0.00125em] text-gray-800">
+            Tagi
+          </h4>
+          <MultiSelect
+            disableSearch={true}
+            value={selectedTags}
+            onChange={setSelectedTags}
+            options={tagOptions}
+            labelledBy="Select"
+            hasSelectAll={false}
+          />
+        </div>
+        <div className="flex flex-col items-stretch justify-center gap-2 pt-6">
+          <h4 className="mb-4 self-end text-xl font-semibold tracking-[0.00125em] text-gray-800">
+            Lokalizacja
+          </h4>
+          <ReactSearchAutocomplete
+            className="mb-4"
+            styling={{ borderRadius: "8px" }}
+            items={mappedCities}
+            placeholder="Lokalizacja"
+            inputDebounce={200}
+            inputSearchString={city}
+            onSelect={(city) => setValue("city", city.name)}
+            onClear={() => setValue("city", "")}
+          />
+        </div>
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          variant="default"
+          className="mt-2 text-lg"
+        >
+          Save
+        </Button>
+      </form>
+    </>
   );
 };
 
