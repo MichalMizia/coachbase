@@ -2,7 +2,7 @@
 
 // data
 import { FaqItem, faqItemsHeader, faqItemsMain } from "@/content/faq";
-import { useQueryStore } from "@/lib/state/media-queries-generation";
+// import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 // types
 import { LucideProps, SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
