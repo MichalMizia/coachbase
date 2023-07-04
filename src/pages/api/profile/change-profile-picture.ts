@@ -3,6 +3,7 @@ import multiparty from "multiparty";
 import axios from "axios";
 import User from "@/model/user";
 import initMongoose from "@/lib/db/db";
+import uploadToGoogleDrive from "@/lib/uploadToGoogleDrive";
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,18 +38,23 @@ export default async function handler(
     console.log(`Path`, path);
     console.log(`Name`, fileName);
 
-    let fileRes;
-    const url = `${req.headers.origin}/api/upload-file-from-path`;
-    console.log(url);
-    fileRes = await axios.post(url, {
-      path: path,
-      name: fileName,
-    });
-    if (fileRes.statusText !== "OK") {
-      return res.status(400).json({ message: "Błąd przy dodawaniu zdjęcia" });
+    // const url = `${req.headers.origin}/api/upload-file-from-path`;
+    // console.log(url);
+    const resultURL = await uploadToGoogleDrive(path, fileName);
+    if (!resultURL) {
+      return res
+        .status(400)
+        .json({ message: "Błąd podczas dodawania zdjęcia" });
     }
+    // const fileRes = await axios.post(url, {
+    //   path: path,
+    //   name: fileName,
+    // });
+    // if (fileRes.statusText !== "OK") {
+    //   return res.status(400).json({ message: "Błąd przy dodawaniu zdjęcia" });
+    // }
 
-    const resultURL: string = fileRes.data.resultURL;
+    // const resultURL: string = fileRes.data.resultURL;
     user.image = resultURL;
     try {
       await user.save();
