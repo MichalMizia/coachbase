@@ -37,7 +37,10 @@ export default async function handler(
     console.log(`Path`, path);
     console.log(`Name`, fileName);
 
-    const fileRes = await axios.post("api/upload-file-from-path", {
+    let fileRes;
+    const url = `${req.headers.origin}/api/upload-file-from-path`;
+    console.log(url);
+    fileRes = await axios.post(url, {
       path: path,
       name: fileName,
     });

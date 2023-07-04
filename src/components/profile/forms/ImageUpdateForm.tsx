@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 interface ImageUpdateFormProps {
   imgSrc: string | null | undefined;
@@ -29,6 +30,7 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
   } = useForm<FormData>({
     resolver: zodResolver(fileUploadSchema),
   });
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
