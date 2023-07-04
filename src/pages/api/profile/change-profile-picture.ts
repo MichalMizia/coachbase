@@ -37,25 +37,10 @@ export default async function handler(
     console.log(`Path`, path);
     console.log(`Name`, fileName);
 
-    const isProduction = process.env.NODE_ENV === "production";
-    let fileRes = null;
-    if (!isProduction) {
-      fileRes = await axios.post(
-        "http://localhost:3000/api/upload-file-from-path",
-        {
-          path: path,
-          name: fileName,
-        }
-      );
-    } else {
-      fileRes = await axios.post(
-        "https://coachbase.vercel.app/api/upload-file-from-path",
-        {
-          path: path,
-          name: fileName,
-        }
-      );
-    }
+    const fileRes = await axios.post("api/upload-file-from-path", {
+      path: path,
+      name: fileName,
+    });
     if (fileRes.statusText !== "OK") {
       return res.status(400).json({ message: "Błąd przy dodawaniu zdjęcia" });
     }
