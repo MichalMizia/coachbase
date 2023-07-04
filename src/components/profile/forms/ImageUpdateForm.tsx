@@ -81,7 +81,9 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
           <img
             className="absolute inset-auto -z-10 h-full w-full object-cover lg:rounded-sm lg:p-2"
             src={
-              currentFiles && currentFiles.length
+              currentFiles &&
+              currentFiles.length &&
+              URL.createObjectURL(currentFiles[0])
                 ? URL.createObjectURL(currentFiles[0])
                 : imgSrc
             }
@@ -118,7 +120,9 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
         </>
       ) : (
         <>
-          {currentFiles ? (
+          {currentFiles &&
+          currentFiles.length &&
+          URL.createObjectURL(currentFiles[0]) ? (
             <>
               <Image
                 width={100}
