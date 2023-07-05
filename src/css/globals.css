@@ -222,3 +222,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.quick {
+  text-shadow: 2px 1px 9px rgba(59, 130, 246, 0.5);
+}

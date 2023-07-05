@@ -84,7 +84,7 @@ export default function Page() {
               headers: { "Content-Type": "multipart/form-data" },
             });
           } catch (e) {
-            return toast.error("Coś poszło nie tak");
+            return toast.error("Coś poszło nie tak podczas wstawiania zdjęcia");
           }
           console.log(res1.data);
           if (res1.data.resultURL) {

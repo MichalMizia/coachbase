@@ -12,12 +12,14 @@ export interface mongooseTrainersData extends TrainerType {
 }
 
 const Page = async ({}: pageProps) => {
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
   const trainersData: TrainerType[] = await fetchAllTrainers();
+  const session = await getServerSession();
+
   // const serializedTrainersData: TrainerType[] = trainersData.map((trainer) => {
   //   const { __v, createdAt, updatedAt, ...newTrainer } = trainer;
   //   return newTrainer;
   // });
-  const session = await getServerSession();
   // console.log(serializedTrainersData);
 
   return (

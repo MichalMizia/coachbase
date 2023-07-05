@@ -43,7 +43,7 @@ const SearchBarOffers = ({
 }: SearchBarOffersProps) => {
   const categoriesRef = useRef<HTMLButtonElement>(null);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState<boolean>(false);
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  const isNotMobile = useMediaQuery("(min-width: 600px)");
 
   const mappedCities = useMemo(() => {
     let cachedCities: MappedCity[] = [];
@@ -132,9 +132,10 @@ const SearchBarOffers = ({
               debouncedSetQuery(e.target.value)
             }
           />
-          {!isMobile ? (
+          {isNotMobile && (
             <>
               <ReactSearchAutocomplete
+                key="desktop-search"
                 className="text-md offers-search relative right-[2%] top-0.5 z-20 w-[38%] flex-grow-0 self-stretch !rounded-r-lg border border-l-2 border-slate-400 border-l-gray-50 !bg-gray-50 p-1.5 text-gray-900 lg:p-2.5 lg:text-lg"
                 styling={{ borderRadius: "0" }}
                 items={mappedCities}
@@ -146,7 +147,7 @@ const SearchBarOffers = ({
                 <MapPinIcon size={24} className="text-slate-400" />
               </div>
             </>
-          ) : null}
+          )}
           <button
             type="submit"
             className="absolute bottom-0 right-0 top-0 z-30 flex aspect-square items-center justify-center rounded-r-lg border border-blue-700 bg-blue-700 p-2.5 text-lg font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
@@ -170,9 +171,10 @@ const SearchBarOffers = ({
           </button>
         </div>
       </div>
-      {isMobile ? (
+      {!isNotMobile && (
         <>
           <ReactSearchAutocomplete
+            key="mobile-search"
             items={mappedCities}
             className="text-md relative -top-1.5 pt-1"
             styling={{ borderRadius: "4px" }}
@@ -180,11 +182,8 @@ const SearchBarOffers = ({
             inputDebounce={200}
             onSelect={(MappedCity) => setCity(MappedCity.name)}
           />
-          {/* <div className="absolute bottom-0 right-[34.5%] top-0 z-30 flex h-full items-center justify-center">
-                <MapPinIcon size={24} className="text-slate-400" />
-              </div> */}
         </>
-      ) : null}
+      )}
     </form>
   );
 };

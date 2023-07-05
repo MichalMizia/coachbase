@@ -18,12 +18,13 @@ const RolesSearch = ({ roles, setRoles }: RolesSearchProps) => {
   return (
     <section className="flex w-full items-center justify-start gap-10 text-black">
       {roles.map((role, ind) => (
-        <div key={ind} className="flex items-center justify-center gap-1">
+        <div key={ind} className="flex items-center justify-center gap-1.5">
           <p>{role.name}</p>
           <input
             type="checkbox"
             checked={role.visible}
             onChange={() => changeRoles(role.name)}
+            className="relative top-0.5"
           />
         </div>
       ))}

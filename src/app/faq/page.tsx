@@ -5,7 +5,7 @@ import { FaqItem, faqItemsHeader, faqItemsMain } from "@/content/faq";
 // import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 // types
-import { LucideProps, SidebarCloseIcon, SidebarOpenIcon } from "lucide-react";
+import { LucideProps, SaveIcon, SendIcon, SidebarOpenIcon } from "lucide-react";
 import { Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -125,6 +125,23 @@ const Page = ({}) => {
         </h1>
         {allItems.find((item) => item.item === active)?.content}
       </section>
+      {/* <section className="z-10 flex h-screen w-screen items-center justify-center bg-white">
+        <div className="relative isolate aspect-square h-96 rounded-full bg-gradient-to-tr from-blue-300 via-blue-500 to-indigo-500">
+          <div className="absolute inset-0 z-10 m-auto aspect-square h-[320px] overflow-hidden rounded-full bg-white">
+            <SendIcon
+              size={420}
+              strokeWidth={1.5}
+              className="absolute left-[40%] top-[60%] z-20 -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
+            />
+          </div>
+          <p className="quick absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 font-serif text-[200px] font-semibold tracking-tight text-gray-900">
+            <span className="relative -top-8 left-1">C</span>
+            <span className="relative right-1 top-8">B</span>
+          </p>
+          <div className="absolute right-0 top-0 z-20 aspect-[18/4] w-36 -translate-x-[10%] translate-y-[100%] -rotate-45 rounded-[300%] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+          <div className="absolute bottom-0 left-0 z-20 aspect-[18/4] w-36 -translate-x-[5%] -translate-y-[170%] -rotate-45 rounded-[300%] bg-gradient-to-r from-blue-400 via-blue-400 to-blue-500"></div>
+        </div>
+      </section> */}
     </main>
   );
 };
