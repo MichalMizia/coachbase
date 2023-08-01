@@ -38,7 +38,11 @@ const LatestUserArticles = async ({
   return (
     <ul className="mt-2 flex flex-col items-stretch justify-start">
       {articles.map((article) => {
-        return <a href={article.slug}>{article.title}</a>;
+        return (
+          <a key={article.slug} href={article.slug}>
+            {article.title}
+          </a>
+        );
       })}
     </ul>
   );

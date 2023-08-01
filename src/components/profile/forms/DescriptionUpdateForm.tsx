@@ -55,6 +55,7 @@ export function DescriptionUpdateForm({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(ProfileUpdateSchema),
@@ -71,16 +72,14 @@ export function DescriptionUpdateForm({
     if (!data) return toast.error("Pola są wymagane");
 
     try {
-      console.log(
-        data.description === content,
-        data.description,
-        currentDescription
-      );
-      await axios.post("/api/profil/opis", {
+      console.log(data.description === content, data.description, content);
+      const res = await axios.post("/api/profil/opis", {
         slug,
         summary: data.summary !== summary ? data.summary : null,
         description: data.description !== content ? data.description : null,
       });
+
+      toast.success(res.data?.message || "Pomyślnie zmieniono opis");
     } catch (e) {
       if (
         e instanceof AxiosError &&
@@ -105,10 +104,10 @@ export function DescriptionUpdateForm({
 
   return (
     <div className="max-w-4xl space-y-[3px]">
-      <div className="mb-4 flex max-w-4xl items-center justify-between">
+      <div className="mb-4 flex max-w-4xl items-start justify-between gap-2 sm:items-center">
         <div className="space-y-[3px]">
           <h2 className="text-xl font-semibold text-gray-800">Opis</h2>
-          <p className="text-sm text-text_readable">
+          <p className="text-h6 leading-[1.2em] text-text_readable">
             Krótki opis wyświetla się w liście ofert a długi opis po wejściu w
             profil trenera
           </p>
@@ -116,8 +115,8 @@ export function DescriptionUpdateForm({
         <Tabs defaultValue="summary">
           <Dialog>
             <DialogTrigger asChild>
-              <Button isLoading={isLoading}>
-                <Edit className="mr-2 h-4 w-4 text-gray-300" />
+              <Button isLoading={isLoading} className="self-start">
+                <Edit className="mr-2 h-4 w-4 text-gray-300 " />
                 Edytuj
               </Button>
             </DialogTrigger>
@@ -189,14 +188,14 @@ export function DescriptionUpdateForm({
                         value={currentDescription}
                         onChange={(e) => {
                           setCurrentDescription(e);
-                          console.log(e);
+                          setValue("description", e);
                         }}
                       />
                       <input
                         type="text"
                         {...register("description")}
-                        defaultValue={content}
-                        // className="pointer-events-none absolute -z-10 opacity-0"
+                        readOnly
+                        className="pointer-events-none absolute -z-10 opacity-0"
                         aria-hidden="true"
                       />
                       {errors && errors.description && (
@@ -217,7 +216,7 @@ export function DescriptionUpdateForm({
           </Dialog>
         </Tabs>
       </div>
-      <div className="mt-2 flex items-start justify-start gap-4 xl:gap-6">
+      <div className="mt-2 flex flex-col items-start justify-start gap-4 sm:flex-row xl:gap-6">
         <Card className="max-w-lg flex-1 space-y-0.5">
           <CardHeader>
             <CardTitle className="text-gray-800">Krótki Opis</CardTitle>

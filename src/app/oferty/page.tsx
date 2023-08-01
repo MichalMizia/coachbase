@@ -128,7 +128,11 @@ const Page = async ({
           <ul className="offers-grid mt-4 grid gap-4 md:mt-6 lg:mt-8 lg:gap-3">
             {trainers?.map((trainer) => {
               return (
-                <a href={`/oferty/${trainer.slug}`} className="max-w-md">
+                <a
+                  key={trainer._id}
+                  href={`/oferty/${trainer.slug}`}
+                  className="max-w-md"
+                >
                   {/* <li className="group relative isolate h-full w-full overflow-hidden rounded-md bg-white p-4 shadow-md transition-all hover:shadow-lg hover:shadow-black/30 sm:p-6">
                     <span className="absolute left-0 top-0 isolate -z-10 h-full w-full -translate-x-3/4 rounded-full bg-blue-600/20" />
                     <header className="flex items-start justify-start gap-4">

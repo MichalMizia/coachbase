@@ -130,6 +130,7 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
             {trainers.map((trainer) => {
               return (
                 <a
+                  key={trainer._id}
                   href={`/oferty/${trainer.slug}`}
                   title={`Oferta ${trainer.username}`}
                   className="bg-slate-200 even:bg-slate-300"

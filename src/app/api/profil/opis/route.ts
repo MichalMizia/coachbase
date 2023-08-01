@@ -23,7 +23,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   const { slug, summary, description }: reqType = await req.json();
-  console.log("Profile API: ", slug, summary, description);
 
   if (!slug) {
     return NextResponse.json({
@@ -40,7 +39,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   //   }
 
   try {
-    if (summary && description && summary.length && description.length) {
+    if (summary?.length && description?.length) {
       const [trainer, trainerData]: [
         HydratedDocument<TrainerType>,
         HydratedDocument<TrainerDataType>
@@ -64,11 +63,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { message: "Pomyślnie zmieniono opisy" },
         { status: 200 }
       );
-    } else if (description && description.length) {
+    } else if (description?.length) {
       // when the user is editing only the llong description
-      //   @ts-expect-error
-      const trainerData: HydratedDocument<TrainerDataType> =
-        await TrainerData.find({ userSlug: slug });
+      const trainerData: HydratedDocument<TrainerDataType> | null =
+        await TrainerData.findOne({ userSlug: slug });
       if (!trainerData) {
         return NextResponse.json({
           status: 400,
@@ -77,6 +75,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
 
       trainerData.heroSection.content = sanitize(description);
+      console.log("Profile API: ", slug, summary, description);
       await trainerData.save();
 
       return NextResponse.json(
@@ -85,9 +84,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     } else if (summary && summary.length) {
       // when the user is editing only the short description
-      //   @ts-expect-error
-      const trainer: HydratedDocument<TrainerType> = await TrainerData.find({
-        userSlug: slug,
+      // @ts-expect-error
+      const trainer: HydratedDocument<TrainerType> = await User.find({
+        slug: slug,
+        isTrainer: true,
       });
       if (!trainer) {
         return NextResponse.json({
@@ -110,6 +110,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     }
   } catch (e) {
+    console.log("api error: ", e);
     return NextResponse.json(
       { message: "Błąd podczas zmieniania opisu" },
       { status: 400 }

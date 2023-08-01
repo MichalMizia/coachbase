@@ -80,7 +80,7 @@ const ImageUpdateForm = ({
   return (
     <form
       className={classNames(
-        "flex max-w-[800px] items-start justify-start gap-4 xl:gap-6",
+        "flex max-w-[800px] flex-col items-start justify-start gap-4 sm:flex-row xl:gap-6",
         className!
       )}
       onSubmit={handleSubmit(onSubmit)}
@@ -115,7 +115,7 @@ const ImageUpdateForm = ({
         )}
       </Card>
 
-      <Card className="max-w-[400px] flex-1">
+      <Card className="w-full flex-1 sm:max-w-[400px]">
         <CardHeader>
           <CardTitle className="text-gray-800">
             Edytuj zdjęcie profilowe

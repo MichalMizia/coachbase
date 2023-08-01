@@ -14,7 +14,7 @@ export function Sidebar({ className, ...props }: SidebarProps) {
   return (
     <div
       className={cn(
-        "absolute left-0 max-h-[calc(100vh-122px)] max-w-sm -translate-x-full self-stretch bg-white transition-all nav:max-h-[calc(100vh-70px)] lg:bg-transparent lg:pb-8",
+        "absolute left-0 max-h-[calc(100vh-122px)] w-full -translate-x-full self-stretch border-r bg-white transition-all xs:max-w-sm nav:max-h-[calc(100vh-70px)] lg:bg-transparent lg:pb-8",
         className,
         isMenuOpen ? "translate-x-0" : ""
       )}

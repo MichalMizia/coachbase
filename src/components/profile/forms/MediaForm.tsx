@@ -23,7 +23,6 @@ import { toast } from "react-hot-toast";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { MultiSelect, Option } from "react-multi-select-component";
 // data
-import { MappedCity } from "@/components/offers/OffersSearchbar";
 import mappedCities from "../../../config/data/citiesList.json";
 import { allTags } from "@/config/global";
 // css
@@ -59,7 +58,8 @@ const MediaForm = ({
     return allTags.map((tag) => {
       return { value: tag, label: tag };
     });
-  }, [allTags]);
+  }, []);
+
   const [selectedTags, setSelectedTags] = useState<Option[]>(
     tags.map((tag) => {
       return { value: tag, label: tag };
