@@ -1,7 +1,7 @@
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <main className="container-md bg-primary py-8">
+    <main className="container-md bg-bg py-8">
       <section id="hero" className="flex items-center justify-center gap-8">
         <div
           className="h-[50vh] flex-1 animate-pulse border-gray-400 bg-white"

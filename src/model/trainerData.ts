@@ -1,11 +1,14 @@
-import { Schema, model, models } from "mongoose";
-import { UserRolesType } from "./user";
-import { string } from "zod";
+import { Schema, Types, model, models } from "mongoose";
 
-const TrainerDataSchema = new Schema(
+const TrainerDataSchema = new Schema<TrainerDataType>(
   {
     userSlug: {
       type: Schema.Types.String,
+      required: true,
+      ref: "User",
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
@@ -16,27 +19,26 @@ const TrainerDataSchema = new Schema(
         required: true,
       },
     },
-    tags: {
-      type: [String],
+    offers: {
+      type: [
+        {
+          offerTitle: {
+            type: String,
+            required: true,
+          },
+          offerDescription: {
+            type: String,
+            required: true,
+          },
+          offerPhotoUrl: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
       required: true,
       default: [],
     },
-    offers: [
-      {
-        offerTitle: {
-          type: String,
-          required: true,
-        },
-        offerDescription: {
-          type: String,
-          required: true,
-        },
-        offerPhotoUrl: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
     // testimonials: [
     //   {
     //     testimonialRating: {
@@ -79,7 +81,8 @@ const TrainerDataSchema = new Schema(
 );
 
 const TrainerData =
-  models?.TrainerData || model("TrainerData", TrainerDataSchema);
+  models?.TrainerData ||
+  model<TrainerDataType>("TrainerData", TrainerDataSchema);
 
 export default TrainerData;
 
@@ -108,15 +111,16 @@ export interface HeroSectionType {
 
 export interface TrainerDataType {
   userSlug: string;
+  userId: Types.ObjectId;
   heroSection: HeroSectionType;
-  offers?: TrainerOfferType[];
+  offers: TrainerOfferType[];
   socialMedia: SocialMediaType;
-  tags: string[];
+  // tags: string[];
   // testimonials?: TrainerTestimonialType[]
 }
 
 export interface TrainerMediaType {
   socialMedia: SocialMediaType;
-  tags: string[];
+  tags?: string[];
   city?: string;
 }

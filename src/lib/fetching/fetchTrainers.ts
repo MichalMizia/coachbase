@@ -1,5 +1,5 @@
 import User from "@/model/user";
-import initMongoose from "../db/db";
+import initMongoose from "../db";
 
 export async function fetchAllTrainers() {
   try {

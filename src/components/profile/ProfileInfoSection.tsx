@@ -15,6 +15,7 @@ import * as z from "zod";
 import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { classNames } from "@/lib/utils";
+import { DescriptionUpdateForm } from "./forms/DescriptionUpdateForm";
 
 interface ProfileInfoSectionProps {
   user: TrainerType;
@@ -96,9 +97,10 @@ const ProfileInfoSection = ({ user, heroContent }: ProfileInfoSectionProps) => {
       <div className="aspect-video flex-1 self-stretch lg:aspect-auto">
         <ImageUpdateForm imgSrc={user.image} id={user._id || ""} />
       </div>
-      <form
+
+      {/* <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-1 flex-col items-start justify-start rounded-tr-lg border-secondary px-4 py-6 lg:border-r-2 lg:border-t-2 lg:px-6 lg:py-4"
+        className="flex flex-1 flex-col items-start justify-start rounded-tr-lg border-secondary_custom px-4 py-6 lg:border-r-2 lg:border-t-2 lg:px-6 lg:py-4"
       >
         <header
           className={classNames(
@@ -183,7 +185,7 @@ const ProfileInfoSection = ({ user, heroContent }: ProfileInfoSectionProps) => {
             className={classNames(
               "z-[2] flex-1 rounded-l-lg px-[18px] py-2.5 text-gray-800 transition-all",
               isViewingShortDescription
-                ? "cursor-default underline decoration-secondary decoration-2 underline-offset-4"
+                ? "cursor-default underline decoration-secondary_custom decoration-2 underline-offset-4"
                 : "bg-white hover:bg-slate-100"
             )}
             type="button"
@@ -195,7 +197,7 @@ const ProfileInfoSection = ({ user, heroContent }: ProfileInfoSectionProps) => {
             className={classNames(
               "z-[2] flex-1 rounded-r-lg px-[18px] py-2.5 text-gray-800 transition-all",
               !isViewingShortDescription
-                ? "cursor-default underline decoration-secondary decoration-2 underline-offset-4"
+                ? "cursor-default underline decoration-secondary_custom decoration-2 underline-offset-4"
                 : "bg-white hover:bg-slate-100"
             )}
             type="button"
@@ -246,7 +248,8 @@ const ProfileInfoSection = ({ user, heroContent }: ProfileInfoSectionProps) => {
             className="relative w-full max-w-xl rounded-b-lg rounded-tr-lg border-2 border-gray-300 px-2 py-2 pt-2.5 text-[17px] text-sm text-gray-800 [box-sizing:padding-box] focus:border-blue-500 focus:ring-blue-500 lg:max-h-[300px] lg:min-h-[100px] lg:bg-white"
           />
         )}
-      </form>
+      </form> */}
+      {/* <DescriptionUpdateForm /> */}
     </section>
   );
 };

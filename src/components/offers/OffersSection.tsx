@@ -5,20 +5,21 @@ import { TrainerType } from "@/model/user";
 // components
 import { LucideUser, SendIcon } from "lucide-react";
 import Image from "next/image";
-import StarsRating from "../ui/StarsRating";
+import StarsRating from "../custom/StarsRating";
 import PersonAvatar from "../../../public/assets/undraw_person.png";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
+import { useQueryStore } from "@/lib/state/media-queries-generation";
 
 interface OffersSectionProps {
   data: TrainerType[];
 }
 
 const OffersSection = ({ data }: OffersSectionProps) => {
-  const isLarge = useMediaQuery("(min-width: 960px)");
+  const { isLarge } = useQueryStore();
 
   if (!data || !data.length) {
     return (
-      <section className="bg-primary py-12">
+      <section className="bg-bg py-12">
         <div className="container-md">
           <h2 className="text-4xl text-black">Brak wyników...</h2>
         </div>
@@ -27,14 +28,14 @@ const OffersSection = ({ data }: OffersSectionProps) => {
   }
 
   return (
-    <section className="latest-offers bg-primary py-4 md:py-6 lg:py-12">
+    <section className="latest-offers bg-bg py-4 md:py-6 lg:py-12">
       <div className="mx-auto w-[96%] max-w-[1280px] lg:w-[92%]">
         <ul className="grid grid-flow-row grid-cols-1 items-start justify-between gap-x-4 lg:grid-cols-2 xxl:grid-cols-3">
           {data.map((trainer) => {
             return (
               <li
                 key={trainer.username}
-                className="group relative mx-auto my-2 flex w-full max-w-3xl items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
+                className="group relative mx-auto my-2 flex w-full max-w-3xl items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary_custom hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
               >
                 <div className="z-[2] flex-1 self-center py-4 pl-5 pr-3 lg:self-start lg:px-6 lg:pb-6 lg:pt-4">
                   <header className="mb-0.5 flex items-center justify-between text-black lg:mb-1">
@@ -54,7 +55,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                   </ul>
                   <p
                     id="description"
-                    className="mx-auto mb-[11px] mt-3 line-clamp-6 w-[105%] pb-[1px] text-left text-[13.5px] leading-normal tracking-[0.005em] md:w-full md:text-sm md:leading-tight lg:mt-4 lg:pb-5 lg:text-[15px]"
+                    className="mx-auto mb-[11px] mt-3 line-clamp-6 w-[105%] pb-[1px] text-left text-[13.5px] leading-normal tracking-[0.005em] md:w-full md:text-sm md:leading-tight lg:mb-1 lg:mt-4 lg:pb-5 lg:text-[15px]"
                   >
                     {trainer.summary}
                   </p>
@@ -63,7 +64,7 @@ const OffersSection = ({ data }: OffersSectionProps) => {
                       href={`oferty/${trainer.slug}`}
                       title={`Profil ${trainer.username}`}
                     >
-                      <button className="flex items-center justify-center gap-1 rounded-sm px-2 py-1 text-[13px] text-gray-700 ring-1 ring-gray-400 transition-all duration-[400] hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1 md:gap-2 md:text-sm">
+                      <button className="flex items-center justify-center gap-1 rounded-sm px-2 py-1 text-[13px] text-gray-700 ring-1 ring-gray-400 transition-all duration-300 hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1 md:gap-2 md:text-sm">
                         <SendIcon size={16} className="relative -mb-[2px]" />
                         Zobacz ofertę
                       </button>

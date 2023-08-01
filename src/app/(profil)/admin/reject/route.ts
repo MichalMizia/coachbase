@@ -1,4 +1,4 @@
-import initMongoose from "@/lib/db/db";
+import initMongoose from "@/lib/db";
 import PendingRequest from "@/model/pendindRequest";
 import User, { UserRolesType } from "@/model/user";
 import { NextRequest, NextResponse } from "next/server";

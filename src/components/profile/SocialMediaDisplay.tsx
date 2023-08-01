@@ -1,8 +1,9 @@
 "use client";
 
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { classNames } from "@/lib/utils";
+import { classNames, copyToClipboard } from "@/lib/utils";
 import { FacebookIcon, InstagramIcon, MailIcon } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 interface SocialMediaDisplayProps {
   instagram?: string;
@@ -22,7 +23,7 @@ const SocialMediaDisplay = ({
   return (
     <div
       className={classNames(
-        "isolate z-10 flex items-stretch justify-center gap-1 rounded-b-lg text-black md:gap-2",
+        "isolate z-10 flex items-stretch justify-center gap-1 rounded-b-lg text-black",
         className!
       )}
     >
@@ -31,40 +32,39 @@ const SocialMediaDisplay = ({
           href={instagram}
           target="_blank"
           referrerPolicy="no-referrer"
-          className="group relative isolate flex aspect-square items-center justify-center border-b border-b-white p-3"
+          className="flex aspect-square items-center justify-center border-b border-b-white px-0.5"
         >
-          <InstagramIcon size={isMobile ? 20 : 22} className="z-10" />
-          <p className="absolute bottom-0 left-[calc(100%-4px)] top-0 z-20 flex h-full origin-left scale-x-0 items-center bg-white pl-3 pr-2 text-sm transition-all duration-[400ms] group-hover:scale-x-100 md:text-[17px]">
-            {instagram}
-          </p>
+          <InstagramIcon
+            size={isMobile ? 17 : 21}
+            className="z-10 text-gray-800"
+          />
         </a>
       ) : null}
-      {facebook && facebook.length ? (
+      {facebook && facebook.length && (
         <a
           href={facebook}
           target="_blank"
           referrerPolicy="no-referrer"
-          className="group relative flex aspect-square items-center justify-center border-b border-b-white  p-2"
+          className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <FacebookIcon size={isMobile ? 20 : 22} className="z-10" />
-          <p className="absolute bottom-0 left-[calc(100%-4px)] top-0 z-20 flex h-full origin-left scale-x-0 items-center bg-white  pl-3 pr-2 text-sm transition-all duration-[400ms] group-hover:scale-x-100 md:text-[17px]">
-            {facebook}
-          </p>
+          <FacebookIcon
+            size={isMobile ? 17 : 21}
+            className="z-10 text-gray-800"
+          />
         </a>
-      ) : null}
-      {email && email.length ? (
-        <a
-          href={email}
-          target="_blank"
-          referrerPolicy="no-referrer"
-          className="group relative flex aspect-square items-center justify-center border-b border-b-white p-2"
+      )}
+      {email && email.length && (
+        <button
+          title="Email"
+          onClick={() => {
+            copyToClipboard(email);
+            toast.success("Skopiowano email");
+          }}
+          className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <MailIcon size={isMobile ? 20 : 22} className="z-10" />
-          <p className="absolute bottom-0 left-[calc(100%-4px)] top-0 z-20 flex h-full origin-left scale-x-0 items-center bg-white pl-3 pr-2 text-sm transition-all duration-[400ms] group-hover:scale-x-100 md:text-[17px]">
-            {email}
-          </p>
-        </a>
-      ) : null}
+          <MailIcon size={isMobile ? 17 : 21} className="z-10 text-gray-800" />
+        </button>
+      )}
     </div>
   );
 };

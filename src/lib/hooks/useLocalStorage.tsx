@@ -2,23 +2,46 @@ import { useEffect, useState } from "react";
 
 export function useLocalStorage<T>(
   key: string,
-  initialValue: T,
+  defaultValue: T,
   storage: Storage = localStorage
-) {
-  const [value, setValue] = useState<T>(() => {
-    const jsonVal = storage.getItem(key);
-    if (!jsonVal) {
-      if (typeof initialValue === "function") {
-        return initialValue();
-      }
-      return initialValue;
-    }
-    return JSON.parse(jsonVal);
-  });
+): [T, (value: T) => void] {
+  const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [value, key]);
+    const item = storage.getItem(key);
 
-  return [value, setValue];
+    if (!item) {
+      storage.setItem(key, JSON.stringify(defaultValue));
+    }
+
+    setValue(item ? JSON.parse(item) : defaultValue);
+
+    function handler(e: StorageEvent) {
+      if (e.key !== key) return;
+
+      const lsi = storage.getItem(key);
+      setValue(JSON.parse(lsi ?? ""));
+    }
+
+    window.addEventListener("storage", handler);
+
+    return () => {
+      window.removeEventListener("storage", handler);
+    };
+  }, []);
+
+  const setValueWrap = (value: T) => {
+    try {
+      setValue(value);
+
+      storage.setItem(key, JSON.stringify(value));
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new StorageEvent("storage", { key }));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return [value, setValueWrap];
 }

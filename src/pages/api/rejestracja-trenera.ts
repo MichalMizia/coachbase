@@ -2,7 +2,7 @@ import {
   TrainerRequestType,
   trainerController,
 } from "@/controllers/trainerController";
-import initMongoose from "@/lib/db/db";
+import initMongoose from "@/lib/db";
 import PendingRequest from "@/model/pendindRequest";
 import User from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";

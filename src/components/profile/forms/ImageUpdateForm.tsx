@@ -7,20 +7,27 @@ import Image from "next/image";
 // utils
 import { fileUploadSchema } from "@/lib/validations/fileUploadValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { HTMLProps, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
+import { classNames } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface ImageUpdateFormProps {
+interface ImageUpdateFormProps extends HTMLProps<HTMLFormElement> {
   imgSrc: string | null | undefined;
   id: string;
 }
 
 type FormData = z.infer<typeof fileUploadSchema>;
 
-const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
+const ImageUpdateForm = ({
+  imgSrc,
+  id,
+  className,
+  ...props
+}: ImageUpdateFormProps) => {
   const {
     register,
     handleSubmit,
@@ -68,18 +75,20 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
     );
   }
 
-  const currentFiles: FileList | null = watch("files") || null;
+  const currentFiles: FileList | null | undefined = watch("files");
 
   return (
     <form
-      action=""
-      className="after:bg-blue group relative isolate z-10 flex aspect-[16/10] h-full w-full flex-col items-center justify-center overflow-hidden bg-white shadow shadow-[#00000030] transition-shadow after:absolute after:left-1/2 after:top-0 after:z-[2] after:w-6 after:rotate-45 after:bg-blue-50 hover:shadow-lg lg:p-4"
+      className={classNames(
+        "flex max-w-[800px] items-start justify-start gap-4 xl:gap-6",
+        className!
+      )}
       onSubmit={handleSubmit(onSubmit)}
+      {...props}
     >
-      {imgSrc ? (
-        <>
+      <Card className="aspect-video flex-1 self-stretch overflow-hidden p-1 md:aspect-square xl:aspect-video">
+        {imgSrc ? (
           <img
-            className="absolute inset-auto -z-10 h-full w-full object-cover lg:rounded-sm lg:p-2"
             src={
               currentFiles &&
               currentFiles.length &&
@@ -88,85 +97,58 @@ const ImageUpdateForm = ({ imgSrc, id }: ImageUpdateFormProps) => {
                 : imgSrc
             }
             alt="Zdjęcie Profilowe"
+            className="h-full w-full rounded-md object-cover"
           />
-          <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000012]" />
-          <div className="mt-auto flex h-auto origin-bottom-left scale-[.8] cursor-pointer items-stretch justify-center self-start justify-self-end md:scale-[.9] lg:scale-100">
-            <label htmlFor="file" className="sr-only">
-              Zdjęcie profilowe
-            </label>
-            <input
-              multiple={false}
-              required
-              id="file"
-              accept="image/*"
-              type="file"
-              {...register("files")}
-              className="block w-full rounded-l-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors?.files && (
-              <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">
-                {errors.files.message?.toString()}
-              </p>
-            )}
-            <Button
-              type="submit"
-              className="rounded-l-none"
-              isLoading={isLoading}
-              disabled={currentFiles === null}
-            >
-              Zapisz
-            </Button>
-          </div>
-        </>
-      ) : (
-        <>
-          {currentFiles &&
+        ) : currentFiles &&
           currentFiles.length &&
           URL.createObjectURL(currentFiles[0]) ? (
-            <>
-              <Image
-                width={100}
-                height={100}
-                className="absolute inset-auto -z-10 h-full w-full rounded-sm object-cover p-2"
-                alt="Preview zdjęcia profilowego"
-                src={URL.createObjectURL(currentFiles[0])}
-              />
-              <div className="absolute inset-auto -z-[5] h-full w-full rounded-sm bg-[#00000000] p-2 transition-all duration-300 group-hover:bg-[#00000015]" />
-            </>
-          ) : (
-            <div className="mb-8 flex items-center justify-center gap-2">
-              <LucideUser />
-              <h4 className="text-lg font-semibold">Zdjęcie Profilowe</h4>
-            </div>
-          )}
-          <div className="flex items-stretch justify-center">
-            <label htmlFor="file" className="sr-only">
-              Plik weryfikacyjny
-            </label>
-            <input
-              multiple={false}
-              required
-              id="file"
-              accept="image/*"
-              type="file"
-              {...register("files")}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors?.files && (
-              <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">
-                {errors.files.message?.toString()}
-              </p>
-            )}
-            <Button
-              type="submit"
-              isLoading={isLoading}
-              disabled={currentFiles === null}
-            >
-              Zapisz
-            </Button>
+          <img
+            alt="Preview zdjęcia profilowego"
+            src={URL.createObjectURL(currentFiles[0])}
+            className="h-full w-full rounded-md object-cover"
+          />
+        ) : (
+          <div className="mb-8 flex items-center justify-center gap-2">
+            <LucideUser />
+            <h4 className="text-lg font-semibold">Zdjęcie Profilowe</h4>
           </div>
-        </>
-      )}
+        )}
+      </Card>
+
+      <Card className="max-w-[400px] flex-1">
+        <CardHeader>
+          <CardTitle className="text-gray-800">
+            Edytuj zdjęcie profilowe
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <label htmlFor="file" className="sr-only">
+            Plik weryfikacyjny
+          </label>
+          <input
+            multiple={false}
+            required
+            id="file"
+            accept="image/*"
+            type="file"
+            {...register("files")}
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          />
+          {errors?.files && (
+            <p className="absolute -top-1 left-0 bg-white px-[6px] py-[2px] text-sm text-red-600">
+              {errors.files.message?.toString()}
+            </p>
+          )}
+          <Button
+            type="submit"
+            isLoading={isLoading}
+            disabled={currentFiles == undefined}
+            className="w-full"
+          >
+            Zapisz
+          </Button>
+        </CardContent>
+      </Card>
     </form>
   );
 };

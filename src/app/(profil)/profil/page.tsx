@@ -1,21 +1,35 @@
-import ChangeNameForm from "@/components/auth/ChangeNameForm";
-import ProfileInfoSection from "@/components/profile/ProfileInfoSection";
 import authOptions from "@/lib/auth";
-import { ChevronRightIcon, HeartIcon, HomeIcon } from "lucide-react";
+import { ChevronRightIcon, Edit, HeartIcon, HomeIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import HeaderCards from "@/components/profile/HeaderCards";
 import {
   fetchTrainer,
   fetchTrainerFromEmail,
 } from "@/lib/fetching/fetchTrainer";
 import { TrainerType, UserType } from "@/model/user";
 import { fetchTrainerData } from "@/lib/fetching/fetchTrainerData";
-import { TrainerDataType } from "@/model/trainerData";
+import TrainerData, { TrainerDataType } from "@/model/trainerData";
+import { Separator } from "@/components/ui/separator";
+import ImageUpdateForm from "@/components/profile/forms/ImageUpdateForm";
+import { DescriptionUpdateForm } from "@/components/profile/forms/DescriptionUpdateForm";
+import Button from "@/components/ui/Button";
+import initMongoose from "@/lib/db";
 
-interface pageProps {}
+export interface PageProps {
+  user?: TrainerType;
+  userData?: TrainerDataType;
+}
 
-const page = async ({}: pageProps) => {
+// const getUser = async (slug: string) => {
+//   await initMongoose();
+
+//   const trainer = await TrainerData.find({ userSlug: slug }).populate(
+//     "userSlug"
+//   );
+//   return trainer;
+// };
+
+const Page = async () => {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const session = await getServerSession(authOptions);
@@ -23,58 +37,50 @@ const page = async ({}: pageProps) => {
     redirect("/rejestracja");
   }
 
-  if (!session.user.isTrainer) {
-    return (
-      <main className="bg-primary">
-        <header className="w-full bg-white shadow">
-          <div className="container-md flex items-center justify-between px-2">
-            <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
-              <a href="/">
-                <HomeIcon size={20} className="text-blue-600" />
-              </a>
-              <ChevronRightIcon size={20} />
-              <h1 className="font-semibold text-blue-600">Profil</h1>
-            </nav>
-          </div>
-        </header>
-        <h1 className="text-2xl font-semibold text-black">
-          Witaj spowrotem, {session.user.username}
-        </h1>
-        {/* <ProfileInfoSection
-          user={session.user}
-          isTrainer={session.user.isTrainer}
-        /> */}
-      </main>
-    );
-  }
-
-  const user: TrainerType = await fetchTrainerFromEmail(session.user?.email);
+  const user: TrainerType = await fetchTrainerFromEmail(session.user.email);
   const userData: TrainerDataType = await fetchTrainerData(user.slug);
+  if (!user._id) {
+    redirect("/rejestracja");
+  }
+  // const user2 = await getUser(user.slug);
+  // console.log("Trainer populate: ", user2);
 
   // when the user is logged in as a trainer
   return (
-    <main className="bg-primary">
-      <header className="w-full bg-white shadow">
-        <div className="container-md flex items-center justify-between px-2">
-          <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
-            <a href="/">
-              <HomeIcon size={20} className="text-blue-600" />
-            </a>
-            <ChevronRightIcon size={20} />
-            <h1 className="font-semibold text-blue-600">Profil</h1>
-          </nav>
-          <HeaderCards user={user} userData={userData} />
+    <div className="flex h-full flex-col items-stretch justify-start px-4 py-6 lg:px-8">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-semibold text-gray-800">Profil</h2>
+          <p className="text-h6 text-text_readable">
+            Zmiany tutaj będą wyświetlane w twojej ofercie.
+          </p>
         </div>
-      </header>
-      <ProfileInfoSection
-        user={user}
-        heroContent={userData.heroSection.content}
-      />
-    </main>
+      </div>
+      <Separator className="my-4 bg-gray-300" />
+      <div>
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <div className="space-y-0.5">
+            <h2 className="text-xl font-semibold text-gray-800">
+              Zdjęcie Profilowe
+            </h2>
+          </div>
+        </div>
+        <ImageUpdateForm imgSrc={user.image} id={user._id} />
+      </div>
+      <Separator className="my-4 bg-gray-300" />
+      <div className="">
+        <DescriptionUpdateForm
+          summary={user.summary}
+          content={userData.heroSection.content}
+          slug={user.slug}
+        />
+      </div>
+      
+    </div>
   );
 };
 
-export default page;
+export default Page;
 
 {
   /* <div className="flex items-start justify-center gap-8">

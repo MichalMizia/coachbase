@@ -2,11 +2,13 @@
   z-index: 11;
   position: relative;
   display: inline-block;
+  top: 4px;
   width: 40px;
   height: 30px;
   scale: 0.9;
   cursor: pointer;
-  margin: auto 0;
+  margin: 0;
+  align-self: center;
 }
 .menu-toggle span {
   margin: 0 auto;
@@ -27,9 +29,15 @@
 .menu-toggle span:after {
   width: 40px;
   height: 5px;
-  background-color: black;
+  background-color: #4b5563;
   display: block;
   opacity: 1;
+  transition: background-color 0.3s ease-in-out;
+}
+.menu-toggle:not(.menu-toggle-active):hover span,
+.menu-toggle:hover span:before,
+.menu-toggle:hover span:after {
+  background-color: #1f2937;
 }
 .menu-toggle span:before {
   margin-top: -12px;

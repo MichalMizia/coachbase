@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "ES2015"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/lib/db/db.js",
+    "src/lib/db.js",
     "src/model/article.ts",
     "src/lib/auth.ts",
     "src/components/homepage/RulesHomepage.tsx"

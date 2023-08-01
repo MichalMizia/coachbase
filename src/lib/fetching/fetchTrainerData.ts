@@ -1,5 +1,5 @@
 import TrainerData, { TrainerDataType } from "@/model/trainerData";
-import initMongoose from "../db/db";
+import initMongoose from "../db";
 
 export async function fetchTrainerData(slug: string) {
   try {

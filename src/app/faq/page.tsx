@@ -1,7 +1,7 @@
 "use client";
 
 // data
-import { FaqItem, faqItemsHeader, faqItemsMain } from "@/content/faq";
+import { FaqItem, faqItemsHeader, faqItemsMain } from "@/config/faq";
 // import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 // types
@@ -43,7 +43,7 @@ const SidebarItem = ({
         className={classNames(
           "max-w-[120px] flex-1 origin-left text-center md:max-w-[150px]",
           isSidebarOpen
-            ? "static scale-x-100 opacity-100 transition-all duration-[400ms]"
+            ? "duration-[400ms] static scale-x-100 opacity-100 transition-all"
             : "absolute scale-x-0 opacity-0",
           active ? "text-black" : ""
         )}
@@ -70,7 +70,7 @@ const Page = ({}) => {
     <main className="min-h-screen bg-white py-6 text-gray-800 lg:py-10">
       <aside className="fixed left-0 top-0 z-20 flex min-h-screen w-auto flex-col justify-start border-r bg-white pt-[75px] shadow-md shadow-[#00000020] transition-all duration-500">
         <button
-          className="relative w-full border-b bg-primary p-2 transition-all hover:bg-slate-300 lg:px-4"
+          className="relative w-full border-b bg-bg p-2 transition-all hover:bg-slate-300 lg:px-4"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           aria-haspopup="menu"
           aria-controls="sidebar"

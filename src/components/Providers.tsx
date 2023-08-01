@@ -1,8 +1,11 @@
 "use client";
 
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
+import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 import { XIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
+import { ReactNode, useEffect } from "react";
 import { ToastBar, Toaster, toast } from "react-hot-toast";
 
 interface ProvidersProps {
@@ -10,6 +13,17 @@ interface ProvidersProps {
 }
 
 const Providers = ({ children }: ProvidersProps) => {
+  const isMobile = useMediaQuery("(max-width: 800px)");
+  const isLarge = useMediaQuery("(min-width: 960px)");
+
+  const { setIsMobile, setIsLarge } = useQueryStore();
+  useEffect(() => {
+    setIsMobile(isMobile);
+  }, [isMobile]);
+  useEffect(() => {
+    setIsLarge(isLarge);
+  }, [isLarge]);
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false}>

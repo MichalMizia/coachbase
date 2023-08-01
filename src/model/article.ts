@@ -1,6 +1,6 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, Types, model, models } from "mongoose";
 
-const ArticleSchema = new Schema(
+const ArticleSchema = new Schema<ArticleType>(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -15,15 +15,12 @@ const ArticleSchema = new Schema(
       type: String,
       required: true,
     },
-    photoUrl: {
-      type: String,
-      required: true,
-    },
+    summary: String,
+    published: { type: Boolean, required: true },
+    slug: String,
+    photoUrl: String,
+    photoAlt: String,
     impressions: {
-      type: Number,
-      default: 0,
-    },
-    views: {
       type: Number,
       default: 0,
     },
@@ -31,10 +28,28 @@ const ArticleSchema = new Schema(
   { collection: "Articles", timestamps: true }
 );
 
-const Article = models?.Article || model("Article", ArticleSchema);
+const Article = models?.Article || model<ArticleType>("Article", ArticleSchema);
 
-export interface ArticleType {
-  
-}
+type Published = {
+  published: true;
+  slug: string;
+};
+type UnPublished = {
+  published: false;
+  slug: "";
+};
+
+export type ArticleType = {
+  _id: string;
+  summary: string;
+  userId: Types.ObjectId;
+  title: string;
+  content: string;
+  photoUrl?: string;
+  photoAlt?: string;
+  impressions: number;
+  createdAt: Date;
+  updatedAt: Date;
+} & (UnPublished | Published);
 
 export default Article;

@@ -1,4 +1,4 @@
-import { RolesType } from "@/app/oferty/OffersPage";
+import { RolesType } from "@/app/oferty/@components/OffersPage";
 import { Dispatch, SetStateAction } from "react";
 
 interface RolesSearchProps {

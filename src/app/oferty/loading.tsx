@@ -10,7 +10,7 @@ import styles from "../../css/loading/offers.module.css";
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <main className="bg-primary">
+    <main className="bg-bg">
       <section
         className={`${styles.header} border-b-2 border-gray-300 pb-6 pt-8`}
       >
@@ -100,7 +100,7 @@ export default function Loading() {
           </section>
         </div>
       </section>
-      <section className="latest-offers bg-primary py-4 md:py-6 lg:py-12">
+      <section className="latest-offers bg-bg py-4 md:py-6 lg:py-12">
         <div className="mx-auto w-[96%] max-w-[1280px] lg:w-[92%]">
           <ul className="grid grid-flow-row grid-cols-1 items-start justify-between gap-x-4 lg:grid-cols-2 xxl:grid-cols-3">
             {Array(5)
@@ -109,7 +109,7 @@ export default function Loading() {
                 return (
                   <li
                     key={ind}
-                    className="group relative mx-auto my-2 flex w-full max-w-3xl animate-pulse items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
+                    className="group relative mx-auto my-2 flex w-full max-w-3xl items-stretch rounded-l-sm bg-white shadow shadow-[#00000020] transition-shadow duration-300 after:absolute after:left-0 after:top-0 after:h-full after:w-1 after:rounded-l-sm after:bg-secondary_custom hover:shadow-md md:flex-row lg:my-4 lg:flex-col-reverse"
                     style={{ animationDelay: `${ind * 300}ms` }}
                   >
                     <div className="z-[2] flex-1 self-center py-4 pl-5 pr-3 lg:self-start lg:px-6 lg:pb-6 lg:pt-4">
@@ -129,7 +129,7 @@ export default function Loading() {
                         ipsam ab alias.
                       </p>
                       <div className="flex w-full items-start justify-between gap-2">
-                        <span className="rounded-sm px-2 py-1 text-[13px] text-transparent ring-1 ring-gray-400 transition-all duration-[400] md:text-sm">
+                        <span className="duration-[400ms] rounded-sm px-2 py-1 text-[13px] text-transparent ring-1 ring-gray-400 transition-all md:text-sm">
                           .. Zobacz ofertę
                         </span>
                       </div>

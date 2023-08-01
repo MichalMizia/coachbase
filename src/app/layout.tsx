@@ -4,6 +4,8 @@ import Providers from "@/components/Providers";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
+import { headers } from "next/headers";
+import { NextRequest } from "next/server";
 
 export const metadata = {
   title: "CoachBase",
@@ -31,7 +33,7 @@ export const metadata = {
     "Trening",
   ],
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icons/favicon.ico",
     other: [
       {
         rel: "apple-touch-icon",
@@ -77,12 +79,19 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
 
+  const headersList = headers();
+  const activePath = headersList.get("x-pathname");
+
   return (
     <html lang="en">
-      <body className="bg-primary text-text">
-        {/* <div id="modals" className="modals" /> */}
+      <body className="bg-bg text-text">
         <Providers>
-          <Navbar session={session} />
+          {activePath?.startsWith("/edytor") ? null : (
+            <Navbar session={session} />
+          )}
+          {/* <div className="!z-[100000] text-3xl text-black">
+            {JSON.stringify(activePath)}
+          </div> */}
           {children}
         </Providers>
       </body>

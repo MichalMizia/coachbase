@@ -1,7 +1,7 @@
 "use client";
 
 // assets
-import Logo from "./ui/Logo";
+import Logo from "./custom/Logo";
 import {
   AlbumIcon,
   HeartIcon,
@@ -24,6 +24,7 @@ import "../css/nav.css";
 import Button from "./ui/Button";
 import { usePathname } from "next/navigation";
 import ProfileLink from "./ProfileLink";
+import { useQueryStore } from "@/lib/state/media-queries-generation";
 
 interface NavbarProps {
   session: Session | null;
@@ -36,8 +37,8 @@ const homeConfig: HomeConfig = {
       href: "/oferty",
       icon: (
         <MessagesSquareIcon
-          className="mr-2 mt-[2px]"
-          size={20}
+          className="h-[19px] w-[19px] md:h-[26px] md:w-[26px] nav:mr-2 nav:mt-[2px] nav:h-[22px] nav:w-[22px]"
+
           // stroke="#5E6E81"
         />
       ),
@@ -45,23 +46,27 @@ const homeConfig: HomeConfig = {
     {
       title: "Artykuły",
       href: "/blog",
-      icon: <NewspaperIcon className="mr-2 mt-[2px]" size={20} />,
+      icon: (
+        <NewspaperIcon className="h-[19px] w-[19px] md:h-[26px] md:w-[26px] nav:mr-2 nav:mt-[2px] nav:h-[22px] nav:w-[22px]" />
+      ),
     },
     {
       title: "FAQ",
       href: "/faq",
-      icon: <AlbumIcon className="mr-2 mt-[2px]" size={20} />,
+      icon: (
+        <AlbumIcon className="h-[19px] w-[19px] md:h-[26px] md:w-[26px] nav:mr-2 nav:mt-[2px] nav:h-[22px] nav:w-[22px]" />
+      ),
     },
   ],
 };
 
 export default function Navbar({ session }: NavbarProps) {
-  const isMobile = useMediaQuery("(max-width: 800px)");
+  const { isMobile } = useQueryStore();
   const isLarge = useMediaQuery("(min-width: 1120px)");
   const pathname = usePathname();
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 py-4 text-white shadow-sm shadow-slate-400">
+    <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 py-4 text-white shadow-sm shadow-slate-400">
       <div className="container-md mx-auto flex w-[95%] items-end justify-between gap-4 lg:gap-8">
         <Logo className="scale-90" />
 
@@ -84,21 +89,22 @@ export default function Navbar({ session }: NavbarProps) {
               return (
                 <Button
                   variant="text"
+                  size="small"
                   key={navEl.title}
                   className={classNames(
                     navEl.disabled ? "text-gray-300" : "text-white",
                     isMobile
                       ? pathname?.includes(navEl.href)
-                        ? "flex-1 rounded-none bg-blue-100 text-sm text-gray-800 even:border-x even:border-text_readable md:text-lg"
-                        : "flex-1 rounded-none text-sm text-gray-800 even:border-x even:border-text_readable md:text-lg"
-                      : "text-[17px] font-[400]",
+                        ? "flex-1 rounded-none bg-blue-100 text-sm text-gray-700 even:border-x even:border-text md:text-lg"
+                        : "flex-1 rounded-none text-sm text-text_readable even:border-x even:border-text md:text-lg"
+                      : "text-[17px] font-normal",
                     "hover:bg-[#00000010]"
                   )}
                 >
                   <Link
                     className={classNames(
                       "flex h-full w-full items-center justify-center",
-                      isMobile ? "flex-col gap-0.5" : ""
+                      isMobile ? "flex-col" : ""
                     )}
                     title={navEl.title}
                     href={navEl.href}

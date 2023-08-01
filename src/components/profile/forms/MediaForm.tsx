@@ -4,7 +4,12 @@
 import { SocialMediaType } from "@/model/trainerData";
 import { MenuType } from "../HeaderCards";
 // icons
-import { FacebookIcon, InstagramIcon, LucideSidebarClose, MailIcon } from "lucide-react";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  LucideSidebarClose,
+  MailIcon,
+} from "lucide-react";
 // hooks
 import { useForm } from "react-hook-form";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
@@ -18,9 +23,9 @@ import { toast } from "react-hot-toast";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { MultiSelect, Option } from "react-multi-select-component";
 // data
-import { MappedCity } from "@/components/offers/SearchOffers";
-import cities from "../../../content/data/miastaShort.json";
-import { allTags, tagOptions } from "@/content/global";
+import { MappedCity } from "@/components/offers/OffersSearchbar";
+import mappedCities from "../../../config/data/citiesList.json";
+import { allTags } from "@/config/global";
 // css
 import "../../../css/search.css";
 
@@ -50,6 +55,11 @@ const MediaForm = ({
   slug,
 }: MediaFormProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const tagOptions: Option[] = useMemo(() => {
+    return allTags.map((tag) => {
+      return { value: tag, label: tag };
+    });
+  }, [allTags]);
   const [selectedTags, setSelectedTags] = useState<Option[]>(
     tags.map((tag) => {
       return { value: tag, label: tag };
@@ -68,25 +78,10 @@ const MediaForm = ({
     setValue("city", city);
   }, []);
 
-  // city list
-  const mappedCities = useMemo(() => {
-    let cachedCities: MappedCity[] = [];
-    cities.forEach((region) => {
-      if (region.cities) {
-        region.cities.forEach((city) => {
-          if (city?.text_simple) {
-            cachedCities.push({ name: city.text_simple, id: city.id });
-          }
-        });
-      }
-    });
-    return cachedCities;
-  }, []);
-
   async function onSubmit(data: FormData) {
     setIsLoading(true);
 
-    const currentTags = selectedTags.map((val) => val.value);
+    const currentTags = selectedTags.map((val) => val.label);
     console.log("Data: ", data, "\n", "Tags: ", currentTags);
 
     try {
@@ -213,7 +208,7 @@ const MediaForm = ({
             items={mappedCities}
             placeholder="Lokalizacja"
             inputDebounce={200}
-            inputSearchString={city}
+            inputSearchString={city ? city : ""}
             onSelect={(city) => setValue("city", city.name)}
             onClear={() => setValue("city", "")}
           />

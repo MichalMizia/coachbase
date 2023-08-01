@@ -1,4 +1,4 @@
-import initMongoose from "../db/db";
+import initMongoose from "../db";
 import PendingRequest from "@/model/pendindRequest";
 
 export async function fetchAllPendingRequests() {

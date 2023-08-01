@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
 const bcrypt = require("bcrypt");
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<IUser>(
   {
     username: {
       type: String,
@@ -17,17 +17,21 @@ const UserSchema = new Schema(
     },
     isTrainer: {
       type: Boolean,
-      default: false,
+      required: true,
     },
     emailVerified: {
       type: Boolean,
       default: false,
+      required: true,
     },
+    tags: [String],
+    roles: [String],
+    rating: Number,
     image: String,
+    avatar: String,
     city: String,
     slug: String,
     summary: String,
-    roles: Array,
   },
   { collection: "Users", timestamps: { createdAt: true, updatedAt: false } }
 );
@@ -41,20 +45,32 @@ const User = models?.User || model("User", UserSchema);
 export type UserRolesType = "Trener" | "Dietetyk" | "Fizjoterapeuta";
 
 export interface UserType {
-  _id?: string;
-  emailVerified?: boolean;
+  _id: string;
+  emailVerified: boolean;
   username: string;
   email: string;
   password: string;
-  isTrainer: boolean;
   image: string | null;
-  // createdAt: Date;
+  avatar: string | null;
+  isTrainer: false;
 }
-export interface TrainerType extends UserType {
+export interface TrainerType {
+  _id: string;
+  emailVerified: boolean;
+  username: string;
+  email: string;
+  password: string;
+  image: string | null;
+  avatar: string | null;
+  tags: string[] | null;
+  rating: number | null;
+  isTrainer: true;
   roles: UserRolesType[];
   summary: string;
   slug: string;
   city: string;
 }
+
+export type IUser = UserType | TrainerType;
 
 export default User;

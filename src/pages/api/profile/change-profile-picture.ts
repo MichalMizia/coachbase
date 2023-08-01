@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import multiparty from "multiparty";
 import axios from "axios";
 import User from "@/model/user";
-import initMongoose from "@/lib/db/db";
+import initMongoose from "@/lib/db";
 import uploadToGoogleDrive from "@/lib/uploadToGoogleDrive";
 
 export default async function handler(

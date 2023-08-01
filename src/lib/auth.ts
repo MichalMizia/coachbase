@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import initMongoose from "./db/db";
+import initMongoose from "./db";
 import User, { UserType } from "@/model/user";
 
 import Credentials from "next-auth/providers/credentials";

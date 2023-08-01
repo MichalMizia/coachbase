@@ -1,25 +1,16 @@
-// import { useEffect } from "react";
-// // import { Dispatch, SetStateAction } from "react";
-// import { create } from "zustand";
+// import { Dispatch, SetStateAction } from "react";
+import { create } from "zustand";
 
-// interface GenerationState {
-//   isMobile: boolean;
-//   update: () => void;
-// }
+interface GenerationState {
+  isMobile: boolean;
+  setIsMobile: (isMobile: boolean) => void;
+  isLarge: boolean;
+  setIsLarge: (isLarge: boolean) => void;
+}
 
-// const mobileQuery = "(max-width: 660px)";
-
-// export const useQueryStore = create<GenerationState>()((set, get) => ({
-//   isMobile: false,
-//   update: () => {
-//     useEffect(() => {
-//       const media = window.matchMedia(mobileQuery);
-//       if (media.matches !== get().isMobile) {
-//         set({ isMobile: media.matches });
-//       }
-//       const listener = () => set({ isMobile: media.matches });
-//       window.addEventListener("resize", listener);
-//       return () => window.removeEventListener("resize", listener);
-//     }, []);
-//   },
-// }));
+export const useQueryStore = create<GenerationState>()((set, get) => ({
+  isMobile: false,
+  setIsMobile: (isMobile: boolean) => set({ isMobile }),
+  isLarge: false,
+  setIsLarge: (isLarge: boolean) => set({ isLarge }),
+}));

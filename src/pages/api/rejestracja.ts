@@ -1,5 +1,5 @@
 import { registerController } from "@/controllers/userController";
-import initMongoose from "@/lib/db/db";
+import initMongoose from "@/lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
