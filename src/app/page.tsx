@@ -30,12 +30,6 @@ const Page = async ({}: pageProps) => {
   const trainersData: TrainerType[] = await getTrainers();
   const session = await getServerSession();
 
-  // const serializedTrainersData: TrainerType[] = trainersData.map((trainer) => {
-  //   const { __v, createdAt, updatedAt, ...newTrainer } = trainer;
-  //   return newTrainer;
-  // });
-  // console.log(serializedTrainersData);
-
   return (
     <OffersPage session={session} jsonData={JSON.stringify(trainersData)} />
   );

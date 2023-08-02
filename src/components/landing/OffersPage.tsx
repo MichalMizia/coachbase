@@ -51,11 +51,11 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
 
   return (
     <main className="text-gray-200">
-      <section className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000030] py-16">
+      <section className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000060] py-16">
         <Image
           className="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.4]"
           src={HeroImg}
-          alt=""
+          alt="Mężczyzna trenujący crossfit przy zachodzącym słońcu"
           loading="lazy"
         />
         <div className="container-md flex h-full flex-col items-center justify-around lg:max-h-[22rem]">

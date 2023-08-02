@@ -6,6 +6,8 @@ import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
+import { Suspense } from "react";
+import Logo from "@/components/custom/Logo";
 
 export const metadata = {
   title: "CoachBase",
@@ -87,7 +89,19 @@ export default async function RootLayout({
       <body className="bg-bg text-text">
         <Providers>
           {activePath?.startsWith("/edytor") ? null : (
-            <Navbar session={session} />
+            <Suspense
+              fallback={
+                <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 py-4 text-white shadow-sm shadow-slate-400">
+                  <div className="container-md mx-auto flex w-[95%] items-end justify-between gap-4 lg:gap-8">
+                    <Logo className="scale-90" />
+                    <div className="w-[25%] max-w-[200px] animate-pulse bg-white/20"></div>
+                    <div className="h-10 w-10 animate-pulse rounded-full border border-violet-300 bg-blue-400 shadow-md"></div>
+                  </div>
+                </header>
+              }
+            >
+              <Navbar session={session} />
+            </Suspense>
           )}
           {/* <div className="!z-[100000] text-3xl text-black">
             {JSON.stringify(activePath)}

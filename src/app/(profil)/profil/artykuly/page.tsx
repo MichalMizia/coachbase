@@ -39,7 +39,7 @@ const Page = async () => {
   // when the user is logged in as a trainer
   return (
     <div className="flex h-full flex-col items-stretch justify-start px-4 py-6 lg:px-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold text-gray-800">Artykuły</h2>
           <p className="text-h6 text-text_readable">
@@ -50,17 +50,20 @@ const Page = async () => {
       </div>
       <Separator className="my-4 bg-gray-300" />
 
-      {articles &&
-        articles.map((article) => (
-          <ArticleCard
-            key={article._id.toString()}
-            id={article._id.toString()}
-            title={article.title}
-            photoUrl={article.photoUrl || null}
-            date={article.updatedAt}
-            userId={user._id}
-          />
-        ))}
+      {articles && (
+        <ul className="w-full space-y-2">
+          {articles.map((article) => (
+            <ArticleCard
+              key={article._id.toString()}
+              id={article._id.toString()}
+              title={article.title}
+              photoUrl={article.photoUrl || null}
+              date={article.updatedAt}
+              userId={user._id}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

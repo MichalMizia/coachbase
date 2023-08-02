@@ -1,21 +1,24 @@
 import * as z from "zod";
 import { fileSchema } from "./fileUploadValidation";
 
+const numberRegex: RegExp = /\d/;
+
 export const trainerRegisterSchemaPart1 = z.object({
   username: z
     .string()
     .min(5, "Nazwa powinna zawierać minimum 5 znaków")
     .max(40, "Nazwa powinna zawierać maksimum 40 znaków"),
   email: z.string().email(),
-  password: z.string(),
+  password: z
+    .string()
+    .min(8, "Hasło powinno zawierać minimum 8 znaków")
+    .refine((str) => numberRegex.test(str), "Hasło powinno zawierać cyfrę"),
   description: z
     .string()
     .max(250, "Opis powinien zawierać maksimum 250 znaków")
     .min(40, "Opis powinien zawierać minimum 40 znaków"),
   isFormInInitialStateCurrently: z.literal(true),
 });
-
-const numberRegex: RegExp = /\d/;
 
 export const trainerRegisterSchemaPart2 = z.object({
   username: z

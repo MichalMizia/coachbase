@@ -14,15 +14,17 @@ import {
 } from "@/components/ui/dialog";
 // components
 import Button from "@/components/ui/Button";
-import { Edit } from "lucide-react";
-import { HTMLAttributes, useState } from "react";
+import { Edit, Loader2Icon } from "lucide-react";
+import { Dispatch, HTMLAttributes, SetStateAction, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
 interface ArticleImageFormProps extends HTMLAttributes<HTMLDivElement> {
-  photoUrl?: string;
+  photoUrl: string;
+  setPhotoUrl: (value: string) => void;
   postId: string;
   userId: string;
 }
@@ -31,6 +33,7 @@ type FormData = z.infer<typeof fileUploadSchema>;
 
 const ArticleImageForm = ({
   photoUrl,
+  setPhotoUrl,
   userId,
   postId,
   className,
@@ -56,19 +59,16 @@ const ArticleImageForm = ({
     formData.append("image", file);
 
     try {
-      const res = await axios.post(
-        "/api/profile/change-profile-picture",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      const url = res.data.url;
+      const res = await axios.post("/api/upload-files", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log(res);
+      const url = res.data.resultURL;
       if (!url) {
         throw new Error();
       }
 
-      localStorage.setItem(`article_photoUrl_${postId}`, url);
+      setPhotoUrl(url);
     } catch (e) {
       if (
         e instanceof AxiosError &&
@@ -87,12 +87,12 @@ const ArticleImageForm = ({
       setIsLoading(false);
     }
 
-    toast.success(
-      "Zdjęcie profilowe zmienione, żeby zobaczyć zmiany może być potrzebne wylogowanie i ponowne zalogowanie"
-    );
+    toast.success("Dodano zdjęcie jako miniaturkę artykułu");
   }
 
   const currentFiles: FileList | null = watch("files") || null;
+
+  console.log(photoUrl);
 
   return (
     <Dialog>
@@ -118,7 +118,7 @@ const ArticleImageForm = ({
             {...register("files")}
             className="absolute inset-0 z-[2] h-full w-full cursor-pointer opacity-0"
           /> */}
-          {(photoUrl || currentFiles?.length) && (
+          {/* {(photoUrl || currentFiles?.length) && (
             // decorational div to show the user he can edit the picture
             <div
               aria-hidden="true"
@@ -126,25 +126,17 @@ const ArticleImageForm = ({
             >
               <Icons.add className="absolute inset-0 m-auto h-6 w-6 -translate-y-0.5 translate-x-0.5 text-white" />
             </div>
-          )}
-          {photoUrl ? (
-            <img
-              src={
-                currentFiles?.length && currentFiles[0] instanceof File
-                  ? URL.createObjectURL(currentFiles[0])
-                  : photoUrl
-              }
-              alt="Zdjęcie Profilowe"
-              className="h-full w-full rounded-md object-cover"
-            />
-          ) : currentFiles &&
-            currentFiles.length &&
-            URL.createObjectURL(currentFiles[0]) ? (
-            <img
-              alt="Preview zdjęcia profilowego"
-              src={URL.createObjectURL(currentFiles[0])}
-              className="h-full w-full rounded-md object-cover"
-            />
+          )} */}
+          {photoUrl?.length ? (
+            <>
+              <img
+                src={photoUrl}
+                alt="Miniaturka Artykułu"
+                className="h-full w-full rounded-md object-cover"
+                loading="lazy"
+              />
+              <Loader2Icon className="absolute inset-0 -z-10 m-auto h-1/3 w-1/3 animate-pulse animate-timed-spin text-gray-700" />
+            </>
           ) : (
             <div className="absolute inset-0 m-auto flex flex-col items-center justify-center gap-2">
               <Icons.post className="h-8 w-8" />
@@ -221,7 +213,7 @@ const ArticleImageForm = ({
                 Back
               </Button>
             </DialogTrigger>
-            <Button variant="default">
+            <Button variant="default" isLoading={isLoading}>
               <Icons.media className="mr-2 h-4 w-4" />
               Save
             </Button>

@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { LoginForm } from "@/app/(auth)/@components/LoginForm";
+import { SendPasswordResetForm } from "../@components/SendPasswordResetForm";
 
 export const metadata: Metadata = {
-  title: "Login - Coachbase",
+  title: "Zresetuj Hasło - Coachbase",
   description: "Zaloguj się do swojego konta na coachbase.pl",
 };
 
-export default function LoginPage() {
+export default function Page() {
   return (
     <main>
       <section className="hero flex h-[calc(100vh-67px)] items-center bg-bg">
@@ -15,14 +15,13 @@ export default function LoginPage() {
           <div className="mx-auto flex w-[94%] max-w-[350px] flex-col justify-center space-y-4">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-3xl font-semibold tracking-tight text-black">
-                Witaj spowrotem!
+                Zresetuj hasło
               </h1>
               <p className="text-sm text-slate-500">
-                Zaloguj się przy użyciu emaila.
+                Nie martw się, każdy kiedyś tu był
               </p>
             </div>
-            <LoginForm />
-
+            <SendPasswordResetForm  />
             <p className="mt-2 px-8 text-center text-sm text-slate-500">
               <Link
                 href="/rejestracja"
@@ -30,15 +29,6 @@ export default function LoginPage() {
                 title="Rejestracja"
               >
                 Nie masz konta? Zarejestruj się
-              </Link>
-            </p>
-            <p className="mt-2 px-8 text-center text-sm text-slate-500">
-              <Link
-                href="/reset-hasla"
-                className="hover:text-brand underline underline-offset-4"
-                title="Zresetuj Hasło"
-              >
-                Nie pamiętasz hasła? Reset
               </Link>
             </p>
           </div>

@@ -1,70 +1,64 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { userAuthSchema } from "@/lib/validations/authValidations";
 import { useState } from "react";
 import Button from "../../../components/ui/Button";
 import { Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { useProfileStore } from "@/lib/state/profile-state-generation";
 import Link from "next/link";
+import axios from "axios";
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SendPasswordResetFormProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
-type FormData = z.infer<typeof userAuthSchema>;
+const userResetPwdSchema = z.object({
+  email: z.string().email(),
+});
 
-export function LoginForm({ className, ...props }: UserAuthFormProps) {
+type FormData = z.infer<typeof userResetPwdSchema>;
+
+export function SendPasswordResetForm({
+  className,
+  ...props
+}: SendPasswordResetFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(userAuthSchema),
+    resolver: zodResolver(userResetPwdSchema),
   });
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
-  const searchParams = useSearchParams();
   // const { setUser, setUserData } = useCurrentUserStore();
 
   async function onSubmit(data: FormData) {
+    console.log("");
     setIsLoading(true);
 
-    const signInResult = await signIn("credentials", {
-      email: data.email.toLowerCase(),
-      password: data.password,
-      redirect: false,
-      callbackUrl: searchParams?.get("from") || "/",
-    });
+    try {
+      const res = await axios.post("/api/profil/reset-hasla", {
+        email: data.email,
+      });
 
-    setIsLoading(false);
-
-    console.log(signInResult);
-    if (!signInResult?.ok) {
-      if (signInResult?.error) {
-        return toast.error(signInResult.error);
+      console.log(res);
+      if (res.statusText === "OK") {
+        toast.success("Wysłano email z linkiem do zmiany hasła");
       }
-      return toast.error("Coś poszło nie tak podczas logowania");
+    } catch (e) {
+      return toast.error(
+        "Nie udało się wysłać emaila z linkiem do zmiany hasła"
+      );
+    } finally {
+      setIsLoading(false);
     }
-    // const { user, userData } = await fetchUser(data.email.toLowerCase());
-    // if (user) {
-    //   setUser(user);
-    // }
-    // if (userData) {
-    //   setUserData(userData);
-    // }
-
-    toast.success("Zalogowano");
-    router.push("/");
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
           <label htmlFor="email" className="sr-only">
@@ -74,7 +68,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             type="email"
             {...register("email")}
             id="email"
-            placeholder="name@example.com"
+            placeholder="email@example.com"
             autoCapitalize="none"
             autoComplete="email"
             autoCorrect="off"
@@ -85,38 +79,17 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           {errors?.email && (
             <p className="px-1 text-xs text-red-600">{errors.email.message}</p>
           )}
+          {/* {JSON.stringify(errors)} */}
         </div>
-        <div className="mb-2">
-          <label htmlFor="password" className="sr-only">
-            Hasło
-          </label>
-          <input
-            type="password"
-            {...register("password")}
-            id="password"
-            placeholder="•••••••••"
-            autoCapitalize="none"
-            autoComplete="off"
-            autoCorrect="off"
-            disabled={isLoading || isGoogleLoading}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            required
-          />
-          {errors?.password && (
-            <p className="px-1 text-xs text-red-600">
-              {errors.password.message}
-            </p>
-          )}
-        </div>
+
         <Button
           type="submit"
           className="w-full"
           disabled={isLoading || isGoogleLoading}
         >
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Zaloguj
+          Wyślij link do resetu
         </Button>
-        
       </form>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
@@ -128,7 +101,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           </span>
         </div>
       </div>
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <Button variant="default" className="w-full">
           <Link href="/rejestracja-trenera" title="Rejestracja Konta Trenera">
             Utwórz Konto Trenera

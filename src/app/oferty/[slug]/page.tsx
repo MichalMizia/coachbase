@@ -51,7 +51,7 @@ const Page = async ({ params }: pageProps) => {
                   <>
                     <Loader2Icon
                       size={28}
-                      className="absolute inset-0 -z-10 m-auto animate-pulse animate-timed-spin text-gray-800"
+                      className="absolute inset-0 -z-10 m-auto animate-pulse animate-timed-spin text-gray-700"
                     />
                     <img
                       src={trainer.image}

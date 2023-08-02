@@ -4,12 +4,12 @@ export type ProfileNavigationOptions =
   | "O mnie"
   | "Opinie"
   | "Oferty"
-  | "Artykuły";
+  | "Efekty";
 export const profileNavigationOptions: ProfileNavigationOptions[] = [
   "O mnie",
   "Opinie",
   "Oferty",
-  "Artykuły",
+  "Efekty",
 ];
 
 interface GenerationState {

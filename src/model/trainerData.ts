@@ -1,4 +1,5 @@
 import { Schema, Types, model, models } from "mongoose";
+import { TrainerType } from "./user";
 
 const TrainerDataSchema = new Schema<TrainerDataType>(
   {
@@ -30,12 +31,22 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
             type: String,
             required: true,
           },
-          offerPhotoUrl: {
+          offerPrice: {
             type: String,
             required: true,
           },
+          offerFields: {
+            pricePer: String,
+            amountOfWorkouts: String,
+            duration: String,
+          },
         },
       ],
+      required: true,
+      default: [],
+    },
+    images: {
+      type: [String],
       required: true,
       default: [],
     },
@@ -89,7 +100,12 @@ export default TrainerData;
 export interface TrainerOfferType {
   offerTitle: string;
   offerDescription: string;
-  offerPhotoUrl: string;
+  offerPrice: string;
+  offerFields?: {
+    pricePer?: string;
+    amountOfWorkouts?: string;
+    duration?: string;
+  };
 }
 export interface TrainerTestimonialType {
   testimonialTitle: string;
@@ -112,6 +128,7 @@ export interface HeroSectionType {
 export interface TrainerDataType {
   userSlug: string;
   userId: Types.ObjectId;
+  images: string[];
   heroSection: HeroSectionType;
   offers: TrainerOfferType[];
   socialMedia: SocialMediaType;
@@ -123,4 +140,15 @@ export interface TrainerMediaType {
   socialMedia: SocialMediaType;
   tags?: string[];
   city?: string;
+}
+
+export interface PopulatedTrainerDataType {
+  userSlug: string;
+  userId: TrainerType;
+  images: string[];
+  heroSection: HeroSectionType;
+  offers: TrainerOfferType[];
+  socialMedia: SocialMediaType;
+  // tags: string[];
+  // testimonials?: TrainerTestimonialType[]
 }

@@ -78,6 +78,67 @@ export const tagOptions: Option[] = [
   { label: "Boks", value: "boks" },
 ];
 
+type offerOptionType = {
+  name: string;
+  fields?: {
+    amountOfPeople?: string[];
+    pricePer?: string[];
+    amountOfWorkouts?: boolean;
+    duration?: boolean;
+  };
+};
+
+export const offerOptions: offerOptionType[] = [
+  {
+    name: "Prowadzenie Treningowe Online",
+    fields: {
+      duration: true,
+    },
+  },
+  {
+    name: "Trening Grupowy",
+    fields: {
+      amountOfPeople: ["1", "2", "3", "grupa"],
+    },
+  },
+  {
+    name: "Trening Personalny",
+    fields: {
+      pricePer: ["1h", "2h", "Trening"],
+    },
+  },
+  {
+    name: "Pakiet Treningów Personalnych",
+    fields: {
+      pricePer: ["1h", "2h", "Trening"],
+      amountOfWorkouts: true,
+    },
+  },
+  {
+    name: "Konsultacje Treningowe",
+  },
+  {
+    name: "Konsultacje Dietetyczne",
+  },
+  {
+    name: "Prowadzenie Dietetyczne",
+  },
+  {
+    name: "Wizyta Fizjoterapeutyczna",
+  },
+];
+
+export const offerOptionNames: string[] = [
+  "Prowadzenie Treningowe Online",
+  "Trening Grupowy",
+  "Trening Personalny",
+  "Pakiet Treningów Personalnych",
+  "Konsultacje Treningowe",
+  "Konsultacje Dietetyczne",
+  "Prowadzenie Dietetyczne",
+  "Wizyta Fizjoterapeutyczna",
+];
+
 export const randomFacts: string[] = [
   "Japonia to obecnie jedyne cesarstwo na świecie. Tym samym Akihito to jedyny cesarz na świecie sprawujący władzę od 1989 roku.",
   "Księżyc nie posiada atmosfery. Z tego powodu raz pozostawiony ślad pozostanie na nim na zawsze (dopóki nie uderzy w niego meteoryt). Ostatni człowiek stąpający po Srebrnym Globie Gene Cernan obiecał swojej córce, iż pozostawi na jego powierzchni ślad TDC, czyli jej inicjały. Jak powiedział, tak zrobił.",

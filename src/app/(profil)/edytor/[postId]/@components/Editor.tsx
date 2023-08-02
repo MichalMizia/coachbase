@@ -33,6 +33,10 @@ const Editor = ({ className, post, userId }: EditorProps) => {
     post.content,
     sessionStorage
   );
+  const [photoUrl, setPhotoUrl] = useLocalStorage<string>(
+    `article_photoUrl_${post._id}`,
+    post.photoUrl || ""
+  );
 
   const {
     register,
@@ -87,7 +91,8 @@ const Editor = ({ className, post, userId }: EditorProps) => {
         </div>
         <ArticleImageForm
           postId={post._id}
-          photoUrl={post.photoUrl || undefined}
+          photoUrl={photoUrl}
+          setPhotoUrl={setPhotoUrl}
           userId={userId}
           className=""
         />
