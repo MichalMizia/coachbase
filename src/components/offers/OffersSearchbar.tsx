@@ -164,6 +164,7 @@ const SearchBarOffers = ({
           <PopoverTrigger asChild>
             <button
               role="combobox"
+              name="Wyszukaj Miasto Trenera"
               aria-expanded={isOpenCityModal}
               className="arial flex h-full w-full max-w-xl flex-1 items-center justify-between rounded-lg bg-slate-50 px-6 py-[17px] text-base text-text_readable shadow-md transition-shadow hover:shadow-lg hover:shadow-black/25 lg:rounded-none lg:border-r-2 lg:py-5"
             >
@@ -212,6 +213,7 @@ const SearchBarOffers = ({
           <PopoverTrigger asChild>
             <button
               role="combobox"
+              name="Wyszukaj Specjalizację Trenera"
               aria-expanded={isOpenTagModal}
               className="arial flex h-full w-full max-w-xl flex-1 items-center justify-between rounded-lg bg-slate-50 px-6 py-[17px] text-base text-text_readable shadow-md transition-shadow hover:shadow-lg hover:shadow-black/25 lg:rounded-none lg:border-r-2 lg:py-5"
             >
@@ -261,7 +263,7 @@ const SearchBarOffers = ({
           role="searchbox"
           id="search-dropdown"
           autoComplete="off"
-          className="hover valid:text-gray-800 arial flex h-16 max-w-xl flex-1 items-center justify-start self-stretch rounded-lg bg-slate-50 px-6 py-5 text-base  text-text_readable shadow-md outline-none transition-shadow placeholder:text-text hover:shadow-lg hover:shadow-black/25 focus:shadow-xl focus:shadow-[#00000030] lg:rounded-none lg:border-r"
+          className="hover arial flex h-16 max-w-xl flex-1 items-center justify-start self-stretch rounded-lg bg-slate-50 px-6 py-5 text-base text-text_readable  shadow-md outline-none transition-shadow placeholder:text-text valid:text-gray-800 hover:shadow-lg hover:shadow-black/25 focus:shadow-xl focus:shadow-[#00000030] lg:rounded-none lg:border-r"
           placeholder="Imię i Nazwisko Trenera"
           defaultValue={defaultQuery || ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>

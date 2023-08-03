@@ -91,6 +91,7 @@ export default function Navbar({ session }: NavbarProps) {
                   variant="text"
                   size="small"
                   key={navEl.title}
+                  name={navEl.title}
                   className={classNames(
                     navEl.disabled ? "text-gray-300" : "text-white",
                     isMobile

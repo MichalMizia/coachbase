@@ -13,6 +13,7 @@ import { TrainerDataType } from "@/model/trainerData";
 import { Sidebar } from "./@components/Sidebar";
 import NavigationToggle from "./@components/NavigationToggle";
 import initMongoose from "@/lib/db";
+import { ReactNode } from "react";
 
 const getUser = async (email: string): Promise<IUser | null> => {
   await initMongoose();
@@ -23,7 +24,8 @@ const getUser = async (email: string): Promise<IUser | null> => {
 export default async function ProfileLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  components: React.ReactNode
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {

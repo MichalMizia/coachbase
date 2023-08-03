@@ -14,9 +14,10 @@ const PhotoSection = ({}: PhotoSectionProps) => {
         className="relative isolate mx-auto flex aspect-video w-full max-w-[650px] cursor-pointer items-end justify-stretch overflow-hidden rounded-lg shadow-md  shadow-black/20 transition-all hover:shadow-lg hover:shadow-black/30 lg:col-span-3 lg:mx-0 lg:aspect-auto"
       >
         <Image
-          className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-90"
+          className="absolute inset-0 -z-[2]  object-cover brightness-90"
+          fill
           src={StrengthImg}
-          alt=""
+          alt="Zdjęcie przedstawiające trening siłowy"
         />
         <footer className="w-full bg-gradient-to-b from-black/20 to-black/80 p-4">
           <h4 className="text-white" style={{ fontSize: "var(--size-step-2)" }}>
@@ -30,9 +31,10 @@ const PhotoSection = ({}: PhotoSectionProps) => {
         className="relative isolate mx-auto flex aspect-video h-full w-full max-w-[650px] cursor-pointer items-end justify-stretch overflow-hidden rounded-lg shadow-md shadow-black/20 transition-all hover:shadow-lg hover:shadow-black/30 lg:col-span-2 lg:mx-0 lg:aspect-auto"
       >
         <Image
-          className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-90"
+          className="absolute inset-0 -z-[2]  object-cover brightness-90"
           src={DietImg}
-          alt=""
+          fill
+          alt="Talerz z ryżem, łososiem i warzywami"
         />
         <footer className="w-full  bg-gradient-to-b from-black/20 to-black/80 p-4">
           <h4 className="text-white" style={{ fontSize: "var(--size-step-2)" }}>
@@ -46,9 +48,10 @@ const PhotoSection = ({}: PhotoSectionProps) => {
         className="relative isolate mx-auto flex aspect-video w-full max-w-[650px] cursor-pointer items-end justify-stretch overflow-hidden rounded-lg shadow-md shadow-black/20 transition-all hover:shadow-lg hover:shadow-black/30 lg:col-span-2 lg:mx-0 lg:aspect-auto"
       >
         <Image
-          className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-90"
+          className="absolute inset-0 -z-[2]  object-cover brightness-90"
           src={MartialArtsImg}
-          alt=""
+          fill
+          alt="Worek bokserski na sali treningowej sztuk walki"
         />
         <footer className="w-full  bg-gradient-to-b from-black/20 to-black/80 p-4">
           <h4 className="text-white" style={{ fontSize: "var(--size-step-2)" }}>
@@ -62,9 +65,10 @@ const PhotoSection = ({}: PhotoSectionProps) => {
         className="relative isolate mx-auto flex aspect-video w-full max-w-[650px] cursor-pointer items-end justify-stretch overflow-hidden rounded-lg shadow-md shadow-black/20 transition-all hover:shadow-lg hover:shadow-black/30 lg:col-span-3 lg:mx-0 lg:aspect-auto"
       >
         <Image
-          className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-90"
+          className="absolute inset-0 -z-[2]  object-cover brightness-90"
           src={OnlineImg}
-          alt=""
+          fill
+          alt="Zdjęcie przedstawiające osobe pracująca na laptopie zdalnie"
         />
         <footer className="w-full bg-gradient-to-b from-black/20 to-black/80 p-4">
           <h4 className="text-white" style={{ fontSize: "var(--size-step-2)" }}>

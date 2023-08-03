@@ -60,6 +60,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         email: email,
       },
       offers: [],
+      images: [],
     };
     await Promise.all([
       PendingRequest.deleteOne({ email: email }),
