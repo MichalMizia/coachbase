@@ -1,6 +1,6 @@
-interface pageProps {}
+interface PageProps {}
 
-const page = ({}: pageProps) => {
+const Page = ({}: PageProps) => {
   return (
     <main className="w-full bg-white py-10 text-gray-800">
       <article className="politykaPrywatnosci privacy-article article flow mx-auto w-[90%] !max-w-7xl lg:w-[85%]">
@@ -249,8 +249,8 @@ const page = ({}: pageProps) => {
                   ponownie wpisywać loginu i hasła;
                 </li>
                 <li>
-                  realizacji celów określonych powyżej w części "Istotne
-                  techniki marketingowe";
+                  realizacji celów określonych powyżej w części &#34;Istotne
+                  techniki marketingowe&#34;;
                 </li>
               </ol>
             </li>
@@ -359,4 +359,4 @@ const page = ({}: pageProps) => {
   );
 };
 
-export default page;
+export default Page;
