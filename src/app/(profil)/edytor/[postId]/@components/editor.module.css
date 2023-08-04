@@ -16,7 +16,7 @@
   font-size: var(--size-step-0) !important;
 }
 .editor p {
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .editor h1 {
   font-size: var(--size-step-4) !important;
@@ -48,11 +48,33 @@
   @apply text-teal-500 underline decoration-current underline-offset-1 hover:opacity-80;
 }
 
-.editor p:first-child {
+.editor .ql-editor p:first-child {
   font-size: var(--size-step-1);
   font-style: italic;
+  --flow-space: 0;
   /* text-wrap: balance; */
 }
 .editor p {
   font-size: var(--size-step-0);
+}
+
+@media (max-width: 640px) {
+  .editor p {
+    @apply !text-h6;
+    line-height: 1.2;
+  }
+  .editor p:first-child {
+    @apply !text-body;
+    font-style: italic;
+    /* text-wrap: balance; */
+  }
+  .editor h1 {
+    font-size: var(--size-step-3) !important;
+  }
+  .editor h2 {
+    font-size: var(--size-step-2) !important;
+  }
+  .editor h3 {
+    font-size: var(--size-step-1) !important;
+  }
 }

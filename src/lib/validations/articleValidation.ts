@@ -2,7 +2,6 @@ import { fileSchema } from "./fileUploadValidation";
 import * as z from "zod";
 
 export const articleUploadSchema = z.object({
-  files: fileSchema,
   title: z
     .string()
     .max(40, "Tytuł nie może być dłuższy niż 40 znaków")

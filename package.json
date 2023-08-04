@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "ts-check": "tsc --noEmit"
@@ -53,6 +54,7 @@
     "multiparty": "^4.2.3",
     "next": "^13.4.12",
     "next-auth": "^4.22.1",
+    "next-sitemap": "^4.1.8",
     "nodemailer": "^6.9.4",
     "postcss": "8.4.23",
     "react": "18.2.0",

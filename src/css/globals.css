@@ -264,28 +264,47 @@ body {
   font-size: 14px;
 }
 
+@media (max-width: 640px) {
+  .ql-editor {
+    padding: 8px !important;
+  }
+}
+
 .ql-toolbar {
   border: none;
 }
 
 .article-editor .ql-editor > * + * {
-  margin-block-start: var(--flow-space, 0.4em) !important;
+  margin-block-start: var(--flow-space, 0.5em) !important;
 }
-.article-editor .ql-editor > * + p {
+.article-editor .ql-editor > * + p:first-child {
   --flow-space: 0em;
 }
 .article-editor .ql-editor > * + h1 {
-  --flow-space: 0.18em;
+  --flow-space: 0.4em;
 }
 .article-editor .ql-editor > * + h2 {
-  --flow-space: 0.32em;
+  --flow-space: 0.6em;
 }
 .article-editor .ql-editor > * + h3 {
-  --flow-space: 0.5em;
+  --flow-space: 0.8em;
 }
+@media (min-width: 640px) {
+  .article-editor .ql-editor > * + h1 {
+    --flow-space: 0.2em;
+  }
+  .article-editor .ql-editor > * + h2 {
+    --flow-space: 0.35em;
+  }
+  .article-editor .ql-editor > * + h3 {
+    --flow-space: 0.5em;
+  }
+}
+
 .article-editor .ql-editor > * + ul,
 .article-editor .ql-editor > * + ol {
   --flow-space: 0.8em;
+  padding-left: 2vw;
 }
 .article-editor .ql-editor {
   max-height: 100%;

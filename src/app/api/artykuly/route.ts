@@ -2,12 +2,13 @@
 import initMongoose from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Article, { ArticleType } from "@/model/article";
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, HydratedDocument } from "mongoose";
 import { randomFacts } from "@/config/global";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 import axios from "axios";
+import slugify from "slugify";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions);
@@ -29,8 +30,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     await initMongoose();
     console.log("id: ", id);
+    // const content =
+    //   randomFacts[Math.round(Math.random() * (randomFacts.length - 1))];
     const content =
-      randomFacts[Math.round(Math.random() * (randomFacts.length - 1))];
+      "Zacznij edytować nowy artykuł, kiedy zakończysz edycję możesz opublikować go luz zapisać bez opublikowania";
 
     const articleOptions: Omit<ArticleType, "updatedAt" | "createdAt" | "_id"> =
       {
@@ -106,24 +109,53 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     return NextResponse.json({}, { status: 400 });
   }
 }
-// export async function PATCH(req: Request, res: Response) {
-//   try {
-//     await initMongoose();
-//   } catch (e) {
-//     console.log("Failed connecting to database: ", e);
-//     return NextResponse.json(
-//       { message: "Failed connecting to database" },
-//       { status: 500 }
-//     );
-//   }
+export async function PATCH(req: NextRequest, res: NextResponse) {
+  try {
+    await initMongoose();
+  } catch (e) {
+    console.log("Failed connecting to database: ", e);
+    return NextResponse.json(
+      { message: "Failed connecting to database" },
+      { status: 500 }
+    );
+  }
 
-//   try {
-//     const users = await User.find({}).exec();
-//     return NextResponse.json(users, { status: 200 });
-//   } catch (e) {
-//     return NextResponse.json(
-//       { message: "Błąd wczytywania użytkowników z bazy danych" },
-//       { status: 400 }
-//     );
-//   }
-// }
+  const { articleId, photoUrl, title, summary, content, published } =
+    await req.json();
+
+  if (!title?.length || !summary.length || !content?.length) {
+    return NextResponse.json(
+      { message: "Tytuł, podsumowanie i kontent artykułu są wymagane" },
+      { status: 400 }
+    );
+  }
+
+  const article: HydratedDocument<ArticleType> = await Article.findById(
+    articleId
+  ).exec();
+
+  if (!article) {
+    return NextResponse.json(
+      { message: "Nie ma takiego artykułu" },
+      { status: 400 }
+    );
+  }
+
+  article.title = title;
+  article.summary = summary;
+  article.content = content;
+  if (published) {
+    article.published = true;
+    article.slug = slugify(title);
+  }
+  if (photoUrl) {
+    article.photoUrl = photoUrl;
+  }
+
+  try {
+    await article.save();
+    return NextResponse.json({}, { status: 200 });
+  } catch (e) {
+    return NextResponse.json({}, { status: 400 });
+  }
+}

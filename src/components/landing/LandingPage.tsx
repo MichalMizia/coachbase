@@ -16,11 +16,14 @@ import DumbellImg from "../../../public/assets/dumbells.jpg";
 import { Icons } from "@/components/ui/icons";
 // dynamic imports
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { ArticleType } from "@/model/article";
 const PhotoSection = dynamic(() => import("./PhotoSection"));
 
-interface OffersPageProps {
+interface LandingPageProps {
   session: Session | null;
   jsonData: string;
+  articles: ArticleType[];
 }
 
 export type SortingType = "Najlepiej oceniane" | "Najnowsze" | "Najbliżej";
@@ -31,24 +34,8 @@ export interface RolesType {
 }
 
 // export const sortingOptions = ["Najnowsze", "Najlepiej oceniane", "Najbliżej"];
-
-const OffersPage = ({ session, jsonData }: OffersPageProps) => {
+const LandingPage = ({ session, jsonData, articles }: LandingPageProps) => {
   const trainers: TrainerType[] = JSON.parse(jsonData);
-  // const [roles, setRoles] = useState<RolesType[]>([
-  //   {
-  //     name: "Trener",
-  //     visible: true,
-  //   },
-  //   {
-  //     name: "Dietetyk",
-
-  //     visible: true,
-  //   },
-  //   {
-  //     name: "Fizjoterapeuta",
-  //     visible: true,
-  //   },
-  // ]);
 
   return (
     <main className="text-gray-200">
@@ -109,18 +96,68 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
       </section>
 
       <section className="border-b-2 py-8 md:py-12 lg:py-16">
+        <div className="container-md flex flex-wrap items-start justify-center gap-8 pb-8">
+          {/* <div className="flex-1">
+            <h2 className="text-h2 font-semibold text-gray-800">
+              Ostatnie&nbsp;Artykuły
+            </h2>
+            <Link
+              href="/"
+              className="relative -top-1.5 text-body text-text_readable underline decoration-current decoration-1 transition-all hover:text-black"
+            >
+              Zobacz więcej...
+            </Link>
+            {articles.length && (
+              <ul className="mt-4 flex flex-col">
+                {articles.map((article) => (
+                  <li className="flex items-stretch justify-stretch">
+                    <Link
+                      title={article.title}
+                      className="flex items-start gap-2"
+                      href={article.slug}
+                    >
+                      {article.photoUrl ? (
+                        <img
+                          src={article.photoUrl}
+                          alt={
+                            article.photoAlt ||
+                            `Miniaturka artykułu ${article.title}`
+                          }
+                          className="h-12 w-12 rounded-full object-cover shadow-md"
+                        />
+                      ) : (
+                        <div className="h-12 w-12 bg-blue-500">
+                          <Icons.media className="text-white" />
+                        </div>
+                      )}
+                      <div className="flex flex-col items-start">
+                        <h3 className="text-body font-[500] text-gray-800">
+                          {article.title}
+                        </h3>
+                        <p className="relative -top-1 text-text_readable">
+                          {article.summary}
+                        </p>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div> */}
+          <div className="flex-1"></div>
+        </div>
         <div className="container-md">
           <header className="flex items-center justify-between">
-            <div className="space-y-0.5">
+            <div className="">
               <h2
-                style={{ fontSize: "var(--size-step-3)" }}
-                className="font-semibold text-gray-800 "
+                // style={{ fontSize: "var(--size-step-3)" }}
+                className="text-h2 font-semibold text-gray-800"
               >
                 Najnowsze Oferty
               </h2>
               <p
-                style={{ fontSize: "var(--size-step-0)" }}
-                className=" text-text_readable"
+                // style={{ fontSize: "var(--size-step-0)" }}
+                className="relative -top-0.5 text-body text-text_readable"
               >
                 Oto trenerzy którzy ostatnio założyli konto na CoachBase
               </p>
@@ -224,4 +261,4 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
   );
 };
 
-export default OffersPage;
+export default LandingPage;
