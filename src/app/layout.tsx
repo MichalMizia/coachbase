@@ -1,4 +1,5 @@
 import "../css/globals.css";
+import "../css/article.css";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 // auth
@@ -8,6 +9,8 @@ import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 import { Suspense } from "react";
 import Logo from "@/components/custom/Logo";
+import { Analytics } from "@vercel/analytics/react";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "CoachBase",
@@ -34,6 +37,7 @@ export const metadata = {
     "Nauka",
     "Trening",
   ],
+
   icons: {
     icon: "/icons/favicon.ico",
     other: [
@@ -72,6 +76,7 @@ export const metadata = {
     url: "https://coachbase.pl/oferty",
   },
   themeColor: "#ffffff",
+  verification: { google: "qpUyWQxaLEGfUfIiRq0_gqPqviHw7vrC506P4Y1p9I4" },
 };
 
 export default async function RootLayout({
@@ -83,9 +88,10 @@ export default async function RootLayout({
 
   const headersList = headers();
   const activePath = headersList.get("x-pathname");
+  console.log("active: ", activePath);
 
   return (
-    <html lang="en">
+    <html lang="pl">
       <body className="bg-bg text-text">
         <Providers>
           {activePath?.startsWith("/edytor") ? null : (
@@ -106,7 +112,28 @@ export default async function RootLayout({
           {/* <div className="!z-[100000] text-3xl text-black">
             {JSON.stringify(activePath)}
           </div> */}
+          <Analytics />
           {children}
+
+          {activePath?.startsWith("/edytor") ||
+          activePath?.startsWith("/profil") ? null : (
+            <>
+              <Suspense
+                fallback={
+                  <header className="fixed left-0 right-0 top-0 z-[999] w-full bg-blue-500 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 py-4 text-white shadow-sm shadow-slate-400">
+                    <div className="container-md mx-auto flex w-[95%] items-end justify-between gap-4 lg:gap-8">
+                      <Logo className="scale-90" />
+                      <div className="w-[25%] max-w-[200px] animate-pulse bg-white/20"></div>
+                      <div className="h-10 w-10 animate-pulse rounded-full border border-violet-300 bg-blue-400 shadow-md"></div>
+                    </div>
+                  </header>
+                }
+              >
+                <Footer />
+              </Suspense>
+              <div className="h-[51px] bg-white md:h-[66px] nav:hidden"></div>
+            </>
+          )}
         </Providers>
       </body>
     </html>

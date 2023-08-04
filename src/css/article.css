@@ -35,6 +35,32 @@
   max-width: 28ch;
 }
 
+.article ol {
+  list-style: decimal;
+  padding-left: 2rem;
+}
+.article ol li::marker {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.article ul {
+  padding-left: 12px;
+}
+.article ul li {
+  padding-left: 4px;
+}
+
+.privacy-article ul {
+  list-style: circle;
+}
+.privacy-article ul li::marker {
+  content: "✓";
+  color: #facc15;
+  right: calc(100% + 2rem);
+  position: absolute;
+}
+
 .article blockquote {
   padding-inline-start: 1em;
   border-inline-start: 0.3em solid;
@@ -44,11 +70,12 @@
   max-width: 50ch;
 }
 
-.article.flow > * + * {
+.flow > * + * {
   margin-block-start: var(--flow-space, 1em);
 }
 .article :is(h1, h2, h3, blockquote) {
-  --flow-space: 1.5em;
+  margin-block-start: var(--flow-space, 1.25em);
+  margin-block-end: var(--flow-space, 0.5em);
 }
 .article :is(h1, h2, h3) + * {
   --flow-space: 0.5em;

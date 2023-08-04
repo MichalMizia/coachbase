@@ -103,7 +103,7 @@ const Providers = ({ children }: ProvidersProps) => {
               clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
             },
           }}
-          className="h-[100vh] w-full"
+          className="h-full w-full"
         >
           {children}
         </motion.div>

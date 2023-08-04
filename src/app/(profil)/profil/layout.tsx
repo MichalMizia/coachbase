@@ -25,7 +25,7 @@ export default async function ProfileLayout({
   children,
 }: {
   children: ReactNode;
-  components: React.ReactNode
+  components: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
@@ -38,7 +38,7 @@ export default async function ProfileLayout({
 
   if (!user.isTrainer) {
     return (
-      <main className="bg-bg">
+      <main className="h-full overflow-hidden bg-bg">
         <header className="w-full bg-white shadow">
           <div className="container-md flex items-center justify-between px-2">
             <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
@@ -66,7 +66,7 @@ export default async function ProfileLayout({
 
   // when the user is logged in as a trainer
   return (
-    <main className="flex h-[calc(100vh-122px)] max-w-[100vw] flex-col items-stretch justify-start overflow-hidden overflow-x-hidden bg-white nav:h-[calc(100vh-70px)]">
+    <main className="flex h-[calc(100vh-70px)] max-w-[100vw] flex-col items-stretch justify-start overflow-hidden overflow-x-hidden bg-white">
       <header className="z-[2] w-full shadow-md shadow-[#00000020]">
         <div className="container-md flex items-center justify-between px-2 lg:flex-row-reverse">
           <NavigationToggle />

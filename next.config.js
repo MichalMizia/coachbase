@@ -19,6 +19,15 @@ const nextConfig = {
         hostname: "drive.google.com",
       },
     ],
+    // minimumCacheTTL: 31536000,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap.xml",
+        destination: "/api/sitemap",
+      },
+    ];
   },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };

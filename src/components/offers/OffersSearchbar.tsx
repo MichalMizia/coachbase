@@ -107,6 +107,7 @@ const SearchBarOffers = ({
       className={cn("w-full", className)}
       onSubmit={(e) => handleSubmit(e)}
       {...props}
+      id="search"
     >
       {/* <div className="relative flex">
         <div className="relative flex w-full items-center justify-center">
@@ -261,7 +262,6 @@ const SearchBarOffers = ({
         <input
           type="text"
           role="searchbox"
-          id="search-dropdown"
           autoComplete="off"
           className="hover arial flex h-16 max-w-xl flex-1 items-center justify-start self-stretch rounded-lg bg-slate-50 px-6 py-5 text-base text-text_readable  shadow-md outline-none transition-shadow placeholder:text-text valid:text-gray-800 hover:shadow-lg hover:shadow-black/25 focus:shadow-xl focus:shadow-[#00000030] lg:rounded-none lg:border-r"
           placeholder="Imię i Nazwisko Trenera"

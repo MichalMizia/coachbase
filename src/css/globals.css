@@ -42,11 +42,11 @@ body {
   padding-top: 66px !important;
   overflow-x: hidden;
   pointer-events: all !important;
+  scroll-behavior: smooth;
 }
 @media (max-width: 800px) {
   body {
     padding-top: 60px !important;
-    padding-bottom: 50px !important;
   }
 }
 

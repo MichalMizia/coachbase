@@ -1,8 +1,6 @@
 "use client";
 
 // components
-import { Globe2Icon, MessagesSquareIcon } from "lucide-react";
-import PhotoSection from "./PhotoSection";
 import Button from "@/components/ui/Button";
 // import { MultiSelect } from "react-multi-select-component";
 // types
@@ -16,6 +14,9 @@ import Image from "next/image";
 import HeroImg from "../../../public/assets/hero.jpg";
 import DumbellImg from "../../../public/assets/dumbells.jpg";
 import { Icons } from "@/components/ui/icons";
+// dynamic imports
+import dynamic from "next/dynamic";
+const PhotoSection = dynamic(() => import("./PhotoSection"));
 
 interface OffersPageProps {
   session: Session | null;
@@ -51,13 +52,18 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
 
   return (
     <main className="text-gray-200">
-      <section className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000060] py-16">
+      <section
+        id="search-section"
+        className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000060] py-16"
+      >
         <Image
           className="absolute inset-0 -z-10 object-cover brightness-[0.4]"
           src={HeroImg}
           alt="Mężczyzna trenujący crossfit przy zachodzącym słońcu"
           fill
           priority
+          loading="eager"
+          placeholder="blur"
         />
         <div className="container-md flex h-full flex-col items-center justify-around lg:max-h-[22rem]">
           <header>
@@ -141,12 +147,11 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
                       {trainer.city}
                     </div>
                     {trainer.image && (
-                      <Image
-                        fill
-                        loading="lazy"
+                      <img
                         src={trainer.image}
+                        placeholder="blur"
                         alt={`Zdjęcie Profilowe ${trainer.username}`}
-                        className="absolute inset-0 -z-[2] object-cover brightness-[0.8] transition-all duration-200 group-hover:scale-105"
+                        className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-[0.8] transition-all duration-200 group-hover:scale-105"
                       />
                     )}
                     <main className="w-full bg-gradient-to-b from-black/20 to-black/80 p-4">
@@ -207,8 +212,10 @@ const OffersPage = ({ session, jsonData }: OffersPageProps) => {
         </main>
         <Image
           src={DumbellImg}
-          alt=""
-          className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-50"
+          alt="Sala treningowa wypełniona hantlami"
+          fill
+          placeholder="blur"
+          className="absolute inset-0 -z-[2] object-cover brightness-50"
         />
       </section>
 
