@@ -17,12 +17,7 @@ const OfferTabsAbout = ({ trainerData }: OfferTabsAboutProps) => {
           <FileText size={18} className="text-text" />
           Opis
         </h4>
-        <main
-          className="max-w-xl px-1 py-3 article"
-          dangerouslySetInnerHTML={{
-            __html: sanitize(trainerData.heroSection.content),
-          }}
-        ></main>
+        <main className="article max-w-xl px-1 py-3"></main>
       </section>
       {/* <section className="border-b border-gray-300 px-6 py-4">
         <h4 className="flex w-fit items-center justify-start gap-2 px-1 text-body text-gray-800">

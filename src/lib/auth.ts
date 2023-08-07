@@ -1,11 +1,12 @@
 // @ts-nocheck
 
 import initMongoose from "./db";
-import User, { UserType } from "@/model/user";
+import User, { IUser, UserType } from "@/model/user";
 
 import Credentials from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 import { GetSessionParams } from "next-auth/react";
+import { HydratedDocument } from "mongoose";
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -26,11 +27,12 @@ const authOptions: NextAuthOptions = {
       },
       // Authorize callback is ran upon calling the signin function
       async authorize(credentials, req) {
-        initMongoose();
+        await initMongoose();
 
         // Try to find the user and also return the password field
-        const user = await User.findOne({ email: credentials?.email });
-        console.log("User when fetching: ", user);
+        const user: HydratedDocument<IUser> | null = await User.findOne({
+          email: credentials?.email,
+        });
 
         if (!user) {
           throw new Error("No user with a matching email was found.");
@@ -43,7 +45,7 @@ const authOptions: NextAuthOptions = {
           throw new Error("Your password is invalid");
         }
 
-        return user._doc;
+        return user;
         // return user;
       },
     }),

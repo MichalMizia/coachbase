@@ -15,7 +15,7 @@ const ProfileLink = ({ username, isLarge }: ProfileLinkProps) => {
       .join("");
 
   return (
-    <Link title="Profil" href="/profil">
+    <a title="Profil" href="/profil">
       {initials ? (
         isLarge ? (
           <div className="flex items-end justify-center gap-2">
@@ -39,7 +39,7 @@ const ProfileLink = ({ username, isLarge }: ProfileLinkProps) => {
           <UserIcon />
         </div>
       )}
-    </Link>
+    </a>
   );
 };
 

@@ -8,7 +8,11 @@ interface IUser extends Omit<DefaultUser, "name" | "id"> {
 }
 
 declare module "next-auth" {
-  interface User extends IUser {}
+  interface User extends Omit<DefaultUser, "name" | "id"> {
+    isTrainer: boolean;
+    _id: string;
+    username: string;
+  }
 
   interface Session extends DefaultSession {
     user: User;

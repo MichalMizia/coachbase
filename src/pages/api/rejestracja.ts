@@ -15,7 +15,6 @@ export default async function handler(
       return res.status(500).json({ message: "Failed connecting to database" });
     }
 
-    console.log("Mongoose connected while registering a user");
     try {
       await registerController.addNewUser(req, res);
     } catch (e) {

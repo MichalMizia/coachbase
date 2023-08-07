@@ -1,25 +1,20 @@
 import authOptions from "@/lib/auth";
-import { ChevronRightIcon, HeartIcon, HomeIcon } from "lucide-react";
+import { ChevronLeft, ChevronRightIcon, HomeIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import HeaderCards from "@/components/profile/HeaderCards";
-import {
-  fetchTrainer,
-  fetchTrainerFromEmail,
-} from "@/lib/fetching/fetchTrainer";
 import User, { type IUser } from "@/model/user";
-import { fetchTrainerData } from "@/lib/fetching/fetchTrainerData";
-import { TrainerDataType } from "@/model/trainerData";
-import { Sidebar } from "./@components/Sidebar";
-import NavigationToggle from "./@components/NavigationToggle";
 import initMongoose from "@/lib/db";
 import { ReactNode } from "react";
+import PrevRouteBtn from "@/components/PrevRouteBtn";
+import dynamic from "next/dynamic";
+const MobileDrawer = dynamic(() => import("./@components/MobileDrawer"));
+const Sidebar = dynamic(() => import("./@components/Sidebar"));
 
-const getUser = async (email: string): Promise<IUser | null> => {
-  await initMongoose();
-  const user: IUser | null = await User.findOne({ email: email }).lean().exec();
-  return user;
-};
+// const getUser = async (email: string): Promise<IUser | null> => {
+//   await initMongoose();
+//   const user: IUser | null = await User.findOne({ email: email }).lean().exec();
+//   return user;
+// };
 
 export default async function ProfileLayout({
   children,
@@ -28,46 +23,19 @@ export default async function ProfileLayout({
   components: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
+  console.log("Session in profile: ", session);
   if (!session?.user?.email) {
     redirect("/rejestracja");
   }
-  const user = await getUser(session.user.email);
-  if (!user) {
-    redirect("/rejestracja");
-  }
 
-  if (!user.isTrainer) {
-    return (
-      <main className="h-full overflow-hidden bg-bg">
-        <header className="w-full bg-white shadow">
-          <div className="container-md flex items-center justify-between px-2">
-            <nav className="flex w-fit items-center justify-center gap-3 pb-4 pt-6 ">
-              <a href="/">
-                <HomeIcon size={20} className="text-blue-600" />
-              </a>
-              <ChevronRightIcon size={20} />
-              <h1 className="font-semibold text-blue-600">Profil</h1>
-            </nav>
-          </div>
-        </header>
-        <h1 className="text-2xl font-semibold text-black">
-          Witaj spowrotem, {session.user.username}
-        </h1>
-        {/* <ProfileInfoSection
-            user={session.user}
-            isTrainer={session.user.isTrainer}
-          /> */}
-      </main>
-    );
+  if (!session.user.isTrainer) {
+    redirect("konto-uzytkownika");
   }
-
-  const userData: TrainerDataType = await fetchTrainerData(user.slug);
-  // const newUser = { ...user, _id: user._id.toString() };
 
   // when the user is logged in as a trainer
   return (
-    <main className="flex h-[calc(100vh-70px)] max-w-[100vw] flex-col items-stretch justify-start overflow-hidden overflow-x-hidden bg-white">
-      <header className="z-[2] w-full shadow-md shadow-[#00000020]">
+    <main className="flex h-screen w-screen flex-col items-stretch justify-start overflow-hidden bg-white">
+      {/* <header className="z-[2] w-full shadow-md shadow-[#00000020]">
         <div className="container-md flex items-center justify-between px-2 lg:flex-row-reverse">
           <NavigationToggle />
           <HeaderCards user={user} userData={userData} />
@@ -79,17 +47,25 @@ export default async function ProfileLayout({
             <h1 className="font-semibold text-blue-600">Profil</h1>
           </nav>
         </div>
-      </header>
-      {/* <ProfileInfoSection
-          user={user}
-          heroContent={userData.heroSection.content}
-        /> */}
-      <section className="relative h-full w-full flex-1 overflow-hidden border-t border-gray-300">
-        <div className="grid h-full lg:grid-cols-5">
-          <Sidebar className="h-full border-gray-300 lg:static lg:translate-x-0 lg:border-r" />
-          <div className="col-span-3 overflow-y-auto border-l lg:col-span-4">
-            {children}
-            <div className="-z-10 h-20 w-full"></div>
+      </header> */}
+
+      <section className="relative h-full w-full flex-1 border-t border-gray-300">
+        {/* mobile navigation */}
+        <div className="relative isolate w-full overflow-hidden bg-blue-500 py-1 before:absolute before:-left-6 before:-top-3 before:-z-10 before:h-24 before:w-32 before:rotate-45 before:rounded-[30%] before:border-black/20 before:bg-indigo_custom/20 before:shadow-md before:shadow-black/20 after:absolute after:-right-3 after:-top-2 after:h-20 after:w-24 after:-rotate-45 after:rounded-[40%] after:bg-indigo_custom/50 lg:hidden">
+          <div className="container-md flex items-center justify-between">
+            <PrevRouteBtn variant="text" className="hover:bg-black/10">
+              <ChevronLeft className="text-white" />
+            </PrevRouteBtn>
+            <MobileDrawer />
+          </div>
+        </div>
+        {/* desktop grid */}
+        <div className="grid h-full rounded-lg lg:grid-cols-4 lg:rounded-none xl:[grid-template-columns:320px_1fr]">
+          <Sidebar className="col-span-1 hidden h-full max-w-xs lg:block" />
+          <div className="col-span-3 w-full overflow-y-hidden bg-blue-500 lg:bg-transparent xl:col-span-1">
+            <div className="h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-14">
+              {children}
+            </div>
           </div>
         </div>
       </section>

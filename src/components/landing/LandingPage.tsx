@@ -8,7 +8,7 @@ import { TrainerType, UserRolesType } from "@/model/user";
 // utils
 import { Session } from "next-auth";
 // hooks
-import SearchBarOffers from "@/components/offers/OffersSearchbar";
+import SearchBarOffers from "@/components/landing/OffersSearchbar";
 // images
 import Image from "next/image";
 import HeroImg from "../../../public/assets/hero.jpg";

@@ -9,8 +9,8 @@ import { redirect } from "next/navigation";
 import initMongoose from "@/lib/db";
 // types
 import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
-import { TrainerType } from "@/model/user";
 import NewOfferForm from "./@components/NewOfferForm";
+import TrainerOfferCard from "./@components/TrainerOfferCard";
 
 interface PageProps {}
 
@@ -29,15 +29,15 @@ const getUser = async (
 
 const Page = async ({}: PageProps) => {
   const session = await getServerSession(authOptions);
-  if (!session?.user._id) {
-    redirect("login");
+  if (!session?.user?._id) {
+    redirect("/rejestracja");
   }
 
   const userData = await getUser(session.user._id);
   if (!userData) {
-    redirect("login");
+    throw new Error("Brak danych powiązanych z tym trenerem");
   }
-  const user: TrainerType = userData?.userId;
+  const user = userData?.userId;
 
   return (
     <div className="flex h-full flex-col items-stretch justify-start px-4 py-6 lg:px-8">
@@ -51,6 +51,21 @@ const Page = async ({}: PageProps) => {
         <NewOfferForm userId={user._id} />
       </div>
       <Separator className="my-4 bg-gray-300" />
+      {userData.offers && (
+        <ul className="w-full space-y-2">
+          {userData.offers.map((offer) => (
+            <TrainerOfferCard
+              key={offer.offerTitle}
+              offerTitle={offer.offerTitle}
+              offerDescription={offer.offerDescription}
+              offerPrice={offer.offerPrice}
+              offerFields={offer.offerFields}
+              offerId={offer.offerId}
+              userId={user._id}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

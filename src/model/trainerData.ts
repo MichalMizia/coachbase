@@ -1,5 +1,21 @@
 import { Schema, Types, model, models } from "mongoose";
 import { TrainerType } from "./user";
+import {
+  TrainerOfferSchema,
+  TrainerOfferType,
+} from "./trainerDataSubSchemas/trainerOffer";
+import {
+  TrainerFAQQuestionType,
+  TrainerFAQSchema,
+} from "./trainerDataSubSchemas/trainerFaq";
+import {
+  TrainerReviewSchema,
+  TrainerReviewType,
+} from "./trainerDataSubSchemas/trainerReview";
+import {
+  TrainerTestimonialSchema,
+  TrainerTestimonialType,
+} from "./trainerDataSubSchemas/trainerTestimonial";
 
 const TrainerDataSchema = new Schema<TrainerDataType>(
   {
@@ -13,35 +29,24 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
       required: true,
       ref: "User",
     },
-    heroSection: {
-      image: String,
-      content: {
-        type: String,
-        required: true,
-      },
-    },
+    // trainer options
     offers: {
-      type: [
-        {
-          offerTitle: {
-            type: String,
-            required: true,
-          },
-          offerDescription: {
-            type: String,
-            required: true,
-          },
-          offerPrice: {
-            type: String,
-            required: true,
-          },
-          offerFields: {
-            pricePer: String,
-            amountOfWorkouts: String,
-            duration: String,
-          },
-        },
-      ],
+      type: [TrainerOfferSchema],
+      required: true,
+      default: [],
+    },
+    faq: {
+      type: [TrainerFAQSchema],
+      required: true,
+      default: [],
+    },
+    testimonials: {
+      type: [TrainerTestimonialSchema],
+      required: true,
+      default: [],
+    },
+    reviews: {
+      type: [TrainerReviewSchema],
       required: true,
       default: [],
     },
@@ -50,26 +55,36 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
       required: true,
       default: [],
     },
-    // testimonials: [
-    //   {
-    //     testimonialRating: {
-    //       type: Number,
+    // sections: {
+    //   type: [
+    //     {
+    //       offerTitle: {
+    //         type: String,
+    //         required: true,
+    //       },
+    //       offerDescription: {
+    //         type: String,
+    //         required: true,
+    //       },
+    //       offerPrice: {
+    //         type: String,
+    //         required: true,
+    //       },
+    //       offerFields: {
+    //         pricePer: String,
+    //         amountOfWorkouts: String,
+    //         duration: String,
+    //       },
+    //       offerId: {
+    //         type: Schema.Types.ObjectId,
+    //         required: true,
+    //       },
     //     },
-    //     testimonialDescription: {
-    //       type: String,
-    //       required: true,
-    //     },
-    //     testimonialPhotoUrl: {
-    //       type: String,
-    //       required: true,
-    //     },
-    //     testimonialPostedById: {
-    //       type: Schema.Types.ObjectId,
-    //       required: true,
-    //       ref: "User",
-    //     },
-    //   },
-    // ],
+    //   ],
+    //   required: true,
+    //   default: [],
+    // },
+
     socialMedia: {
       instagram: {
         type: String,
@@ -97,58 +112,49 @@ const TrainerData =
 
 export default TrainerData;
 
-export interface TrainerOfferType {
-  offerTitle: string;
-  offerDescription: string;
-  offerPrice: string;
-  offerFields?: {
-    pricePer?: string;
-    amountOfWorkouts?: string;
-    duration?: string;
-  };
-}
-export interface TrainerTestimonialType {
-  testimonialTitle: string;
-  testimonialDescription: string;
-  testimonialPhotoUrl: string;
-  testimonialPostedById: string;
-}
-export type SocialMediaOptions = "Instagram" | "Facebook" | "Email";
 export interface SocialMediaType {
   instagram: string;
   facebook: string;
   email: string;
 }
 
-export interface HeroSectionType {
-  image?: string;
+export interface Image {
+  url: string;
+  alt?: string;
+}
+
+export interface TrainerSectionType {
+  required: boolean;
+  name: string;
   content: string;
+  images: Image[];
+  layout: string;
 }
 
 export interface TrainerDataType {
+  // these allow for identyfying and populating the user
   userSlug: string;
   userId: Types.ObjectId;
-  images: string[];
-  heroSection: HeroSectionType;
+  bio?: string;
+  // array options
   offers: TrainerOfferType[];
+  faq: TrainerFAQQuestionType[];
+  reviews: TrainerReviewType[];
+  testimonials: TrainerTestimonialType[];
+
+  // all images that a trainer has posted and their social media links
+  images: Image[];
   socialMedia: SocialMediaType;
-  // tags: string[];
-  // testimonials?: TrainerTestimonialType[]
 }
 
+export interface PopulatedTrainerDataType
+  extends Omit<TrainerDataType, "userId"> {
+  userId: TrainerType;
+}
+
+// interface for the page where users can update their socialMedia tags and city
 export interface TrainerMediaType {
   socialMedia: SocialMediaType;
   tags?: string[];
   city?: string;
-}
-
-export interface PopulatedTrainerDataType {
-  userSlug: string;
-  userId: TrainerType;
-  images: string[];
-  heroSection: HeroSectionType;
-  offers: TrainerOfferType[];
-  socialMedia: SocialMediaType;
-  // tags: string[];
-  // testimonials?: TrainerTestimonialType[]
 }

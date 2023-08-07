@@ -1,63 +1,79 @@
 import authOptions from "@/lib/auth";
-import { ChevronRightIcon, Edit, HeartIcon, HomeIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import {
-  fetchTrainer,
-  fetchTrainerFromEmail,
-} from "@/lib/fetching/fetchTrainer";
-import { TrainerType, UserType } from "@/model/user";
-import { fetchTrainerData } from "@/lib/fetching/fetchTrainerData";
-import TrainerData, { TrainerDataType } from "@/model/trainerData";
+import { TrainerType } from "@/model/user";
+import TrainerData, {
+  PopulatedTrainerDataType,
+  TrainerDataType,
+} from "@/model/trainerData";
 import { Separator } from "@/components/ui/separator";
 import ImageUpdateForm from "@/components/profile/forms/ImageUpdateForm";
 import { DescriptionUpdateForm } from "@/components/profile/forms/DescriptionUpdateForm";
-import Button from "@/components/ui/Button";
 import initMongoose from "@/lib/db";
+import MobileImageUpdateForm from "./@components/MobileImageUpdateForm";
+import AvatarImageForm from "./@components/AvatarImageForm";
 
 export interface PageProps {
   user?: TrainerType;
   userData?: TrainerDataType;
 }
 
-// const getUser = async (slug: string) => {
-//   await initMongoose();
+const getUser = async (
+  id: string
+): Promise<PopulatedTrainerDataType | null> => {
+  await initMongoose();
 
-//   const trainer = await TrainerData.find({ userSlug: slug }).populate(
-//     "userSlug"
-//   );
-//   return trainer;
-// };
+  const trainer = await TrainerData.findOne({ userId: id })
+    .populate("userId")
+    .lean()
+    .exec();
+
+  return trainer;
+};
 
 const Page = async () => {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
 
   const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
+  if (!session?.user?._id) {
     redirect("/rejestracja");
   }
 
-  const user: TrainerType = await fetchTrainerFromEmail(session.user.email);
-  const userData: TrainerDataType = await fetchTrainerData(user.slug);
-  if (!user._id) {
-    redirect("/rejestracja");
+  const userData = await getUser(session.user._id);
+  if (!userData) {
+    throw new Error("Brak danych powiązanych z tym trenerem");
   }
-  // const user2 = await getUser(user.slug);
-  // console.log("Trainer populate: ", user2);
-
+  const user = userData?.userId;
   // when the user is logged in as a trainer
   return (
-    <div className="flex h-full flex-col items-stretch justify-start px-4 py-6 lg:px-8">
-      <div className="flex items-center justify-between">
-        <div className="space-y-1">
-          <h2 className="text-2xl font-semibold text-gray-800">Profil</h2>
-          <p className="text-h6 text-text_readable">
-            Zmiany tutaj będą wyświetlane w twojej ofercie.
-          </p>
+    <div className="flex h-full flex-col items-stretch justify-start overflow-auto px-4 pb-6 pt-0 xs:pt-6 lg:px-8">
+      <div className="border-1 mx-auto aspect-video w-screen -translate-x-4 cursor-pointer rounded-t-[24px] border-b-0 border-white shadow-md shadow-black/20 xs:hidden">
+        <MobileImageUpdateForm
+          imgSrc={user.image}
+          id={user._id}
+          className="rounded-t-[24px]"
+        />
+      </div>
+      <div className="relative flex items-center justify-between">
+        <div className="z-[2] flex flex-col items-start gap-2 pt-8 xs:flex-row xs:items-center xs:pt-0">
+          <AvatarImageForm
+            imgSrc={user.avatar}
+            id={user._id}
+            username={user.username}
+          />
+          <div className="">
+            <h2 className="text-h4 font-semibold text-gray-800">
+              Cześć, {user.username.split(" ")[0]}
+            </h2>
+            <p className="max-w-md text-sm text-text_readable sm:text-h6">
+              Uzupełniaj swój profil i przyciągaj klientów
+            </p>
+          </div>
         </div>
       </div>
       <Separator className="my-4 bg-gray-300" />
-      <div>
+
+      <div className="hidden xs:block">
         <div className="mb-2 flex items-center justify-between gap-4">
           <div className="space-y-0.5">
             <h2 className="text-xl font-semibold text-gray-800">
@@ -67,15 +83,14 @@ const Page = async () => {
         </div>
         <ImageUpdateForm imgSrc={user.image} id={user._id} />
       </div>
-      <Separator className="my-4 bg-gray-300" />
+      <Separator className="my-4 hidden bg-gray-300 xs:block" />
       <div className="">
-        <DescriptionUpdateForm
+        {/* <DescriptionUpdateForm
           summary={user.summary}
           content={userData.heroSection.content}
           slug={user.slug}
-        />
+        /> */}
       </div>
-      
     </div>
   );
 };
@@ -96,3 +111,17 @@ export default Page;
   </div>
 </div>; */
 }
+
+// {
+//   "Version": "2012-10-17",
+//   "Statement": [
+//       {
+//           "Effect": "Allow",
+//           "Action": [
+//               "s3:*",
+//               "s3-object-lambda:*"
+//           ],
+//           "Resource": "*"
+//       }
+//   ]
+// }

@@ -69,6 +69,7 @@ module.exports = {
         text: "#73879e",
         text_readable: "#5E6E81",
         secondary_custom: "#2acbb6",
+        indigo_custom: "#602bf8",
         secondary_dark: "#1C8779",
         secondary_light: "#95E5DB",
       },
@@ -91,11 +92,18 @@ module.exports = {
             transform: "rotate(720deg)",
           },
         },
+        "animate-logo": {
+          "50%": { transform: "scale(1.3)", opacity: "0.5" },
+          "75%": {
+            transform: "scale(1.3)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "timed-spin": "timed-spin 2000ms forwards linear",
+        logo: "animate-logo 2000ms cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       screens: {
         xs: "420px",

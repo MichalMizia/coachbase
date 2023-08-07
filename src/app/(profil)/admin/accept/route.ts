@@ -40,8 +40,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { email: email },
       {
         roles: roles,
-        tags: roles,
         summary: summary,
+        tags: roles,
         city: city,
         slug: slug,
         isTrainer: true,
@@ -51,19 +51,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const TrainerDataProps: TrainerDataType = {
       userSlug: slug,
       userId: id,
-      heroSection: {
-        content: summary,
-      },
       socialMedia: {
         instagram: "",
         facebook: "",
         email: email,
       },
       offers: [],
+      testimonials: [],
+      faq: [],
+      reviews: [],
       images: [],
     };
     await Promise.all([
-      PendingRequest.deleteOne({ email: email }),
+      PendingRequest.deleteOne({ email: email }).lean().exec(),
       TrainerData.create(TrainerDataProps),
     ]);
   } catch (e) {

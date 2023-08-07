@@ -8,7 +8,7 @@ import { sanitize } from "isomorphic-dompurify";
 interface reqType {
   slug?: string;
   summary: string | null;
-  description: string | null;
+  bio: string | null;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const { slug, summary, description }: reqType = await req.json();
+  const { slug, summary, bio }: reqType = await req.json();
 
   if (!slug) {
     return NextResponse.json({
@@ -31,15 +31,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  //   if (!trainerData) {
-  //     return NextResponse.json({
-  //       status: 400,
-  //       message: "Nie znaleziono trenera z tymi danymi",
-  //     });
-  //   }
-
   try {
-    if (summary?.length && description?.length) {
+    if (summary?.length && bio?.length) {
       const [trainer, trainerData]: [
         HydratedDocument<TrainerType>,
         HydratedDocument<TrainerDataType>
@@ -56,15 +49,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
 
       trainer.summary = sanitize(summary);
-      trainerData.heroSection.content = sanitize(description);
+      trainerData.bio = sanitize(bio);
       await Promise.all([trainer.save(), trainerData.save()]);
 
       return NextResponse.json(
         { message: "Pomyślnie zmieniono opisy" },
         { status: 200 }
       );
-    } else if (description?.length) {
-      // when the user is editing only the llong description
+    } else if (bio?.length) {
+      // when the user is editing only the llong bio
       const trainerData: HydratedDocument<TrainerDataType> | null =
         await TrainerData.findOne({ userSlug: slug });
       if (!trainerData) {
@@ -74,8 +67,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         });
       }
 
-      trainerData.heroSection.content = sanitize(description);
-      console.log("Profile API: ", slug, summary, description);
+      trainerData.bio = sanitize(bio);
+      console.log("Profile API: ", slug, summary, bio);
       await trainerData.save();
 
       return NextResponse.json(
@@ -83,7 +76,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { status: 200 }
       );
     } else if (summary && summary.length) {
-      // when the user is editing only the short description
+      // when the user is editing only the short bio
       // @ts-expect-error
       const trainer: HydratedDocument<TrainerType> = await User.find({
         slug: slug,
@@ -117,24 +110,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
     );
   }
 }
-export async function PATCH(req: Request, res: Response) {
-  try {
-    await initMongoose();
-  } catch (e) {
-    console.log("Failed connecting to database: ", e);
-    return NextResponse.json(
-      { message: "Failed connecting to database" },
-      { status: 500 }
-    );
-  }
+// export async function PATCH(req: Request, res: Response) {
+//   try {
+//     await initMongoose();
+//   } catch (e) {
+//     console.log("Failed connecting to database: ", e);
+//     return NextResponse.json(
+//       { message: "Failed connecting to database" },
+//       { status: 500 }
+//     );
+//   }
 
-  try {
-    const users = await User.find({}).exec();
-    return NextResponse.json(users, { status: 200 });
-  } catch (e) {
-    return NextResponse.json(
-      { message: "Błąd wczytywania użytkowników z bazy danych" },
-      { status: 400 }
-    );
-  }
-}
+//   try {
+//     const users = await User.find({}).exec();
+//     return NextResponse.json(users, { status: 200 });
+//   } catch (e) {
+//     return NextResponse.json(
+//       { message: "Błąd wczytywania użytkowników z bazy danych" },
+//       { status: 400 }
+//     );
+//   }
+// }

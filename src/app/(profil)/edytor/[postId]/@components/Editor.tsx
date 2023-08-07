@@ -1,7 +1,7 @@
 "use client";
 
 // components
-import QuillEditor from "@/components/custom/quill/Editor";
+import QuillEditor from "@/components/custom/Editor";
 import TextAreaAutosize from "react-textarea-autosize";
 import Button from "@/components/ui/Button";
 import { Icons } from "@/components/ui/icons";
@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 interface EditorProps {
   className: string;
@@ -99,11 +100,11 @@ const Editor = ({ className, post, userId }: EditorProps) => {
     <form
       action=""
       onSubmit={handleSubmit(onSubmit)}
-      className="fixed inset-0 flex h-screen w-screen max-w-[100vw] flex-col items-stretch justify-start overflow-auto overflow-x-hidden bg-white py-6 pb-0 pt-20 sm:pb-6 sm:pt-6"
+      className="fixed inset-0 flex w-screen max-w-[100vw] flex-col items-stretch justify-start overflow-x-hidden bg-white py-6 pb-0 pt-20 xs:h-screen sm:pb-6 sm:pt-6"
     >
       <div className="container-md flex flex-col items-start justify-between pb-6 md:flex-row">
         <div className="flex w-full max-w-md flex-col items-start justify-between self-stretch md:py-2 nav:max-w-xl">
-          <div className="mb-3 flex flex-wrap items-stretch gap-2">
+          <div className="mb-3 flex flex-wrap items-stretch gap-1.5 xs:gap-2">
             <Button
               variant="outlined"
               title="Powrót"
@@ -143,24 +144,34 @@ const Editor = ({ className, post, userId }: EditorProps) => {
               </SelectContent>
             </Select>
           </div>
-          <div className="max-w-screen">
-            <pre>{JSON.stringify(errors)}</pre>
-            <TextAreaAutosize
-              placeholder="Artykuł musi mieć tytuł"
-              className="mb-1 w-[95vw] resize-none rounded-md text-3xl font-semibold text-gray-800 outline-none placeholder-shown:outline-slate-300 sm:w-auto md:p-1"
-              {...register("title")}
-              id="title"
-              name="Tytuł"
-              defaultValue={post.title}
-            />
-            <TextAreaAutosize
-              placeholder="Artykuł musi mieć podsumowanie"
-              className="block w-[95vw] resize-none rounded-md text-h6 text-gray-700 outline-none placeholder-shown:py-0.5 placeholder-shown:outline-slate-300 sm:w-full sm:max-w-lg md:px-1"
-              {...register("summary")}
-              id="summary"
-              name="Podsumowanie"
-              defaultValue={post.summary}
-            />
+          <div className="flex flex-col items-stretch justify-stretch">
+            {/* <pre>{JSON.stringify(errors)}</pre> */}
+            <div className="flex w-[90vw] flex-1 flex-col gap-2 sm:w-full sm:min-w-[300px]">
+              <Label className="text-body text-gray-800" htmlFor="title">
+                Tytuł
+              </Label>
+              <TextAreaAutosize
+                placeholder="Artykuł musi mieć tytuł"
+                className="w-full rounded-md border border-black/20 bg-slate-50 px-3 py-2 text-gray-700 shadow-md outline-none outline-offset-0 transition-all placeholder:text-slate-500 hover:border-indigo_custom/20 focus:border-l-indigo_custom/30 focus:outline focus:outline-1 focus:outline-indigo_custom/30"
+                {...register("title")}
+                id="title"
+                name="Tytuł"
+                defaultValue={post.title}
+              />
+            </div>
+            <div className="mt-4  flex w-[90vw] flex-grow flex-col gap-1 sm:w-full sm:min-w-[300px]">
+              <Label className="text-body text-gray-800" htmlFor="summary">
+                Podsumowanie
+              </Label>
+              <TextAreaAutosize
+                placeholder="Artykuł musi mieć podsumowanie"
+                className="w-full rounded-md border border-black/20 bg-slate-50 px-3 py-2 text-gray-700 shadow-md outline-none outline-offset-0 transition-all placeholder:text-slate-500 hover:border-indigo_custom/20 focus:border-l-indigo_custom/30 focus:outline focus:outline-1 focus:outline-indigo_custom/30"
+                {...register("summary")}
+                id="summary"
+                name="Podsumowanie"
+                defaultValue={post.summary}
+              />
+            </div>
           </div>
         </div>
         <ArticleImageForm
@@ -171,14 +182,14 @@ const Editor = ({ className, post, userId }: EditorProps) => {
           className=""
         />
       </div>
-      <div className="mx-auto w-full flex-1 overflow-clip xs:px-1 sm:w-[90%] sm:pb-2 xl:w-[85%]">
+      <div className="mx-auto w-full flex-1 xs:overflow-clip xs:px-1 sm:w-[90%] sm:pb-2 xl:w-[85%]">
         {errors?.title && (
-          <p className="bottom absolute-0 left-0 w-[200%] text-center text-sm text-red-600">
+          <p className="bottom absolute-0 left-0 text-center text-sm text-red-600">
             {errors.title.message?.toString()}
           </p>
         )}
         {errors?.summary && (
-          <p className="bottom absolute-0 left-0 w-[200%] text-center text-sm text-red-600">
+          <p className="bottom absolute-0 left-0 text-center text-sm text-red-600">
             {errors.summary.message?.toString()}
           </p>
         )}
@@ -187,7 +198,7 @@ const Editor = ({ className, post, userId }: EditorProps) => {
           key="article"
           // className="flex w-full flex-col rounded-md border border-gray-300 bg-gray-50 text-gray-900 ring-offset-background file:border-0 file:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
           className={cn(
-            "relative -left-[1%] flex h-full max-h-full min-h-full w-[102%] flex-col items-stretch justify-start xs:static xs:w-full",
+            "flex h-[80vh] min-h-full flex-col items-stretch justify-start xs:static xs:h-full xs:max-h-full xs:w-full",
             className
           )}
           value={article}

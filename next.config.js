@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "drive.google.com",
       },
+      {
+        protocol: "https",
+        hostname: "coachbase.s3.eu-central-1.amazonaws.com",
+      },
     ],
     minimumCacheTTL: 31536000,
   },

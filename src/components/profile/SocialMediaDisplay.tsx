@@ -23,47 +23,45 @@ const SocialMediaDisplay = ({
   return (
     <div
       className={classNames(
-        "isolate z-10 flex items-stretch justify-center gap-1 rounded-b-lg text-black",
+        "flex items-stretch justify-center gap-1",
         className!
       )}
     >
       {instagram && instagram.length ? (
         <a
+          title="Instagram"
           href={instagram}
           target="_blank"
           referrerPolicy="no-referrer"
+          rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white px-0.5"
         >
-          <InstagramIcon
-            size={isMobile ? 17 : 21}
-            className="z-10 text-gray-800"
-          />
+          <InstagramIcon size={isMobile ? 17 : 21} className="text-gray-800" />
         </a>
       ) : null}
       {facebook && facebook.length && (
         <a
+          title="Facebook"
           href={facebook}
           target="_blank"
           referrerPolicy="no-referrer"
+          rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <FacebookIcon
-            size={isMobile ? 17 : 21}
-            className="z-10 text-gray-800"
-          />
+          <FacebookIcon size={isMobile ? 17 : 21} className="text-gray-800" />
         </a>
       )}
       {email && email.length && (
-        <button
+        <a
           title="Email"
-          onClick={() => {
-            copyToClipboard(email);
-            toast.success("Skopiowano email");
-          }}
+          href={`mailto:${email}`}
+          target="_blank"
+          referrerPolicy="no-referrer"
+          rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <MailIcon size={isMobile ? 17 : 21} className="z-10 text-gray-800" />
-        </button>
+          <MailIcon size={isMobile ? 17 : 21} className="text-gray-800" />
+        </a>
       )}
     </div>
   );

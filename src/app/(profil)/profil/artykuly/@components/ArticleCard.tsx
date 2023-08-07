@@ -114,7 +114,7 @@ const ArticleCard = ({
 
                 setShowDeleteAlert(false);
               }}
-              className="bg-red-600 focus:ring-red-600"
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
             >
               {isDeleteLoading ? (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

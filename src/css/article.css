@@ -87,7 +87,7 @@
   padding-bottom: 12px;
 }
 
-a {
+.article a {
   color: currentColor;
   text-decoration-color: #2dd4bf;
   text-decoration-thickness: 0.3ex;

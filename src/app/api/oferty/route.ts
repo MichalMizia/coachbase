@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import TrainerData, {
   PopulatedTrainerDataType,
   TrainerDataType,
-  TrainerOfferType,
 } from "@/model/trainerData";
-import { HydratedDocument } from "mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
+import { TrainerOfferType } from "@/model/trainerDataSubSchemas/trainerOffer";
 
 interface reqType {
   name: string;
@@ -50,6 +50,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     offerTitle: name,
     offerDescription: description,
     offerPrice: price.toString(),
+    offerId: new mongoose.Types.ObjectId(),
   };
   if (duration?.length || !!amountOfWorkouts || pricePer?.length) {
     newOffer.offerFields = {};

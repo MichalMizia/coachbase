@@ -55,14 +55,14 @@ const ArticleImageForm = ({
     const file = data.files[0];
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
 
     try {
-      const res = await axios.post("/api/upload-files", formData, {
+      const res = await axios.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(res);
-      const url = res.data.resultURL;
+      const url = res.data.resultURLS[0];
       if (!url) {
         throw new Error();
       }
@@ -97,14 +97,14 @@ const ArticleImageForm = ({
     <Dialog>
       <DialogTrigger asChild>
         <div>
-          <div className="absolute left-0 top-0 w-screen border-b bg-bg py-4 shadow-inner md:hidden">
+          <div className="absolute left-0 top-0 w-screen border-b bg-bg py-3 shadow-inner xs:py-4 md:hidden">
             <div className="container-md">
               <Button
                 variant="outlined"
                 className="w-full border-2 border-secondary_custom/60 bg-white text-gray-700 hover:border-secondary_custom/60"
               >
                 <Icons.media className="mr-2 h-4 w-4 text-secondary_custom/90" />
-                Zdjęcie Profilowe
+                Miniatura Artykułu
               </Button>
             </div>
           </div>
@@ -184,15 +184,6 @@ const ArticleImageForm = ({
               {...register("files")}
               className="absolute inset-0 z-[2] h-full w-full cursor-pointer opacity-0"
             />
-            {(photoUrl || currentFiles?.length) && (
-              // decorational div to show the user he can edit the picture
-              <div
-                aria-hidden="true"
-                className="absolute bottom-0 left-0 z-[3] h-12 w-12 rounded-tr-lg bg-blue-500 p-1 shadow-md"
-              >
-                <Icons.add className="absolute inset-0 m-auto h-6 w-6 -translate-y-0.5 translate-x-0.5 text-white" />
-              </div>
-            )}
             {photoUrl ? (
               <img
                 src={

@@ -50,8 +50,8 @@ export interface UserType {
   username: string;
   email: string;
   password: string;
-  image: string | null;
-  avatar: string | null;
+  image?: string;
+  avatar?: string;
   isTrainer: false;
 }
 export interface TrainerType {
@@ -60,11 +60,12 @@ export interface TrainerType {
   username: string;
   email: string;
   password: string;
-  image: string | null;
-  avatar: string | null;
-  tags: string[] | null;
-  rating: number | null;
+  image?: string;
+  avatar?: string;
   isTrainer: true;
+  // trainer only options
+  tags?: string[];
+  rating?: number;
   roles: UserRolesType[];
   summary: string;
   slug: string;

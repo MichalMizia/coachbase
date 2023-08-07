@@ -25,7 +25,7 @@ import React, { useRef, useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Editor from "@/components/custom/quill/Editor";
+import Editor from "@/components/custom/Editor";
 import axios, { AxiosError } from "axios";
 import { useLoadingStore } from "@/lib/state/loading-generation";
 import { toast } from "react-hot-toast";
@@ -220,21 +220,22 @@ export function DescriptionUpdateForm({
         <Card className="max-w-lg flex-1 space-y-0.5">
           <CardHeader>
             <CardTitle className="text-gray-800">Krótki Opis</CardTitle>
-            <CardDescription className="text-body text-text_readable">
-              {summary && <p>{summary}</p>}
-            </CardDescription>
+            {summary && (
+              <CardDescription className="text-sm text-text_readable">
+                {summary}
+              </CardDescription>
+            )}
           </CardHeader>
         </Card>
         <Card className="max-w-lg flex-1 space-y-0.5">
           <CardHeader>
             <CardTitle className="text-gray-800">Długi Opis</CardTitle>
-            <CardDescription className="text-body text-text_readable">
-              {content && (
-                <div
-                  dangerouslySetInnerHTML={{ __html: sanitize(content) }}
-                ></div>
-              )}
-            </CardDescription>
+            {content && (
+              <div
+                className="text-sm text-text_readable"
+                dangerouslySetInnerHTML={{ __html: sanitize(content) }}
+              ></div>
+            )}
           </CardHeader>
         </Card>
       </div>

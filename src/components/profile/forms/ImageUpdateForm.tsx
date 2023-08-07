@@ -2,8 +2,7 @@
 
 // components
 import Button from "@/components/ui/Button";
-import { LucideUser } from "lucide-react";
-import Image from "next/image";
+import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
 // utils
 import { fileUploadSchema } from "@/lib/validations/fileUploadValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +13,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
 import { classNames } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
 interface ImageUpdateFormProps extends HTMLProps<HTMLFormElement> {
   imgSrc: string | null | undefined;
@@ -42,16 +42,21 @@ const ImageUpdateForm = ({
     setIsLoading(true);
 
     const file = data.files[0];
-    console.log(file);
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("file", file);
     formData.append("id", id);
 
+    const t0 = performance.now();
     try {
-      await axios.post("/api/profile/change-profile-picture", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await axios.post(
+        "/api/profile/change-profile-picture",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      console.log(res);
     } catch (e) {
       if (
         e instanceof AxiosError &&
@@ -69,11 +74,47 @@ const ImageUpdateForm = ({
     } finally {
       setIsLoading(false);
     }
+    const t1 = performance.now();
+    console.log(`Call to image upload2 took ${(t1 - t0) / 1000} seconds.`);
 
-    toast.success(
-      "Zdjęcie profilowe zmienione, żeby zobaczyć zmiany może być potrzebne wylogowanie i ponowne zalogowanie"
-    );
+    toast.success("Zdjęcie profilowe zostało zmienione");
   }
+  // async function onSubmit(data: FormData) {
+  //   setIsLoading(true);
+
+  //   const file = data.files[0];
+  //   console.log(file);
+
+  //   const formData = new FormData();
+  //   formData.append("image", file);
+  //   formData.append("id", id);
+
+  //   try {
+  //     await axios.post("/api/profile/change-profile-picture", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //   } catch (e) {
+  //     if (
+  //       e instanceof AxiosError &&
+  //       e.response?.status?.toString()[0] === "4" &&
+  //       e.response?.data?.message
+  //     ) {
+  //       toast.error(e.response.data.message);
+  //       return null;
+  //     } else if (e instanceof z.ZodError) {
+  //       toast.error("Formularz wypełniony niepoprawnie");
+  //       return null;
+  //     }
+  //     toast.error("Coś poszło nie tak podczas zmiany zdjęcia");
+  //     return null;
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+
+  //   toast.success(
+  //     "Zdjęcie profilowe zmienione, żeby zobaczyć zmiany może być potrzebne wylogowanie i ponowne zalogowanie"
+  //   );
+  // }
 
   const currentFiles: FileList | null | undefined = watch("files");
 
@@ -86,32 +127,33 @@ const ImageUpdateForm = ({
       onSubmit={handleSubmit(onSubmit)}
       {...props}
     >
-      <Card className="aspect-video flex-1 self-stretch overflow-hidden p-1 md:aspect-square xl:aspect-video">
+      <Card className="relative aspect-video flex-1 self-stretch overflow-hidden p-1 md:aspect-square xl:aspect-video">
         {imgSrc ? (
-          <img
+          <Image
             src={
-              currentFiles &&
-              currentFiles.length &&
-              URL.createObjectURL(currentFiles[0])
+              currentFiles?.length && URL.createObjectURL(currentFiles[0])
                 ? URL.createObjectURL(currentFiles[0])
                 : imgSrc
             }
             alt="Zdjęcie Profilowe"
-            className="h-full w-full rounded-md object-cover"
+            fill
+            priority
+            className="!static rounded-md object-cover"
           />
-        ) : currentFiles &&
-          currentFiles.length &&
-          URL.createObjectURL(currentFiles[0]) ? (
+        ) : currentFiles?.length && URL.createObjectURL(currentFiles[0]) ? (
           <img
             alt="Preview zdjęcia profilowego"
             src={URL.createObjectURL(currentFiles[0])}
             className="h-full w-full rounded-md object-cover"
           />
         ) : (
-          <div className="mb-8 flex items-center justify-center gap-2">
-            <LucideUser />
-            <h4 className="text-lg font-semibold">Zdjęcie Profilowe</h4>
-          </div>
+          <Image
+            fill
+            priority
+            src={ImagePlaceholder}
+            alt="Pole na dodanie zdjęcia profilowego"
+            className="rounded-lg object-cover p-1"
+          />
         )}
       </Card>
 

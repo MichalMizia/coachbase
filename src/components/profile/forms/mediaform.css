@@ -1,0 +1,11 @@
+.rmsc .dropdown-container {
+  @apply focus-within:!border-indigo_custom/30 focus-within:!shadow-none focus-within:outline focus-within:outline-1 focus-within:outline-indigo_custom/30;
+  border-radius: 8px !important;
+}
+.rmsc .dropdown-heading {
+  @apply !h-[42px] !px-3 text-gray-800 placeholder:text-slate-500;
+  border-radius: 8px !important;
+}
+.rmsc button.clear-selected-button {
+  @apply !border-r-2 border-gray-300 pr-1;
+}

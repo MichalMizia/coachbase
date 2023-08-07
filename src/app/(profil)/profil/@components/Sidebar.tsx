@@ -1,38 +1,42 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Button from "@/components/ui/Button";
-import { FileText } from "lucide-react";
-import { useProfileStore } from "@/lib/state/profile-state-generation";
+import { CalendarDays, FileText } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Logo from "@/components/custom/Logo";
+import { Icons } from "@/components/ui/icons";
+import Link from "next/link";
+import { HoverCard, HoverCardContent } from "@/components/ui/hover-card";
+import { HoverCardTrigger } from "@radix-ui/react-hover-card";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function Sidebar({ className, ...props }: SidebarProps) {
-  const { isMenuOpen } = useProfileStore();
+export default function Sidebar({ className, ...props }: SidebarProps) {
   const pathname = usePathname();
   return (
     <div
       className={cn(
-        "absolute left-0 max-h-[calc(100vh-122px)] w-full -translate-x-full self-stretch border-r bg-white transition-all xs:max-w-sm nav:max-h-[calc(100vh-70px)] lg:bg-transparent lg:pb-8",
-        className,
-        isMenuOpen ? "translate-x-0" : ""
+        "h-screen w-full self-stretch overflow-auto border-r-2 border-indigo-500/20 bg-bg pb-8 transition-all",
+        className
       )}
       {...props}
     >
-      <div className="space-y-4 py-2 lg:py-4">
+      <div className="space-y-4 pb-4">
+        <div className="border-b-2 border-indigo_custom/20 py-6">
+          <Logo className="!text-gray-800" />
+        </div>
         <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
+          <h2 className="mb-2  px-4 text-lg font-semibold tracking-tight text-black">
             Profil
           </h2>
           <div className="">
-            <a href="/profil" title="O mnie">
+            <Link href="/profil" title="O mnie">
               <button
                 className={cn(
-                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-text_readable outline-none transition-all ",
-                  pathname && pathname?.endsWith("profil")
-                    ? "bg-slate-200"
-                    : "hover:bg-slate-100"
+                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                  pathname?.endsWith("profil")
+                    ? " bg-indigo_custom/90 text-white"
+                    : "hover:bg-indigo_custom/20"
                 )}
               >
                 <svg
@@ -43,7 +47,7 @@ export function Sidebar({ className, ...props }: SidebarProps) {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="mr-2 h-4 w-4 text-slate-500"
+                  className="mr-2 h-4 w-4"
                 >
                   <rect width="7" height="7" x="3" y="3" rx="1" />
                   <rect width="7" height="7" x="14" y="3" rx="1" />
@@ -52,45 +56,74 @@ export function Sidebar({ className, ...props }: SidebarProps) {
                 </svg>
                 O mnie
               </button>
-            </a>
-            <a href="/profil/oferty" title="Oferty">
+            </Link>
+            <Link href="/profil/oferty" title="Oferty">
               <button
                 className={cn(
-                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-text_readable outline-none transition-all ",
-                  pathname && pathname?.includes("oferty")
-                    ? "bg-slate-200"
-                    : "hover:bg-slate-100"
+                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                  pathname?.includes("oferty")
+                    ? " bg-indigo_custom/90 text-white"
+                    : "hover:bg-indigo_custom/20"
                 )}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="mr-2 h-4 w-4 text-slate-500"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <polygon points="10 8 16 12 10 16 10 8" />
-                </svg>
+                <Icons.logo className="mr-2 h-4 w-4" />
                 Oferty
               </button>
-            </a>
-            <a href="/profil/artykuly" title="Artykuły">
+            </Link>
+            <Link href="/profil/artykuly" title="Artykuły">
               <button
                 className={cn(
-                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-text_readable outline-none transition-all ",
-                  pathname && pathname?.includes("artykuly")
-                    ? "bg-slate-200"
-                    : "hover:bg-slate-100"
+                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                  pathname?.includes("artykuly")
+                    ? " bg-indigo_custom/90 text-white"
+                    : "hover:bg-indigo_custom/20"
                 )}
               >
                 <FileText size={16} className="mr-2 h-4 w-4" />
                 Artykuły
               </button>
-            </a>
+            </Link>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Link
+                  href="/profil/informacje"
+                  title="Tagi/Lokalizacja/Social Media"
+                >
+                  <button
+                    className={cn(
+                      "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                      pathname?.includes("/informacje")
+                        ? " bg-indigo_custom/90 text-white"
+                        : "hover:bg-indigo_custom/20"
+                    )}
+                  >
+                    <Icons.settings size={16} className="mr-2 h-4 w-4" />
+                    Informacje
+                  </button>
+                </Link>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80 translate-x-[15%]">
+                <div className="flex justify-between space-x-4">
+                  <div className="space-y-1">
+                    <h4 className="text-h6 font-semibold">
+                      Informacje Profilowe
+                    </h4>
+                    <p className="text-sm">
+                      W tej sekcji możesz dodać swoje specjalizacje czyli tagi
+                      które pomagają uplasować się wyżej w wynikach
+                      wyszukiwania, zmienić lokalizację czy dodać linki do
+                      swoich mediów
+                    </p>
+                    <div className="flex items-center pt-2">
+                      <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+                      <span className="text-xs text-muted-foreground">
+                        Edytuj
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           </div>
         </div>
         <div className="px-3 py-2">

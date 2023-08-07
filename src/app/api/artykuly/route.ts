@@ -33,7 +33,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     // const content =
     //   randomFacts[Math.round(Math.random() * (randomFacts.length - 1))];
     const content =
-      "Zacznij edytować nowy artykuł, kiedy zakończysz edycję możesz opublikować go luz zapisać bez opublikowania";
+      "Zacznij kreować swój nowy artykuł, kiedy zakończysz edycję możesz opublikować go lub zapisać bez publikowania ze statusem draft";
 
     const articleOptions: Omit<ArticleType, "updatedAt" | "createdAt" | "_id"> =
       {
