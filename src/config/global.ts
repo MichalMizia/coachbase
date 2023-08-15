@@ -88,47 +88,7 @@ type offerOptionType = {
   };
 };
 
-export const offerOptions: offerOptionType[] = [
-  {
-    name: "Prowadzenie Treningowe Online",
-    fields: {
-      duration: true,
-    },
-  },
-  {
-    name: "Trening Grupowy",
-    fields: {
-      amountOfPeople: ["1", "2", "3", "grupa"],
-    },
-  },
-  {
-    name: "Trening Personalny",
-    fields: {
-      pricePer: ["1h", "2h", "Trening"],
-    },
-  },
-  {
-    name: "Pakiet Treningów Personalnych",
-    fields: {
-      pricePer: ["1h", "2h", "Trening"],
-      amountOfWorkouts: true,
-    },
-  },
-  {
-    name: "Konsultacje Treningowe",
-  },
-  {
-    name: "Konsultacje Dietetyczne",
-  },
-  {
-    name: "Prowadzenie Dietetyczne",
-  },
-  {
-    name: "Wizyta Fizjoterapeutyczna",
-  },
-];
-
-export const offerOptionNames: string[] = [
+export const offerOptions: string[] = [
   "Prowadzenie Treningowe Online",
   "Trening Grupowy",
   "Trening Personalny",

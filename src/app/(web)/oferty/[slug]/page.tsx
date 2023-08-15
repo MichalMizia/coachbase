@@ -1,16 +1,27 @@
 // components
 import StarsRating from "@/components/custom/StarsRating";
-import SocialMediaDisplay from "@/components/profile/SocialMediaDisplay";
+import SocialMediaDisplay from "@/components/custom/SocialMediaDisplay";
 import OfferHeaderNav from "@/app/(web)/oferty/[slug]/@components/OfferHeaderNav";
 import OfferTabs from "@/app/(web)/oferty/[slug]/@components/OfferTabs";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, Loader2Icon, LucideUser } from "lucide-react";
+import { Info, Loader2, Loader2Icon, LucideUser } from "lucide-react";
 import LatestUserArticles from "./@components/LatestUserArticles";
+import AvatarSvg from "@/../public/assets/avatar.svg";
 // utils
 import { Suspense } from "react";
 import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
 import initMongoose from "@/lib/db";
 import { Tabs } from "@/components/ui/tabs";
+import Image from "next/image";
+import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
+import { getServerSession } from "next-auth";
+import authOptions from "@/lib/auth";
+import Link from "next/link";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 // export async function generateStaticParams() {
 //   const trainers: TrainerType[] = await fetchAllTrainers();
@@ -47,47 +58,71 @@ const Page = async ({ params }: pageProps) => {
     throw new Error("Nie ma takiego konta");
   }
 
+  const session = await getServerSession(authOptions);
+
   return (
     <main className="profile-gradient relative min-h-screen bg-white bg-gradient-to-b text-gray-800">
       <section className="container-md flex max-w-6xl items-start justify-center gap-4 py-4 lg:gap-8 lg:py-6">
         <div className="relative flex max-w-3xl flex-[2] flex-col items-stretch justify-start">
           <Tabs defaultValue="Oferty">
-            <header className="max-w-full rounded-sm bg-white p-6 pb-0 shadow-md shadow-black/25 outline outline-1 outline-black/5">
-              <div className="mx-auto flex justify-around gap-4">
-                <section className="relative isolate h-36 w-36 rounded-sm bg-slate-100 lg:h-40 lg:w-40 xl:h-44 xl:w-44">
-                  {trainer.image ? (
-                    <>
-                      <Loader2Icon
-                        size={28}
-                        className="absolute inset-0 -z-10 m-auto animate-pulse animate-timed-spin text-gray-700"
-                      />
-                      <img
-                        src={trainer.image}
-                        alt={`Zdjęcie profilowe ${trainer.username}`}
-                        className="aspect-square h-full w-full rounded-sm object-cover shadow-sm"
-                        loading="lazy"
-                      />
-                    </>
-                  ) : (
-                    <LucideUser size={60} className="my-10" />
-                  )}
-                </section>
+            <header className="max-w-full rounded-sm bg-white pb-0 shadow-md shadow-black/25 outline outline-1 outline-black/5 md:p-6 md:pb-0">
+              <div className="mx-auto flex flex-col justify-around gap-4 md:flex-row md:gap-8">
+                <div className="relative flex aspect-video max-h-[30vh] flex-[0.5] items-center justify-center rounded-md md:self-stretch">
+                  <Image
+                    alt={`Zdjęcie profilowe ${trainer.username}`}
+                    src={trainer.image || ImagePlaceholder}
+                    fill
+                    priority
+                    className="h-full w-full rounded-md object-cover shadow-md shadow-black/20"
+                  />
+                </div>
 
-                <section className="flex max-w-md flex-1 flex-col items-start justify-between">
-                  <div className="flex h-full flex-col items-stretch justify-start">
-                    <header className="relative -top-0.5 flex w-full flex-wrap items-center justify-between gap-x-6 self-stretch lg:gap-8">
-                      <h3 className="text-h4 font-[600] text-black">
-                        {trainer.username}
-                      </h3>
-                      <div className="flex items-center justify-center gap-2">
-                        <SocialMediaDisplay
-                          instagram={trainerData.socialMedia?.instagram}
-                          facebook={trainerData.socialMedia?.facebook}
-                          email={trainerData.socialMedia?.email}
+                <section className="mx-auto flex max-w-lg flex-1 flex-col items-start justify-between px-6 md:px-0">
+                  <div className="flex h-full flex-col items-stretch justify-start ">
+                    <div className="relative flex items-center justify-start gap-2 md:-left-16 md:w-[calc(100%+64px)]">
+                      <div className="relative aspect-square h-14 w-14 rounded-full border border-black/10 shadow-md">
+                        <Image
+                          fill
+                          className="aspect-square rounded-full object-cover"
+                          alt={`Avatar ${trainer.username}`}
+                          src={trainer.avatar || AvatarSvg}
                         />
                       </div>
-                    </header>
-                    <ul className="hidden flex-wrap items-end justify-start gap-1 md:flex">
+                      <header className="relative -top-0.5 flex w-full flex-wrap items-center justify-between gap-x-6 self-stretch lg:gap-8">
+                        <div className="flex flex-col items-start justify-center">
+                          <h3 className="relative top-0.5 text-h4 font-[600] text-black">
+                            {trainer.username}
+                          </h3>
+                          <div className="relative flex flex-wrap items-center justify-start gap-x-3 leading-tight md:-top-0.5">
+                            <p className="font-[500] italic">{trainer.city}</p>
+                            {/* <div className="relative top-[1px] h-1.5 w-1.5 rounded-full bg-gray-800 opacity-75"></div> */}
+                            <HoverCard>
+                              <HoverCardTrigger asChild>
+                                <div className="cursor-pointer">
+                                  <Info className=" mr-0.5 inline h-4 w-4 -translate-y-[1px] text-orange-600/90" />
+                                  {trainer.roles.join(", ")}
+                                </div>
+                              </HoverCardTrigger>
+                              <HoverCardContent className="w-64 border-none bg-black/75 text-white outline-none">
+                                <div className="flex justify-between space-x-4">
+                                  <div className="space-y-1">
+                                    Ten{" "}
+                                    {trainer.roles
+                                      .join(", ")
+                                      .toLowerCase()
+                                      .concat(
+                                        " został zweryfikowany przez firmę CoachBase jako godny zaufania"
+                                      )}
+                                  </div>
+                                </div>
+                              </HoverCardContent>
+                            </HoverCard>
+                          </div>
+                        </div>
+                      </header>
+                    </div>
+
+                    <ul className="flex flex-wrap items-end justify-start gap-1 pt-2">
                       {trainer.tags &&
                         trainer.tags.map((tag, ind) => {
                           // @ts-expect-error
@@ -104,22 +139,26 @@ const Page = async ({ params }: pageProps) => {
                           );
                         })}
                     </ul>
-                    <main className="mt-3 md:mt-0.5 lg:mt-1">
-                      <div className="flex flex-wrap items-center justify-start gap-2">
-                        <p className="font-[500] italic">{trainer.city}</p>
-                        <div className="relative top-[1px] h-1.5 w-1.5 rounded-full bg-gray-800 opacity-75"></div>
-                        <ul>
-                          {trainer.roles.map((role, ind) => (
-                            <>
-                              <li>
-                                {role}
-                                {ind === trainer.roles.length - 1 ? "" : ", "}
-                              </li>
-                            </>
-                          ))}
-                        </ul>
-                      </div>
-                      <StarsRating className="mt-1" />
+                    <div className="mt-1 flex items-center justify-start gap-2">
+                      <StarsRating
+                        className="relative -left-1 w-fit"
+                        rating={trainer.rating}
+                        amount={trainerData.reviews.length}
+                      />
+                      <SocialMediaDisplay
+                        instagram={trainerData.socialMedia?.instagram}
+                        facebook={trainerData.socialMedia?.facebook}
+                        email={trainerData.socialMedia?.email}
+                      />
+                    </div>
+                    <main className="mt-3 text-h6 text-gray-700 lg:top-0">
+                      {trainer.summary}{" "}
+                      <Link
+                        href="#o-mnie"
+                        className="text-text_readable underline decoration-current decoration-1 transition-all hover:opacity-80"
+                      >
+                        Zobacz więcej...
+                      </Link>
                     </main>
                   </div>
 
@@ -131,7 +170,7 @@ const Page = async ({ params }: pageProps) => {
                 </footer> */}
                 </section>
               </div>
-              <ul className="relative top-3 mt-2 flex flex-wrap items-end justify-start gap-1 md:hidden">
+              {/* <ul className="relative top-3 mt-2 flex flex-wrap items-end justify-start gap-1">
                 {trainer.tags &&
                   trainer.tags.map((tag, ind) => {
                     // @ts-expect-error
@@ -147,11 +186,11 @@ const Page = async ({ params }: pageProps) => {
                       </li>
                     );
                   })}
-              </ul>
-              <OfferHeaderNav />
+              </ul> */}
+              <OfferHeaderNav shouldShowFaq={trainerData.faq.length > 0} />
             </header>
 
-            <OfferTabs trainerData={trainerData} />
+            <OfferTabs session={session} trainerData={trainerData} />
           </Tabs>
         </div>
 

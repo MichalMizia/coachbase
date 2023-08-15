@@ -1,9 +1,8 @@
 "use client";
 
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { classNames, copyToClipboard } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { FacebookIcon, InstagramIcon, MailIcon } from "lucide-react";
-import { toast } from "react-hot-toast";
 
 interface SocialMediaDisplayProps {
   instagram?: string;
@@ -18,14 +17,9 @@ const SocialMediaDisplay = ({
   email,
   className,
 }: SocialMediaDisplayProps) => {
-  const isMobile = useMediaQuery("(max-width: 500px)");
-
   return (
     <div
-      className={classNames(
-        "flex items-stretch justify-center gap-1",
-        className!
-      )}
+      className={cn("flex items-stretch justify-center gap-0.5", className!)}
     >
       {instagram && instagram.length ? (
         <a
@@ -36,7 +30,7 @@ const SocialMediaDisplay = ({
           rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white px-0.5"
         >
-          <InstagramIcon size={isMobile ? 17 : 21} className="text-gray-800" />
+          <InstagramIcon className="h-6 w-6 text-gray-800" />
         </a>
       ) : null}
       {facebook && facebook.length && (
@@ -48,7 +42,7 @@ const SocialMediaDisplay = ({
           rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <FacebookIcon size={isMobile ? 17 : 21} className="text-gray-800" />
+          <FacebookIcon className="h-6 w-6 text-gray-800" />
         </a>
       )}
       {email && email.length && (
@@ -60,7 +54,7 @@ const SocialMediaDisplay = ({
           rel="nofollow"
           className="flex aspect-square items-center justify-center border-b border-b-white p-1"
         >
-          <MailIcon size={isMobile ? 17 : 21} className="text-gray-800" />
+          <MailIcon className="h-6 w-6 text-gray-800" />
         </a>
       )}
     </div>

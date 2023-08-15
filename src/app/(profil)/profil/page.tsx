@@ -1,17 +1,25 @@
+// auth
 import authOptions from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+// types
 import { TrainerType } from "@/model/user";
 import TrainerData, {
   PopulatedTrainerDataType,
   TrainerDataType,
 } from "@/model/trainerData";
 import { Separator } from "@/components/ui/separator";
-import ImageUpdateForm from "@/components/profile/forms/ImageUpdateForm";
-import { DescriptionUpdateForm } from "@/components/profile/forms/DescriptionUpdateForm";
+// utils
+import { redirect } from "next/navigation";
 import initMongoose from "@/lib/db";
+// components
+import ImageUpdateForm from "@/components/forms/ImageUpdateForm";
+import { DescriptionUpdateForm } from "@/components/forms/DescriptionUpdateForm";
 import MobileImageUpdateForm from "./@components/MobileImageUpdateForm";
 import AvatarImageForm from "./@components/AvatarImageForm";
+import TrainerFAQCard from "./@components/TrainerFaqCard";
+// lazy loaded stuff
+import dynamic from "next/dynamic";
+const MainContentForm = dynamic(() => import("./@components/MainContentForm"));
 
 export interface PageProps {
   user?: TrainerType;
@@ -46,7 +54,7 @@ const Page = async () => {
   const user = userData?.userId;
   // when the user is logged in as a trainer
   return (
-    <div className="flex h-full flex-col items-stretch justify-start overflow-auto px-4 pb-6 pt-0 xs:pt-6 lg:px-8">
+    <div className="flex h-full flex-col items-stretch justify-start overflow-y-auto px-4 pb-6 pt-0 xs:pt-6 lg:px-8">
       <div className="border-1 mx-auto aspect-video w-screen -translate-x-4 cursor-pointer rounded-t-[24px] border-b-0 border-white shadow-md shadow-black/20 xs:hidden">
         <MobileImageUpdateForm
           imgSrc={user.image}
@@ -84,13 +92,35 @@ const Page = async () => {
         <ImageUpdateForm imgSrc={user.image} id={user._id} />
       </div>
       <Separator className="my-4 hidden bg-gray-300 xs:block" />
-      <div className="">
-        {/* <DescriptionUpdateForm
-          summary={user.summary}
-          content={userData.heroSection.content}
-          slug={user.slug}
-        /> */}
-      </div>
+      {/* <div className="">
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <div className="space-y-0.5">
+            <h2 className="text-xl font-semibold text-gray-800">
+              Najczęściej zadawane pytania
+            </h2>
+            {userData.faq.length > 0 ? (
+              <p>
+                Dodawaj kolejne pytania do swojego FAQ aby zwiększać zasięgi
+              </p>
+            ) : (
+              <p>Nie masz jeszcze żadnych pytań w swoim FAQ, dodaj pierwsze!</p>
+            )}
+          </div>
+        </div>
+        {!!userData.faq.length && (
+          <ul className="w-full space-y-2">
+            {userData.faq.map((question) => (
+              <TrainerFAQCard
+                key={question.question}
+                question={question.question}
+                answer={question.answer}
+                userId={user._id}
+              />
+            ))}
+          </ul>
+        )}
+      </div> */}
+      <MainContentForm userId={user._id} content={userData.content || ""} />
     </div>
   );
 };

@@ -3,19 +3,13 @@ import initMongoose from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Article, { ArticleType } from "@/model/article";
 import mongoose, { Document, HydratedDocument } from "mongoose";
-import { randomFacts } from "@/config/global";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
-import axios from "axios";
 import slugify from "slugify";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return NextResponse.json({}, { status: 403 });
-  }
 
   const { id } = await req.json();
   if (!id) {
@@ -26,10 +20,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
       { status: 400 }
     );
   }
+  if (session?.user?._id !== id) {
+    return NextResponse.json(
+      { message: "Nie masz uprawnień do dodania artykułu" },
+      { status: 403 }
+    );
+  }
 
   try {
     await initMongoose();
-    console.log("id: ", id);
     // const content =
     //   randomFacts[Math.round(Math.random() * (randomFacts.length - 1))];
     const content =
@@ -37,16 +36,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const articleOptions: Omit<ArticleType, "updatedAt" | "createdAt" | "_id"> =
       {
-        userId: id,
+        userId: new mongoose.Types.ObjectId(id),
         title: "Artykuł bez tytułu",
         content: `<p>${content}</p>`,
         published: false,
         impressions: 0,
         summary: "Krótkie podsumowanie twojego artykułu",
         slug: "",
+        tags: ["Trening"],
       };
     const newPost = await Article.create(articleOptions);
-    console.log(newPost);
 
     if (!newPost) {
       return NextResponse.json({}, { status: 400 });
@@ -120,10 +119,17 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const { articleId, photoUrl, title, summary, content, published } =
+  const { articleId, photoUrl, title, summary, content, published, tags } =
     await req.json();
 
-  if (!title?.length || !summary.length || !content?.length) {
+  console.log("tags: ", tags, title, summary);
+
+  if (
+    !title?.length ||
+    !summary.length ||
+    !content?.length ||
+    !Array.isArray(tags)
+  ) {
     return NextResponse.json(
       { message: "Tytuł, podsumowanie i kontent artykułu są wymagane" },
       { status: 400 }
@@ -144,9 +150,10 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   article.title = title;
   article.summary = summary;
   article.content = content;
+  article.tags = tags;
   if (published) {
     article.published = true;
-    article.slug = slugify(title);
+    article.slug = slugify(title.toLowerCase());
   }
   if (photoUrl) {
     article.photoUrl = photoUrl;

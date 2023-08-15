@@ -15,19 +15,21 @@ export const TrainerTestimonialSchema = new Schema<TrainerTestimonialType>(
       default: false,
       required: true,
     },
-    photoUrl: String,
-    photoAlt: String,
+    photoUrl: [Schema.Types.String],
+    photoAlt: [Schema.Types.String],
   },
-  {
-    _id: false,
-  }
+  { timestamps: { createdAt: true, updatedAt: false } }
 );
 
-export interface TrainerTestimonialType {
-  _id: Types.ObjectId;
+export interface NewTrainerTestimonialType {
   title: string;
   description: string;
-  photoUrl?: string | string[];
-  photoAlt?: string | string[];
+  photoUrl: string[];
+  photoAlt: string[];
   transformation: boolean;
+}
+
+export interface TrainerTestimonialType extends NewTrainerTestimonialType {
+  _id: Types.ObjectId;
+  createdAt: Date;
 }

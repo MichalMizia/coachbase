@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import User, { IUser } from "@/model/user";
 import initMongoose from "@/lib/db";
-import { getServerSession } from "next-auth";
-import authOptions from "@/lib/auth";
-import { Session } from "next-auth";
 import { uploadToS3 } from "@/lib/uploadToS3";
 import mongoose, { HydratedDocument } from "mongoose";
 import { JWT, getToken } from "next-auth/jwt";

@@ -1,8 +1,11 @@
+import { PendingRequest, PendingRequestType } from "@/model/pendindRequest";
 import initMongoose from "@/lib/db";
 import { isStringUnsafe } from "@/lib/utils";
 import User, { IUser } from "@/model/user";
 import { HydratedDocument } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import slugify from "slugify";
+import TrainerData, { TrainerDataType } from "@/model/trainerData";
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
   try {
@@ -58,6 +61,26 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
 
     user.email = email;
     user.username = username;
+    if (user.isTrainer) {
+      // @ts-expect-error
+      user.slug = slugify(username);
+      // @ts-expect-error
+      const trainerData: HydratedDocument<TrainerDataType> =
+        await TrainerData.findOne({
+          userSlug: slugify(defaultName),
+        });
+      trainerData.userSlug = slugify(username);
+    }
+    const pendingRequest: HydratedDocument<PendingRequestType> | null =
+      await PendingRequest.findOne({
+        username: defaultName,
+      }).exec();
+
+    if (pendingRequest) {
+      pendingRequest.username = username;
+      pendingRequest.email = email;
+      await pendingRequest.save();
+    }
 
     await user.save();
     return NextResponse.json({}, { status: 200 });

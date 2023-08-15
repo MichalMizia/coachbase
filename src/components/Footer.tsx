@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./custom/Logo";
-import NewsletterForm from "./NewsletterForm";
+import NewsletterForm from "./forms/NewsletterForm";
 
 interface FooterProps {}
 

@@ -55,6 +55,7 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
       required: true,
       default: [],
     },
+    content: String,
     // sections: {
     //   type: [
     //     {
@@ -133,6 +134,7 @@ export interface TrainerSectionType {
 
 export interface TrainerDataType {
   // these allow for identyfying and populating the user
+  _id: string;
   userSlug: string;
   userId: Types.ObjectId;
   bio?: string;
@@ -141,7 +143,8 @@ export interface TrainerDataType {
   faq: TrainerFAQQuestionType[];
   reviews: TrainerReviewType[];
   testimonials: TrainerTestimonialType[];
-
+  // this is the main markdown content
+  content: string;
   // all images that a trainer has posted and their social media links
   images: Image[];
   socialMedia: SocialMediaType;

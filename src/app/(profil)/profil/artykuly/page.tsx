@@ -38,7 +38,7 @@ const Page = async () => {
 
   // when the user is logged in as a trainer
   return (
-    <div className="flex h-full flex-col items-stretch justify-start px-4 py-6 lg:px-8">
+    <div className="flex h-full flex-col items-stretch justify-start overflow-y-auto px-4 py-6 lg:px-8">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="space-y-1">
           <h2 className="text-2xl font-semibold text-gray-800">Artykuły</h2>

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import initMongoose from "@/lib/db";
 // types
 import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
-import MediaForm from "@/components/profile/forms/MediaForm";
+import MediaForm from "@/components/forms/MediaForm";
 
 interface PageProps {}
 
@@ -37,7 +37,7 @@ const Page = async ({}: PageProps) => {
   const user = userData?.userId;
 
   return (
-    <div className="flex flex-col items-stretch justify-start px-4 py-6 lg:px-8">
+    <div className="flex flex-col items-stretch justify-start overflow-y-auto px-4 py-6 lg:px-8">
       <MediaForm
         media={userData.socialMedia}
         tags={user.tags || []}

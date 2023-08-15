@@ -22,7 +22,7 @@ const PendingRequestSchema = new Schema(
   { collection: "PendingRequests" }
 );
 
-const PendingRequest =
+export const PendingRequest =
   models?.PendingRequest || model("PendingRequest", PendingRequestSchema);
 
 export interface PendingRequestType {

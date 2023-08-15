@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { uploadToS3 } from "@/lib/uploadToS3";
-import { Files } from "formidable";
-import { File } from "multiparty";
 
 export default async function handler(
   req: NextApiRequest,

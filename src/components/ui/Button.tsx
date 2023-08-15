@@ -1,7 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { Loader2 } from "lucide-react";
 import { classNames } from "@/lib/utils";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export const buttonVariants = cva(
   "active:scale-95 rounded-md items-center justify-center text-sm font-medium transition-all duration-300 inline-flex focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-75 disabled:brightness-90 disabled:pointer-events-none",
@@ -37,28 +37,28 @@ export interface ButtonProps
   isLoading?: boolean;
 }
 
-export default function Button({
-  className,
-  variant,
-  size,
-  isLoading,
-  children,
-  ...props
-}: ButtonProps) {
-  return (
-    <button
-      className={classNames(buttonVariants({ variant, size }), className!)}
-      disabled={isLoading}
-      {...props}
-    >
-      {isLoading ? (
-        <>
-          <Loader2 className="h-4 w-4 animate-spin" />
-          {children}
-        </>
-      ) : (
-        children
-      )}
-    </button>
-  );
-}
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, isLoading, children, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={classNames(buttonVariants({ variant, size }), className!)}
+        disabled={isLoading}
+        {...props}
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            {children}
+          </>
+        ) : (
+          children
+        )}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
+
+export default Button;

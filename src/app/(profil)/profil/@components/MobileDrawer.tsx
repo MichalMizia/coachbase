@@ -85,6 +85,36 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                         Oferty
                       </button>
                     </Link>
+                    <Link
+                      href="/profil/efekty"
+                      title="Efekty współpracy z trenerem."
+                    >
+                      <button
+                        className={cn(
+                          "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                          pathname?.includes("efekty")
+                            ? " bg-indigo_custom/90 text-white"
+                            : "hover:bg-indigo_custom/20"
+                        )}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="lucide lucide-line-chart mr-2 h-4 w-4"
+                        >
+                          <path d="M3 3v18h18" />
+                          <path d="m19 9-5 5-4-4-3 3" />
+                        </svg>
+                        Efekty
+                      </button>
+                    </Link>
                     <Link href="/profil/artykuly" title="Artykuły">
                       <button
                         className={cn(
@@ -98,6 +128,7 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                         Artykuły
                       </button>
                     </Link>
+
                     <Link
                       href="/profil/informacje"
                       title="Tagi/Lokalizacja/Social Media"

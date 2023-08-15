@@ -1,107 +1,44 @@
-import { classNames, roundHalf } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import "./custom.css";
 
 interface StarsRatingProps {
   rating?: number | null;
-  size?: "small" | "large";
   className?: string;
+  starsClassName?: string;
+  omitRatingNumber?: boolean;
+  amount?: number;
 }
 
-import { StarIcon } from "lucide-react";
-
-const StarsRating = ({ rating, size, className }: StarsRatingProps) => {
+const StarsRating = ({
+  rating,
+  className,
+  starsClassName,
+  omitRatingNumber,
+  amount,
+}: StarsRatingProps) => {
   //   const roundedRating = roundHalf(rating);
   //   console.log(Math.round(rating) - roundedRating);
   //   const isHalfStar = Math.round(rating) - roundedRating === 0.5;
-  if (rating) {
-    const roundedRating = Math.round(rating);
 
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < rating) {
-        stars.push(
-          <StarIcon
-            key={i}
-            fill="#facc1570"
-            strokeWidth="1.5"
-            className="mr-0.5 w-[20px] md:w-[22px]"
-            stroke="#facc15"
-          />
-        );
-      } else {
-        stars.push(
-          <StarIcon
-            key={i}
-            fill="#f5f5f5"
-            strokeWidth="1.5"
-            className="mr-0.5 w-[20px] md:w-[22px]"
-            stroke="#facc1590"
-          />
-        );
-      }
-    }
-
-    return (
+  return (
+    <div className={cn("flex items-center justify-center gap-1", className)}>
       <div
-        className={classNames(
-          "my-[2px] flex items-center self-end",
-          className!
-        )}
-      >
-        {stars}
-        <span
-          className={classNames(
-            size === "small" ? "mx-1" : "mx-2",
-            "translate-y-[1px] rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-gray-800"
-          )}
-        >
-          {rating}
+        className={cn("stars", starsClassName)}
+        style={{ "--rating": rating || 0 } as React.CSSProperties}
+        aria-label={
+          rating
+            ? `Ocena tej oferty wynosi ${rating} na 5 gwiazdek`
+            : "Nie ma jeszcze opinii na temat tej oferty"
+        }
+      ></div>
+      {!omitRatingNumber && (
+        <span className="ml-1 rounded-sm bg-bg p-1 text-[13px] font-semibold text-slate-500 shadow-sm">
+          {rating ? rating : "??"}
+          {!!amount && `,  ${amount} opinii`}
         </span>
-      </div>
-    );
-  } else {
-    return (
-      <div
-        className={classNames(
-          "my-[2px] flex items-center gap-0.5 self-end",
-          className!
-        )}
-      >
-        <StarIcon
-          fill="#f5f5f5"
-          strokeWidth="1.5"
-          stroke="#facc1590"
-          className="mr-0.5 w-[20px] md:w-[22px]"
-        />
-        <StarIcon
-          fill="#f5f5f5"
-          strokeWidth="1.5"
-          stroke="#facc1590"
-          className="mr-0.5 w-[20px] md:w-[22px]"
-        />
-        <StarIcon
-          fill="#f5f5f5"
-          strokeWidth="1.5"
-          stroke="#facc1590"
-          className="mr-0.5 w-[20px] md:w-[22px]"
-        />
-        <StarIcon
-          fill="#f5f5f5"
-          strokeWidth="1.5"
-          stroke="#facc1590"
-          className="mr-0.5 w-[20px] md:w-[22px]"
-        />
-        <StarIcon
-          fill="#f5f5f5"
-          strokeWidth="1.5"
-          stroke="#facc1590"
-          className="mr-0.5 w-[20px] md:w-[22px]"
-        />
-        <span className="mx-2 translate-y-[1px] rounded bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-800">
-          ??
-        </span>
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 };
 
 export default StarsRating;

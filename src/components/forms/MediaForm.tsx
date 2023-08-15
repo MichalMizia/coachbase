@@ -27,7 +27,7 @@ import mappedCities from "@/config/data/citiesList.json";
 import { allTags } from "@/config/global";
 import { Separator } from "@/components/ui/separator";
 // static assets
-import "./mediaform.css";
+import "./css/mediaform.css";
 import Image from "next/image";
 import AvatarSvg from "@/../public/assets/avatar.svg";
 

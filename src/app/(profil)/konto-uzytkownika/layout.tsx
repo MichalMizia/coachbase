@@ -41,6 +41,7 @@ export default async function ProfileLayout({
           <div className="col-span-3 w-full overflow-y-hidden bg-blue-500 lg:bg-transparent xl:col-span-1">
             <div className="h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-14">
               {children}
+              <div className="h-20 w-full opacity-0 lg:hidden"></div>
             </div>
           </div>
         </div>

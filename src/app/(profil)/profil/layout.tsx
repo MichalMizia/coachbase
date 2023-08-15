@@ -34,7 +34,7 @@ export default async function ProfileLayout({
 
   // when the user is logged in as a trainer
   return (
-    <main className="flex h-screen w-screen flex-col items-stretch justify-start overflow-hidden bg-white">
+    <main className="flex h-screen w-full flex-col items-stretch justify-start overflow-hidden bg-white">
       {/* <header className="z-[2] w-full shadow-md shadow-[#00000020]">
         <div className="container-md flex items-center justify-between px-2 lg:flex-row-reverse">
           <NavigationToggle />
@@ -63,7 +63,7 @@ export default async function ProfileLayout({
         <div className="grid h-full rounded-lg lg:grid-cols-4 lg:rounded-none xl:[grid-template-columns:320px_1fr]">
           <Sidebar className="col-span-1 hidden h-full max-w-xs lg:block" />
           <div className="col-span-3 w-full overflow-y-hidden bg-blue-500 lg:bg-transparent xl:col-span-1">
-            <div className="h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-14">
+            <div className="h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-16 lg:pb-0">
               {children}
             </div>
           </div>

@@ -9,23 +9,29 @@ import mongoose, { HydratedDocument } from "mongoose";
 import { TrainerOfferType } from "@/model/trainerDataSubSchemas/trainerOffer";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
+import {
+  NewTrainerTestimonialType,
+  TrainerTestimonialType,
+} from "@/model/trainerDataSubSchemas/trainerTestimonial";
 
 interface PostRequestType {
   userId: string;
 
   title: string;
   description: string;
-  price: number;
-  pricePer: string;
+  photoUrls: string[];
+  photoAlts: string[];
+  transformation: boolean;
 }
 interface PatchRequestType {
   userId: string;
-  offerId: string;
+  testimonialId: string;
 
   title: string;
   description: string;
-  price: number;
-  pricePer: string;
+  photoUrls: string[];
+  photoAlts: string[];
+  transformation: boolean;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -33,9 +39,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const session = await getServerSession(authOptions);
 
-  const { userId, title, description, price, pricePer }: PostRequestType =
-    await req.json();
-  if (!title || !description || !price || !pricePer) {
+  const {
+    userId,
+    title,
+    description,
+    photoUrls,
+    photoAlts,
+    transformation,
+  }: PostRequestType = await req.json();
+  if (!title || !description) {
     return NextResponse.json({
       status: 400,
       message: "Wszystie pola są wymagane",
@@ -50,7 +62,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   if (session?.user._id !== userId) {
     return NextResponse.json({
       status: 403,
-      message: "Nie masz uprawnień do dodania tej oferty",
+      message: "Nie masz uprawnień do dodania tego efektu",
     });
   }
 
@@ -64,23 +76,27 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const newOffer: Omit<TrainerOfferType, "_id"> = {
+  console.log(photoUrls);
+
+  const newTestimonial: NewTrainerTestimonialType = {
     title,
     description,
-    price: price.toString(),
-    pricePer,
+    photoUrl: photoUrls,
+    photoAlt: [""],
+    transformation: transformation || false,
   };
 
   try {
     // ts is salty because i didnt provide object id but mongoose does this automatically
     // @ts-expect-error
-    trainerData.offers = [...trainerData.offers, newOffer];
+    trainerData.testimonials = [...trainerData.testimonials, newTestimonial];
     await trainerData.save();
 
     return NextResponse.json({}, { status: 200 });
   } catch (e) {
+    console.log(e);
     return NextResponse.json(
-      { message: "Błąd podczas dodawania oferty" },
+      { message: "Błąd podczas dodawania efektu" },
       { status: 400 }
     );
   }
@@ -93,13 +109,15 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
 
   const {
     userId,
+    testimonialId,
+
     title,
     description,
-    price,
-    pricePer,
-    offerId,
+    transformation,
+    photoAlts,
+    photoUrls,
   }: PatchRequestType = await req.json();
-  if (!title || !description || !price || !pricePer) {
+  if (!title || !description) {
     return NextResponse.json({
       status: 400,
       message: "Wszystie pola są wymagane",
@@ -128,21 +146,21 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const offerBeingEdited = trainerData.offers.find(
-    (offer) => JSON.stringify(offer._id) === offerId
+  const testimonialBeingEdited = trainerData.testimonials.find(
+    (testimonial) => JSON.stringify(testimonial._id) === testimonialId
   );
 
-  if (!offerBeingEdited) {
+  if (!testimonialBeingEdited) {
     return NextResponse.json({
       status: 400,
       message: "Oferta którą chcesz edytować nie istnieje",
     });
   }
 
-  offerBeingEdited.title = title;
-  offerBeingEdited.description = description;
-  offerBeingEdited.price = price.toString();
-  offerBeingEdited.pricePer = pricePer;
+  testimonialBeingEdited.title = title;
+  testimonialBeingEdited.description = description;
+  testimonialBeingEdited.photoUrl = photoUrls;
+  testimonialBeingEdited.transformation = transformation;
 
   try {
     await trainerData.save();
@@ -161,7 +179,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
 
   const session = await getServerSession(authOptions);
 
-  const { userId, offerId } = await req.json();
+  const { userId, testimonialId } = await req.json();
   if (!userId) {
     return NextResponse.json({
       status: 400,
@@ -171,7 +189,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
   if (session?.user._id !== userId) {
     return NextResponse.json({
       status: 403,
-      message: "Nie masz uprawnień do usunięcia tej oferty",
+      message: "Nie masz uprawnień do usunięcia tego efektu",
     });
   }
 
@@ -186,8 +204,9 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
   }
 
   try {
-    (trainerData.offers = trainerData.offers.filter(
-      (offer) => JSON.stringify(offer._id) !== JSON.stringify(offerId)
+    (trainerData.testimonials = trainerData.testimonials.filter(
+      (testimonial) =>
+        JSON.stringify(testimonial._id) !== JSON.stringify(testimonialId)
     )),
       await trainerData.save();
 

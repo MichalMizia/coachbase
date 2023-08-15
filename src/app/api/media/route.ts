@@ -19,6 +19,7 @@ interface reqType {
 export async function POST(req: NextRequest) {
   const { instagram, facebook, email, city, tags, slug }: reqType =
     await req.json();
+  console.log(instagram);
 
   if (
     typeof instagram !== "string" ||
@@ -48,15 +49,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const TrainerDataQuery: any = {};
+  const TrainerDataQuery: any = { socialMedia: {} };
   if (instagram?.length) {
-    TrainerDataQuery.instagram = instagram;
+    TrainerDataQuery.socialMedia.instagram = instagram;
   }
   if (facebook?.length) {
-    TrainerDataQuery.facebook = facebook;
+    TrainerDataQuery.socialMedia.facebook = facebook;
   }
   if (email?.length) {
-    TrainerDataQuery.email = email;
+    TrainerDataQuery.socialMedia.email = email;
   }
   const isUpdatingTrainerData =
     instagram?.length || facebook?.length || email?.length;
@@ -68,9 +69,10 @@ export async function POST(req: NextRequest) {
   if (tags?.length) {
     userQuery.tags = tags;
   }
-  const isUpdatingUser = city?.length || tags?.length;
 
-  if (isUpdatingTrainerData && isUpdatingUser) {
+  console.log(TrainerDataQuery);
+
+  if (isUpdatingTrainerData) {
     try {
       await Promise.all([
         TrainerData.findOneAndUpdate({ userSlug: slug }, TrainerDataQuery),
@@ -81,23 +83,12 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({}, { status: 200 });
-  } else if (isUpdatingTrainerData) {
-    try {
-      await TrainerData.findOneAndUpdate({ userSlug: slug }, TrainerDataQuery);
-    } catch (e) {
-      return NextResponse.json({}, { status: 400 });
-    }
-
-    return NextResponse.json({}, { status: 200 });
-  } else if (isUpdatingUser) {
+  } else {
     try {
       await User.findOneAndUpdate({ slug: slug }, userQuery);
     } catch (e) {
       return NextResponse.json({}, { status: 400 });
     }
-
     return NextResponse.json({}, { status: 200 });
-  } else {
-    return NextResponse.json({}, { status: 400 });
   }
 }

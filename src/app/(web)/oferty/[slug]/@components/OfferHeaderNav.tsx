@@ -7,9 +7,11 @@ import {
 } from "@/config/profileOptions";
 import { classNames } from "@/lib/utils";
 
-interface OfferHeaderNavProps {}
+interface OfferHeaderNavProps {
+  shouldShowFaq?: boolean;
+}
 
-const OfferHeaderNav = ({}: OfferHeaderNavProps) => {
+const OfferHeaderNav = ({ shouldShowFaq }: OfferHeaderNavProps) => {
   return (
     <>
       {/* <div
@@ -30,15 +32,20 @@ const OfferHeaderNav = ({}: OfferHeaderNavProps) => {
       ))} */}
       <TabsList
         className={classNames(
-          `mt-4 w-full border border-b-0 !border-indigo_custom/20`
+          `mt-4 w-full border border-b-0 !border-indigo_custom/20 md:mt-4`
         )}
         defaultValue={profileNavigationOptions[0]}
       >
-        {profileNavigationOptions.map((opt) => (
-          <TabsTrigger tabIndex={0} className="flex-1" value={opt}>
-            {opt}
-          </TabsTrigger>
-        ))}
+        {profileNavigationOptions.map((opt) => {
+          if (opt === "FAQ" && !shouldShowFaq) {
+            return null;
+          }
+          return (
+            <TabsTrigger key={opt} tabIndex={0} className="flex-1" value={opt}>
+              {opt}
+            </TabsTrigger>
+          );
+        })}
       </TabsList>
     </>
   );

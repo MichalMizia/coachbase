@@ -2,9 +2,9 @@
 
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import formidable, { File, Files } from "formidable";
+import formidable, { File } from "formidable";
 import { NextApiRequest } from "next";
-import { PassThrough, Transform } from "stream";
+import { PassThrough } from "stream";
 
 const accessKeyId = process.env.AMAZON_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AMAZON_ACCESS_KEY;

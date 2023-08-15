@@ -20,7 +20,7 @@ import {
 // components
 import { PlusCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { offerOptionNames, offerOptions } from "@/config/global";
+import { offerOptions } from "@/config/global";
 import { Label } from "@radix-ui/react-label";
 import TextareaAutosize from "react-textarea-autosize";
 // utils
@@ -33,6 +33,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Switch } from "@/components/ui/switch";
+import { useRouter } from "next/navigation";
 
 interface NewOfferFormProps {
   userId: string;
@@ -51,11 +53,7 @@ const NewOfferSchema = z.object({
     required_error: "Cena oferty jest wymagana",
     invalid_type_error: "Cena oferty musi być liczbą",
   }),
-  pricePer: z
-    .union([z.literal("1h"), z.literal("2h"), z.literal("Trening")])
-    .optional(),
-  duration: z.string().min(3).max(20).optional(),
-  amountOfWorkouts: z.number().optional(),
+  pricePer: z.string(),
 });
 
 type FormData = z.infer<typeof NewOfferSchema>;
@@ -65,22 +63,21 @@ const NewOfferForm = ({ userId }: NewOfferFormProps) => {
     resolver: zodResolver(NewOfferSchema),
   });
   const { isLoading, setIsLoading } = useLoadingStore();
+  const [customOfferTitle, setCustomOfferTitle] = useState<boolean>(false);
+  const router = useRouter();
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
     setIsLoading(true);
 
     try {
-      const reqPayload: any = {
+      const res = await axios.post("/api/oferty", {
         userId,
-        name: data.name,
+        title: data.name,
         description: data.description,
         price: data.price,
-      };
-      reqPayload.pricePer = data.pricePer;
-      reqPayload.duration = data.duration;
-      reqPayload.amountOfWorkouts = data.amountOfWorkouts;
-      const res = await axios.post("/api/oferty", reqPayload);
+        pricePer: data.pricePer,
+      });
 
       toast.success("Dodano ofertę");
     } catch (e) {
@@ -100,12 +97,9 @@ const NewOfferForm = ({ userId }: NewOfferFormProps) => {
     } finally {
       setIsLoading(false);
     }
-  };
 
-  const selectedOfferName = form.watch("name") || "Trening Personalny";
-  const selectedOffer = offerOptions.find(
-    (opt) => opt.name === selectedOfferName
-  );
+    router.refresh();
+  };
 
   const errors = form.formState.errors;
   const register = form.register;
@@ -139,57 +133,77 @@ const NewOfferForm = ({ userId }: NewOfferFormProps) => {
             </DialogHeader>
 
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-3 items-center gap-x-2 gap-y-1">
-                <Label htmlFor="select" className="col-span-2 text-gray-800">
-                  Oferta
-                </Label>
-                <Label htmlFor="price" className="col-span-1 text-gray-800">
-                  Cena
+              <div className="grid grid-cols-4 items-center gap-x-2 gap-y-1">
+                <Label
+                  htmlFor="select"
+                  className="col-span-4 flex items-center justify-between gap-1 text-gray-800"
+                >
+                  Rodzaj oferty
+                  <div className="flex items-center justify-end gap-2">
+                    Wpisz własny
+                    <Switch
+                      id="custom-offer-title"
+                      title={
+                        customOfferTitle
+                          ? "Wybierz tytuł z listy"
+                          : "Ustaw własny tytuł oferty"
+                      }
+                      name={
+                        customOfferTitle
+                          ? "Wybierz tytuł z listy"
+                          : "Ustaw własny tytuł oferty"
+                      }
+                      checked={customOfferTitle}
+                      onCheckedChange={(e) => setCustomOfferTitle(e)}
+                    />
+                  </div>
                 </Label>
 
-                {/* <Select
-                  defaultValue="Trening Personalny"
-                  onValueChange={setSelectedOfferName}
+                {customOfferTitle ? (
+                  <input
+                    type="text"
+                    placeholder="Wpisz tytuł oferty"
+                    className="col-span-4 flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    {...register("name")}
+                  />
+                ) : (
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    defaultValue="Trening Personalny"
+                    render={({ field }) => (
+                      <FormItem className="col-span-4">
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Wybierz ofertę" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {offerOptions.map((name) => (
+                              <SelectItem key={name} value={name}>
+                                {name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+
+              <div className="grid grid-flow-row grid-cols-4 items-center gap-1 gap-x-2">
+                <Label
+                  htmlFor="description"
+                  className="col-span-2 row-start-1 text-gray-800"
                 >
-                  <SelectTrigger className="col-span-2">
-                    <SelectValue
-                      {...form.register("name")}
-                      placeholder="Wybierz opcję oferty"
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {offerOptionNames.map((name) => (
-                      <SelectItem value={name}>{name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select> */}
-                <FormField
-                  control={form.control}
-                  name="name"
-                  defaultValue="Trening Personalny"
-                  render={({ field }) => (
-                    <FormItem className="col-span-2">
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Wybierz ofertę" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {offerOptionNames.map((name) => (
-                            <SelectItem key={name} value={name}>
-                              {name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormItem>
-                  )}
-                />
-                <div className="col-span-1 flex h-10 w-full overflow-hidden rounded-md border border-gray-300  ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                  Cena oferty
+                </Label>
+                <div className="col-span-2 row-start-2 flex h-10 w-full overflow-hidden rounded-md border border-gray-300  ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                   <input
                     id="price"
                     key="price"
@@ -201,106 +215,37 @@ const NewOfferForm = ({ userId }: NewOfferFormProps) => {
                     zł
                   </span>
                 </div>
-              </div>
-              <div className="grid grid-cols-5 items-center gap-x-2 gap-y-1">
-                {selectedOffer?.fields?.pricePer ? (
-                  <>
-                    <Label
-                      htmlFor="length-select"
-                      className="text-gray-800 [grid-column:1_/_span_3]"
-                    >
-                      Czas trwania
-                    </Label>
-                    <Select
-                      onValueChange={(value) =>
-                        register("duration", { setValueAs: (val) => value })
-                      }
-                      defaultValue={selectedOffer.fields.pricePer[0]}
-                    >
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Wybierz opcję oferty" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {selectedOffer.fields.pricePer.map((name) => (
-                          <SelectItem key={name} value={name}>
-                            {name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    {errors.pricePer && (
-                      <p className="text-sm text-red-600">
-                        {errors.pricePer.message}
-                      </p>
-                    )}
-                  </>
-                ) : null}
-                {selectedOffer?.fields?.duration ? (
-                  <>
-                    <Label
-                      htmlFor="duration"
-                      className="col-span-3 text-gray-800"
-                    >
-                      Okres trwania
-                    </Label>
-                    <Input
-                      type="text"
-                      id="duration"
-                      key="duration"
-                      className="col-span-4"
-                      {...register("duration")}
-                      placeholder="Ile trwa ta oferta?"
-                    />
-                    {errors.duration && (
-                      <p className="text-sm text-red-600">
-                        {errors.duration.message}
-                      </p>
-                    )}
-                  </>
-                ) : null}
-                {selectedOffer?.fields?.amountOfWorkouts ? (
-                  <>
-                    <Label
-                      htmlFor="ilosc-treningow"
-                      className="row-start-1 text-gray-800 [grid-column:4_/_span_2]"
-                    >
-                      Ilość treningów
-                    </Label>
-                    <Input
-                      id="ilosc-treningow"
-                      key="ilosc-treningow"
-                      className="col-span-2"
-                      type="number"
-                      {...register("amountOfWorkouts", {
-                        valueAsNumber: true,
-                      })}
-                    />
-                    {errors.amountOfWorkouts && (
-                      <p className="text-sm text-red-600">
-                        {errors.amountOfWorkouts.message}
-                      </p>
-                    )}
-                  </>
-                ) : null}
-              </div>
-
-              <div className="grid grid-cols-5 items-center gap-1">
                 <Label
                   htmlFor="description"
-                  className="col-span-2 text-gray-800"
+                  className="row- col-span-2 text-gray-800"
                 >
-                  Opis
+                  Cena za
                 </Label>
-                <TextareaAutosize
-                  id="description"
-                  key="description"
-                  className="col-span-5 flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 sm:col-span-4"
-                  placeholder="Opisz swoją ofertę"
-                  {...register("description")}
+                <input
+                  id="pricePer"
+                  key="pricePer"
+                  className="col-span-2 flex h-10 rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="string"
+                  {...register("pricePer")}
+                  placeholder="Cena odnosi się do:"
                 />
               </div>
             </div>
-            <DialogFooter>
+
+            <div className="grid grid-cols-4 items-center gap-1">
+              <Label htmlFor="description" className="col-span-2 text-gray-800">
+                Opis oferty
+              </Label>
+              <TextareaAutosize
+                id="description"
+                key="description"
+                className="col-span-4 flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm text-gray-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Opisz swoją ofertę"
+                {...register("description")}
+                autoFocus={false}
+              />
+            </div>
+            <DialogFooter className="mt-4">
               <Button type="submit" isLoading={isLoading}>
                 Zapisz
               </Button>

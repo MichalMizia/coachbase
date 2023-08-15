@@ -48,7 +48,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     ).exec();
     const id = new mongoose.Types.ObjectId(user._id);
-    const TrainerDataProps: TrainerDataType = {
+    const TrainerDataProps: Omit<TrainerDataType, "_id"> = {
       userSlug: slug,
       userId: id,
       socialMedia: {
@@ -61,6 +61,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       faq: [],
       reviews: [],
       images: [],
+      content: "",
     };
     await Promise.all([
       PendingRequest.deleteOne({ email: email }).lean().exec(),

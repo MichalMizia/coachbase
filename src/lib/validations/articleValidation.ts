@@ -9,5 +9,5 @@ export const articleUploadSchema = z.object({
   summary: z
     .string()
     .max(200, "Podusmowanie nie może być dłuższe niż 200 znaków")
-    .min(30, "Podusmowanie nie może być dłuższe niż 30 znaków"),
+    .min(30, "Podusmowanie nie może być krótsze niż 30 znaków"),
 });

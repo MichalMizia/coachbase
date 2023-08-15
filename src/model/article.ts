@@ -1,4 +1,5 @@
 import { Schema, Types, model, models } from "mongoose";
+import { TrainerType } from "./user";
 
 const ArticleSchema = new Schema<ArticleType>(
   {
@@ -16,6 +17,7 @@ const ArticleSchema = new Schema<ArticleType>(
       required: true,
     },
     summary: String,
+    tags: { type: [String], required: true },
     published: { type: Boolean, required: true },
     slug: String,
     photoUrl: String,
@@ -48,8 +50,13 @@ export type ArticleType = {
   photoUrl?: string;
   photoAlt?: string;
   impressions: number;
+  tags: string[];
   createdAt: Date;
   updatedAt: Date;
 } & (UnPublished | Published);
+
+export interface PopulatedArticleType extends Omit<ArticleType, "userId"> {
+  userId: TrainerType;
+}
 
 export default Article;

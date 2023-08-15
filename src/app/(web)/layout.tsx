@@ -86,7 +86,7 @@ export default async function RootLayout({
 
   return (
     <html lang="pl">
-      <body className="bg-bg text-text web-body">
+      <body className="web-body relative bg-bg text-text">
         <Providers>
           <Suspense
             fallback={
