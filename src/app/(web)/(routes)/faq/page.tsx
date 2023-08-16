@@ -6,6 +6,7 @@ import { FaqItem, faqItemsHeader, faqItemsMain } from "@/config/faq";
 import { classNames } from "@/lib/utils";
 // types
 import { LucideProps, SaveIcon, SendIcon, SidebarOpenIcon } from "lucide-react";
+import { Metadata } from "next";
 import { Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -52,6 +53,11 @@ const SidebarItem = ({
       </span>
     </button>
   );
+};
+
+export const metadata: Metadata = {
+  title: "FAQ - CoachBase",
+  description: "Strona z najczęściej zadawanymi pytaniami do firmy CoachBase",
 };
 
 const Page = ({}) => {

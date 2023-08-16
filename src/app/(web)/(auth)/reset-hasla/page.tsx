@@ -4,7 +4,7 @@ import { SendPasswordResetForm } from "../@components/SendPasswordResetForm";
 
 export const metadata: Metadata = {
   title: "Zresetuj Hasło - Coachbase",
-  description: "Zaloguj się do swojego konta na coachbase.pl",
+  description: "Zresetuj swoje hasło na coachbase.pl",
 };
 
 export default function Page() {

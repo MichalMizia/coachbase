@@ -1,4 +1,11 @@
+import { Metadata } from "next";
+
 interface PageProps {}
+
+export const metadata: Metadata = {
+  title: "Polityka Prywatności - CoachBase",
+  description: "Polityka prywatności firmy CoachBase",
+};
 
 const Page = ({}: PageProps) => {
   return (

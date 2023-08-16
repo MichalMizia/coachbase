@@ -22,12 +22,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-
-// export async function generateStaticParams() {
-//   const trainers: TrainerType[] = await fetchAllTrainers();
-
-//   return trainers.map((trainer) => trainer.slug);
-// }
+import { Metadata } from "next";
 
 interface pageProps {
   params: {
@@ -48,6 +43,51 @@ const getData = async (
 
   return trainerData;
 };
+
+// trainer metadata
+export async function generateMetadata({ params }: pageProps) {
+  const { slug } = params;
+  const trainerData = await getData(slug);
+  const trainer = trainerData?.userId;
+
+  let keywords: string[] = [
+    "Profil biznesowy",
+    "Trener",
+    "Dietetyka",
+    "Ekspert",
+    "Usługi",
+    "Oferta",
+    "Trening personalny",
+    "Instruktor fitness",
+    "Siłownia",
+    "Sport",
+    "Blog",
+    "Artykuły",
+  ];
+  if (trainer?.tags) {
+    keywords = keywords.concat(trainer.tags);
+  }
+  if (trainer?.username) {
+    keywords = keywords.concat(trainer.username);
+  }
+  if (trainer?.city) {
+    keywords = keywords.concat(trainer.city);
+  }
+
+  const metadata: Metadata = {
+    title: `Profil Biznesowy - ${trainer?.username}`,
+    description:
+      trainer?.summary && trainer.summary.length > 150
+        ? trainer?.summary.concat(` Miasto: ${trainer?.city}`)
+        : `${trainer?.username} to ${trainer?.roles.join(
+            ", "
+          )} oferujący swoje usługi w mieście ${
+            trainer?.city
+          }, oto co ma do powiedzenia o sobie. ${trainer?.summary}`,
+    keywords: keywords,
+  };
+  return metadata;
+}
 
 const Page = async ({ params }: pageProps) => {
   const { slug } = params;

@@ -3,15 +3,14 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["mongoose"],
   },
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/",
-  //       destination: "/oferty",
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap.xml",
+        destination: "/api/sitemap",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -25,14 +24,6 @@ const nextConfig = {
     ],
     minimumCacheTTL: 31536000,
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/sitemap.xml",
-  //       destination: "/api/sitemap",
-  //     },
-  //   ];
-  // },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;

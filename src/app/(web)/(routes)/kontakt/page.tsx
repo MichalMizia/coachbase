@@ -1,4 +1,11 @@
+import { Metadata } from "next";
+
 interface PageProps {}
+
+export const metadata: Metadata = {
+  title: "Kontakt - CoachBase",
+  description: "Strona kontaktowa firmy CoachBase",
+};
 
 const Page = ({}: PageProps) => {
   return (

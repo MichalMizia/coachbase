@@ -7,6 +7,7 @@ import Article, { ArticleType, PopulatedArticleType } from "@/model/article";
 import Image from "next/image";
 import Link from "next/link";
 import AvatarSvg from "@/../public/assets/avatar.svg";
+import { Metadata } from "next";
 
 interface pageProps {}
 
@@ -36,6 +37,67 @@ const getData = async (
 
   return articles || null;
 };
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  // const city = searchParams?.city?.toString();
+  // const tag = searchParams?.tag?.toString();
+
+  let keywords = [
+    "Trening",
+    "Dietetyka",
+    "Fizjoterapia",
+    "Zdrowy styl życia",
+    "Ćwiczenia fizyczne",
+    "Odżywianie",
+    "Rehabilitacja",
+    "Fitness",
+    "Rozciąganie",
+    "Plan treningowy",
+    "Dieta",
+    "Ruch",
+    "Zdrowe nawyki",
+    "Regeneracja",
+    "Trener osobisty",
+    "Ból pleców",
+    "Aktywność fizyczna",
+    "Joga",
+    "Zdrowe odchudzanie",
+    "Urazy sportowe",
+    "Blog",
+    "Artykuły",
+    "Artykuły treningowe",
+    "Artykuły dietetyczne",
+  ];
+  // let title = "Oferty - Coachbase";
+  // let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
+
+  // if (city && tag) {
+  //   title = `Oferty, ${city}, ${tag} - Coachbase`;
+  //   description = description.concat(`w mieście ${city}`);
+  //   keywords = keywords.concat([city, tag]);
+  // } else if (city) {
+  //   title = `Oferty, ${city} - Coachbase`;
+  //   keywords = keywords.concat(city);
+  //   description = description.concat(`w mieście ${city}`);
+  // } else if (tag) {
+  //   title = `Oferty, ${tag} - Coachbase`;
+  //   keywords = keywords.concat(tag);
+  // }
+
+  const metadata: Metadata = {
+    title: "Artykuły - CoachBase",
+    description:
+      "Odkryj cenne porady dotyczące treningu, zdrowego odżywiania i fizjoterapii na blogu CoachBase. Artykuły o ćwiczeniach, dietach i rehabilitacji napisane przez ekspertów zarejestrowanych na CoachBase czekają na Ciebie.",
+    keywords: keywords,
+  };
+  return metadata;
+}
 
 const Page = async ({}: pageProps) => {
   const articles = await getData();

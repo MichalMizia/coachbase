@@ -76,16 +76,14 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
             </Button>
           </DialogTrigger>
         </div>
-        <article className="article !mx-0 !max-w-5xl">
-          {content?.length ? (
-            <div
-              className="article flow"
-              dangerouslySetInnerHTML={{ __html: sanitize(content) }}
-            ></div>
-          ) : (
-            <p className="">Nie masz jeszcze nic w tej sekcji.</p>
-          )}
-        </article>
+        {content?.length ? (
+          <article
+            className="article flow !mx-0 !max-w-5xl"
+            dangerouslySetInnerHTML={{ __html: sanitize(content) }}
+          ></article>
+        ) : (
+          <p className="">Nie masz jeszcze nic w tej sekcji.</p>
+        )}
       </div>
 
       <DialogContent className="!h-[95vh] !w-[95vw] max-w-none overflow-hidden">

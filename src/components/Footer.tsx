@@ -79,13 +79,13 @@ const Footer = ({}: FooterProps) => {
             >
               Artykuły
             </Link>
-            <Link
+            {/* <Link
               className="ml-1 underline decoration-transparent decoration-2 underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom "
               title="Porady"
               href="/porady"
             >
               Porady
-            </Link>
+            </Link> */}
             <Link
               className="ml-1 underline decoration-transparent decoration-2 underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom "
               title="FAQ"

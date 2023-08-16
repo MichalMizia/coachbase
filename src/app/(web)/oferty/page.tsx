@@ -1,19 +1,24 @@
 // components
 import User, { TrainerType } from "@/model/user";
 import SearchBarOffers from "@/components/landing/OffersSearchbar";
+import { SendIcon } from "lucide-react";
+// import LatestArticles from "@/components/LatestArticles";
+// import { Suspense } from "react";
 // utils
 import { getServerSession } from "next-auth";
 import initMongoose from "@/lib/db";
+import { cn } from "@/lib/utils";
 // city list
 import cities from "@/config/data/search-cities.json";
-import { SendIcon } from "lucide-react";
-import StarsRating from "@/components/custom/StarsRating";
-import Button from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
-import TrainerData from "@/model/trainerData";
-import LatestArticles from "@/components/LatestArticles";
-import { Suspense } from "react";
+// config
 import { tagOptions } from "@/config/global";
+import { Metadata } from "next";
+
+// page metadata
+export const metadata: Metadata = {
+  title: "Login - Coachbase",
+  description: "Zaloguj się do swojego konta na coachbase.pl",
+};
 
 export interface mongooseTrainersData extends TrainerType {
   createdAt: Date;
@@ -21,28 +26,58 @@ export interface mongooseTrainersData extends TrainerType {
   __v: number;
 }
 
-// const getTrainers = async (): Promise<TrainerType[]> => {
-//   await initMongoose();
-
-//   const searchParams = useSearchParams();
-//   console.log(searchParams);
-
-//   const trainers: TrainerType[] = await User.find({
-//     isTrainer: true,
-//     image: new RegExp(".*"),
-//   })
-//     .limit(10)
-//     .sort("-createdAt")
-//     .lean()
-//     .exec();
-//   return trainers;
-// };
-
 interface MongooseQuery {
   city?: string;
   tags?: any;
   username?: any;
   isTrainer: true;
+}
+
+// page metadata
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  const city = searchParams?.city?.toString();
+  const tag = searchParams?.tag?.toString();
+
+  let keywords: string[] = [
+    "Trener",
+    "Dietetyk",
+    "Fizjoterapeuta",
+    "Ekspert",
+    "Usługi",
+    "Oferty",
+    "Trening personalny",
+    "Instruktor fitness",
+    "Siłownia",
+    "Sport",
+  ];
+  let title = "Oferty - Coachbase";
+  let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
+
+  if (city && tag) {
+    title = `Oferty, ${city}, ${tag} - Coachbase`;
+    description = description.concat(`w mieście ${city}`);
+    keywords = keywords.concat([city, tag]);
+  } else if (city) {
+    title = `Oferty, ${city} - Coachbase`;
+    keywords = keywords.concat(city);
+    description = description.concat(`w mieście ${city}`);
+  } else if (tag) {
+    title = `Oferty, ${tag} - Coachbase`;
+    keywords = keywords.concat(tag);
+  }
+
+  const metadata: Metadata = {
+    title: title,
+    description: description,
+    keywords: keywords,
+  };
+  return metadata;
 }
 
 const getTrainers = async (
