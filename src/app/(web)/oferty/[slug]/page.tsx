@@ -23,6 +23,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Metadata } from "next";
+import { sanitize } from "isomorphic-dompurify";
 
 interface pageProps {
   params: {
@@ -234,7 +235,7 @@ const Page = async ({ params }: pageProps) => {
           </Tabs>
         </div>
 
-        <aside className="hidden min-h-screen flex-1 rounded-sm bg-white p-3 px-4 shadow-md shadow-black/25 outline outline-1 outline-black/5 lg:block">
+        <aside className="hidden min-h-[400px] flex-1 self-stretch rounded-sm bg-white p-3 px-4 shadow-md shadow-black/25 outline outline-1 outline-black/5 lg:block">
           <div className="flex items-center justify-between">
             <div className="">
               <h2 className="text-h3 font-semibold text-gray-800">Artykuły</h2>
@@ -331,6 +332,51 @@ const Page = async ({ params }: pageProps) => {
           </ul>
         </section>
       )} */}
+      <section
+        id="o-mnie"
+        className="relative isolate mt-4 border-t border-black/5 shadow-inner"
+      >
+        <div className="main-gradient absolute inset-0 -z-10 h-full w-full bg-white"></div>
+        <div className="container-md flex max-w-6xl items-start justify-center gap-4 pb-4 pt-8 lg:gap-8 lg:pb-6">
+          <div className="max-w-3xl flex-[2] border-r-2 pr-2">
+            {trainerData.content?.length ? (
+              <article
+                className="small-article flow mx-auto"
+                dangerouslySetInnerHTML={{
+                  __html: sanitize(trainerData.content),
+                }}
+              ></article>
+            ) : (
+              <header>
+                <h2 className="text-h4 font-semibold text-gray-800">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-badge-info mr-2 inline -translate-y-[2px]"
+                  >
+                    <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                    <line x1="12" x2="12" y1="16" y2="12" />
+                    <line x1="12" x2="12.01" y1="8" y2="8" />
+                  </svg>
+                  O mnie
+                </h2>
+                <p className="max-w-md text-sm text-text_readable sm:text-h6">
+                  {!trainerData.content?.length &&
+                    "Ten trener nie dodał jeszcze sekcji o sobie"}
+                </p>
+              </header>
+            )}
+          </div>
+          <div className="hidden flex-1 lg:flex"></div>
+        </div>
+      </section>
     </main>
   );
 };

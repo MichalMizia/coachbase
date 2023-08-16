@@ -34,7 +34,8 @@ const Providers = ({ children }: ProvidersProps) => {
           <ToastBar
             toast={t}
             style={{
-              padding: t.className?.includes("custom") ? "0" : "8px 10px",
+              padding: t.className?.includes("custom") ? "0 " : "8px 10px",
+              maxWidth: t.className?.includes("max-w-500") ? 500 : 350,
             }}
           >
             {({ icon, message }) =>
@@ -46,7 +47,8 @@ const Providers = ({ children }: ProvidersProps) => {
                       ? "bg-green-100 outline outline-2 outline-green-500"
                       : t.type === "error"
                       ? "border border-red-400 bg-red-100"
-                      : ""
+                      : "",
+                    t.className
                   )}
                 >
                   <div className="flex items-center justify-center gap-2 p-4">
