@@ -5,60 +5,15 @@ import { FaqItem, faqItemsHeader, faqItemsMain } from "@/config/faq";
 // import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 // types
-import { LucideProps, SaveIcon, SendIcon, SidebarOpenIcon } from "lucide-react";
+import { SidebarOpenIcon } from "lucide-react";
 import { Metadata } from "next";
-import { Dispatch, ReactNode, SetStateAction, useMemo, useState } from "react";
-import { toast } from "react-hot-toast";
+import { useMemo, useState } from "react";
+import { SidebarItem } from "./@components/SidebarItem";
 
-interface SidebarItemProps {
-  name: string;
-  isSidebarOpen: boolean;
-  icon: (props: LucideProps) => ReactNode;
-  active: boolean;
-  setActive: Dispatch<SetStateAction<string>>;
-}
-
-const SidebarItem = ({
-  name,
-  isSidebarOpen,
-  icon,
-  active,
-  setActive,
-}: SidebarItemProps) => {
-  return (
-    <button
-      onClick={() => setActive(name)}
-      className={classNames(
-        "flex items-center justify-between gap-2 px-2 py-2 text-sm transition-all lg:px-4 lg:text-[16px]",
-        active
-          ? "bg-slate-200"
-          : "hover:bg-slate-100 focus:border-blue-500 focus:bg-slate-100"
-      )}
-      title={name}
-    >
-      {icon({
-        className: !active ? "text-text_readable" : "text-secondary_dark",
-        size: 22,
-      })}
-      <span
-        className={classNames(
-          "max-w-[120px] flex-1 origin-left text-center md:max-w-[150px]",
-          isSidebarOpen
-            ? "duration-[400ms] static scale-x-100 opacity-100 transition-all"
-            : "absolute scale-x-0 opacity-0",
-          active ? "text-black" : ""
-        )}
-      >
-        {name}
-      </span>
-    </button>
-  );
-};
-
-export const metadata: Metadata = {
-  title: "FAQ - CoachBase",
-  description: "Strona z najczęściej zadawanymi pytaniami do firmy CoachBase",
-};
+// export const metadata: Metadata = {
+//   title: "FAQ - CoachBase",
+//   description: "Strona z najczęściej zadawanymi pytaniami do firmy CoachBase",
+// };
 
 const Page = ({}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {

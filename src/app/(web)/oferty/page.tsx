@@ -14,12 +14,6 @@ import cities from "@/config/data/search-cities.json";
 import { tagOptions } from "@/config/global";
 import { Metadata } from "next";
 
-// page metadata
-export const metadata: Metadata = {
-  title: "Login - Coachbase",
-  description: "Zaloguj się do swojego konta na coachbase.pl",
-};
-
 export interface mongooseTrainersData extends TrainerType {
   createdAt: Date;
   updatedAt: Date;

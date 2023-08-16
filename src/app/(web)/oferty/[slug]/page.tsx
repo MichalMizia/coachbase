@@ -271,7 +271,7 @@ const Page = async ({ params }: pageProps) => {
               <LucideUser size={60} className="my-10" />
             )}
           </div>
-          <div className="mx-auto flex w-[92%] flex-1 flex-col items-start justify-start border-y-2 py-4 lg:w-full lg:border-secondary_custom lg:px-2">
+        <div className="mx-auto flex w-[92%] flex-1 flex-col items-start justify-start border-y-2 py-4 lg:w-full lg:border-secondary_custom lg:px-2">
             <header className="flex w-full flex-col items-start justify-between xl:flex-row xl:items-center">
               <div className="flex items-end justify-center gap-1 md:gap-2">
                 <h2 className="text-xl font-semibold text-black md:text-3xl">
