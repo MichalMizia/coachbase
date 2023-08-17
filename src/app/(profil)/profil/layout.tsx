@@ -1,10 +1,8 @@
 import authOptions from "@/lib/auth";
-import { ChevronLeft, ChevronRightIcon, HomeIcon } from "lucide-react";
+import { ChevronLeft, Loader } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import User, { type IUser } from "@/model/user";
-import initMongoose from "@/lib/db";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import PrevRouteBtn from "@/components/PrevRouteBtn";
 import dynamic from "next/dynamic";
 const MobileDrawer = dynamic(() => import("./@components/MobileDrawer"));
@@ -56,12 +54,22 @@ export default async function ProfileLayout({
             <PrevRouteBtn variant="text" className="hover:bg-black/10">
               <ChevronLeft className="text-white" />
             </PrevRouteBtn>
-            <MobileDrawer />
+            <Suspense fallback={null}>
+              <MobileDrawer />
+            </Suspense>
           </div>
         </div>
         {/* desktop grid */}
         <div className="grid h-full rounded-lg lg:grid-cols-4 lg:rounded-none xl:[grid-template-columns:320px_1fr]">
-          <Sidebar className="col-span-1 hidden h-full max-w-xs lg:block" />
+          <Suspense
+            fallback={
+              <div className="col-span-1 hidden h-full max-w-xs items-center justify-center bg-white lg:flex">
+                <Loader size={24} className="text-gray-700" />
+              </div>
+            }
+          >
+            <Sidebar className="col-span-1 hidden h-full max-w-xs lg:block" />
+          </Suspense>
           <div className="col-span-3 w-full overflow-y-hidden bg-blue-500 lg:bg-transparent xl:col-span-1">
             <div className="h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-16 lg:pb-0">
               {children}

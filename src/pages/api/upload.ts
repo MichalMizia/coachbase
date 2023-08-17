@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { uploadToS3 } from "@/lib/uploadToS3";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,

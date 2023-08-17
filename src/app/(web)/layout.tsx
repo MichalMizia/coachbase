@@ -1,14 +1,16 @@
-import "@/css/globals.css";
 import "@/css/article.css";
-import Navbar from "@/components/Navbar";
-import Providers from "@/components/Providers";
+import "@/css/globals.css";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
-import { Suspense } from "react";
-import Logo from "@/components/custom/Logo";
-import { Analytics } from "@vercel/analytics/react";
+// components
+import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
 import Footer from "@/components/Footer";
+import Logo from "@/components/custom/Logo";
+import { Suspense } from "react";
+// analytics
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "CoachBase",

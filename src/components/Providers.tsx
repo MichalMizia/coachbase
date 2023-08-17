@@ -4,8 +4,8 @@ import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 import { XIcon } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { ReactNode, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
 import { ToastBar, Toaster, toast } from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -25,7 +25,18 @@ const Providers = ({ children }: ProvidersProps) => {
     setIsLarge(isLarge);
   }, [isLarge]);
 
-  const pathname = usePathname();
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    // Apply the animation styles after the component has mounted
+    const animationTimeout = setTimeout(() => {
+      setActive(true);
+    }, 100); // Add a slight delay to ensure the styles apply after the initial render
+
+    return () => {
+      clearTimeout(animationTimeout);
+    };
+  }, []);
 
   return (
     <>
@@ -83,33 +94,9 @@ const Providers = ({ children }: ProvidersProps) => {
         )}
       </Toaster>
       {/* <Toaster position="top-center" reverseOrder={false} /> */}
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={pathname}
-          initial="initialState"
-          animate="animateState"
-          exit="exitState"
-          transition={{
-            duration: 0.5,
-          }}
-          variants={{
-            initialState: {
-              opacity: 0,
-              // clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-            },
-            animateState: {
-              opacity: 1,
-              // clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-            },
-            exitState: {
-              clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
-            },
-          }}
-          className="h-full w-full"
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+      <div className={`animate-container ${active ? "active" : ""}`}>
+        {children}
+      </div>
     </>
   );
 };
