@@ -56,7 +56,6 @@ const SearchBarOffers = ({
   const [tag, setTag] = useState<string>(defaultTag || "");
   const [isOpenTagModal, setIsOpenTagModal] = useState<boolean>(false);
 
-  console.log(defaultQuery);
   const [query, setQuery] = useState<string>(defaultQuery || "");
 
   const router = useRouter();

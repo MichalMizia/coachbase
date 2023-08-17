@@ -13,7 +13,6 @@ import { redirect } from "next/navigation";
 import initMongoose from "@/lib/db";
 // components
 import ImageUpdateForm from "@/components/forms/ImageUpdateForm";
-import { DescriptionUpdateForm } from "@/components/forms/DescriptionUpdateForm";
 import MobileImageUpdateForm from "./@components/MobileImageUpdateForm";
 import AvatarImageForm from "./@components/AvatarImageForm";
 import TrainerFAQCard from "./@components/TrainerFaqCard";

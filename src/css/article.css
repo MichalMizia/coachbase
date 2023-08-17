@@ -108,6 +108,7 @@
 .small-article p {
   @apply text-h6;
   line-height: 1.7;
+  max-width: 90ch;
 }
 .small-article h1 {
   @apply text-h1;
@@ -151,3 +152,8 @@
   max-height: 400px;
   margin-block: 8px;
 }
+
+/* .small-article.lede p:first-child {
+  @apply !text-h5 !italic;
+  --flow-space: 0.75rem;
+} */

@@ -1,4 +1,4 @@
-import { TrainerDataType } from "./../../../../model/trainerData";
+import { TrainerDataType } from "../../../../../model/trainerData";
 import TrainerData from "@/model/trainerData";
 import initMongoose from "@/lib/db";
 import PendingRequest from "@/model/pendindRequest";

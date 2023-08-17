@@ -4,10 +4,8 @@ import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 import { XIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { ToastBar, Toaster, toast } from "react-hot-toast";
-import { AnimatePresence, motion } from "framer-motion";
 
 interface ProvidersProps {
   children: ReactNode;

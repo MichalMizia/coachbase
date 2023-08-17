@@ -1,0 +1,80 @@
+.editor h1,
+.editor h2,
+.editor h3 {
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.1;
+}
+.editor {
+  font-size: var(--size-step-0);
+  color: #1f2937;
+  overflow: auto;
+  /* text-wrap: balance; */
+}
+.editor ul,
+.editor ol {
+  font-size: var(--size-step-0) !important;
+}
+.editor p {
+  line-height: 1.5;
+}
+.editor h1 {
+  font-size: var(--size-step-4) !important;
+}
+.editor h2 {
+  font-size: var(--size-step-3) !important;
+}
+.editor h3 {
+  font-size: var(--size-step-2) !important;
+}
+
+.editor blockquote {
+  padding-inline-start: 1em;
+  border-inline-start: 0.3em solid;
+  font-style: italic;
+  font-size: var(--size-step-0) !important;
+  color: black;
+  max-width: 50ch;
+}
+
+.editor :is(h1, h2, h3, blockquote) {
+  --flow-space: 1.2em;
+}
+.editor :is(h1, h2, h3) + * {
+  --flow-space: 0.5em;
+}
+
+.editor a {
+  @apply text-teal-500 underline decoration-current underline-offset-1 hover:opacity-80;
+}
+
+.editor .ql-editor p:first-child {
+  font-size: var(--size-step-1);
+  font-style: italic;
+  --flow-space: 0;
+  /* text-wrap: balance; */
+}
+.editor p {
+  font-size: var(--size-step-0);
+}
+
+@media (max-width: 640px) {
+  .editor p {
+    @apply !text-h6;
+    line-height: 1.2;
+  }
+  .editor p:first-child {
+    @apply !text-body;
+    font-style: italic;
+    /* text-wrap: balance; */
+  }
+  .editor h1 {
+    font-size: var(--size-step-3) !important;
+  }
+  .editor h2 {
+    font-size: var(--size-step-2) !important;
+  }
+  .editor h3 {
+    font-size: var(--size-step-1) !important;
+  }
+}

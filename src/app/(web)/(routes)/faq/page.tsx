@@ -1,109 +1,70 @@
 "use client";
 
 // data
-import { FaqItem, faqItemsHeader, faqItemsMain } from "@/config/faq";
-// import { useQueryStore } from "@/lib/state/media-queries-generation";
-import { classNames } from "@/lib/utils";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 // types
-import { SidebarOpenIcon } from "lucide-react";
-import { Metadata } from "next";
-import { useMemo, useState } from "react";
-import { SidebarItem } from "./@components/SidebarItem";
-
-// export const metadata: Metadata = {
-//   title: "FAQ - CoachBase",
-//   description: "Strona z najczęściej zadawanymi pytaniami do firmy CoachBase",
-// };
+import { Suspense, useRef, useState } from "react";
+import Sidebar from "./@components/Sidebar";
+import { Loader2 } from "lucide-react";
+import FaqContent from "./@components/FaqContent";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const Page = ({}) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
-    if (window.innerWidth >= 900) {
-      return true;
-    }
-    return false;
-  });
-  const [active, setActive] = useState<string>("O Projekcie");
-  const allItems: FaqItem[] = useMemo(() => {
-    return faqItemsHeader.concat(faqItemsMain);
-  }, []);
+  const [active, setActive] = useLocalStorage<string>(
+    "FAQ_ITEM_KEY",
+    "O Projekcie",
+    localStorage
+  );
+  const [open, setOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-white py-6 text-gray-800 lg:py-10">
-      <aside className="fixed left-0 top-0 z-20 flex min-h-screen w-auto flex-col justify-start border-r bg-white pt-[75px] shadow-md shadow-[#00000020] transition-all duration-500">
-        <button
-          className="relative w-full border-b bg-bg p-2 transition-all hover:bg-slate-300 lg:px-4"
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          aria-haspopup="menu"
-          aria-controls="sidebar"
-          aria-label={
-            isSidebarOpen ? "Zamknij pasek nawigacji" : "Otwórz pasek nawigacji"
-          }
-          title={
-            isSidebarOpen ? "Zamknij pasek nawigacji" : "Otwórz pasek nawigacji"
+    <section className="relative h-full w-full flex-1 border-t border-gray-300">
+      <div className="grid h-full rounded-lg lg:grid-cols-4 lg:rounded-none xl:[grid-template-columns:320px_1fr]">
+        <Suspense
+          fallback={
+            <div className="col-span-1 hidden h-full max-w-xs items-center justify-center bg-white lg:flex">
+              <Loader2 size={24} className="text-gray-700" />
+            </div>
           }
         >
-          <SidebarOpenIcon
-            className={classNames(
-              "transition-all",
-              isSidebarOpen ? "rotate-180" : "rotate-0"
-            )}
-          />
-        </button>
-        <div
-          className="flex w-full flex-col justify-center border-b"
-          id="sidebar"
-        >
-          {faqItemsHeader.map((item) => (
-            <SidebarItem
+          <div className="col-span-1 hidden h-full w-full max-w-xs self-stretch overflow-auto border-r-2 border-indigo-500/20 bg-bg pb-8 transition-all lg:block">
+            <Sidebar
+              setOpen={undefined}
               setActive={setActive}
-              key={item.id}
-              active={item.item === active}
-              icon={item.icon}
-              name={item.item}
-              isSidebarOpen={isSidebarOpen}
-            />
-          ))}
-        </div>
-        <div className="flex w-full flex-col justify-center border-b">
-          {faqItemsMain.map((item) => (
-            <SidebarItem
-              setActive={setActive}
-              active={item.item === active}
-              key={item.id}
-              icon={item.icon}
-              name={item.item}
-              isSidebarOpen={isSidebarOpen}
-            />
-          ))}
-        </div>
-      </aside>
-      <section
-        id="main"
-        className="-z-10 max-w-2xl pl-12 pr-2 md:mx-auto md:w-[90%] md:p-0"
-      >
-        <h1 className="mb-2 text-2xl font-semibold text-black lg:mb-4 lg:text-4xl">
-          {active}
-        </h1>
-        {allItems.find((item) => item.item === active)?.content}
-      </section>
-      {/* <section className="z-10 flex h-screen w-screen items-center justify-center bg-white">
-        <div className="relative isolate aspect-square h-96 rounded-full bg-gradient-to-tr from-blue-300 via-blue-500 to-indigo-500">
-          <div className="absolute inset-0 z-10 m-auto aspect-square h-[320px] overflow-hidden rounded-full bg-white">
-            <SendIcon
-              size={420}
-              strokeWidth={1.5}
-              className="absolute left-[40%] top-[60%] z-20 -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
+              active={active}
+              className=""
             />
           </div>
-          <p className="quick absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 font-serif text-[200px] font-semibold tracking-tight text-gray-900">
-            <span className="relative -top-8 left-1">C</span>
-            <span className="relative right-1 top-8">B</span>
-          </p>
-          <div className="absolute right-0 top-0 z-20 aspect-[18/4] w-36 -translate-x-[10%] translate-y-[100%] -rotate-45 rounded-[300%] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-          <div className="absolute bottom-0 left-0 z-20 aspect-[18/4] w-36 -translate-x-[5%] -translate-y-[170%] -rotate-45 rounded-[300%] bg-gradient-to-r from-blue-400 via-blue-400 to-blue-500"></div>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <div className="absolute right-[5vw] top-8 z-10 h-14 w-14 scale-75 cursor-pointer rounded-2xl bg-blue-500 p-3 text-white transition-all duration-300 hover:bg-blue-600 lg:hidden">
+                <div className="absolute inset-0 m-auto flex h-10 w-[38px] flex-col items-start justify-center gap-[7px]">
+                  <span className="h-[4px] w-[19px] rounded-lg bg-white"></span>
+                  <span className="h-[4px] w-[38px] rounded-lg bg-white"></span>
+                  <span className="h-[4px] w-[19px] self-end rounded-lg bg-white"></span>
+                </div>
+              </div>
+            </SheetTrigger>
+            <SheetContent
+              side="left"
+              className="!z-[1000] col-span-1 block h-full w-full max-w-xs self-stretch overflow-auto border-r-2 border-indigo-500/20 bg-bg !px-0 pb-8 transition-all lg:hidden"
+            >
+              <Sidebar
+                setActive={setActive}
+                active={active}
+                className=""
+                setOpen={setOpen}
+              />
+            </SheetContent>
+          </Sheet>
+        </Suspense>
+        <div className="col-span-3 w-full overflow-y-hidden bg-blue-500 lg:bg-transparent xl:col-span-1">
+          <div className="scrollbar-custom h-full w-full overflow-y-auto rounded-t-[24px] border border-white bg-white pb-16 lg:pb-0">
+            <FaqContent active={active} />
+          </div>
         </div>
-      </section> */}
-    </main>
+      </div>
+    </section>
   );
 };
 

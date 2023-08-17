@@ -1,30 +1,21 @@
 "use client";
 
 // assets
+import { AlbumIcon, MessagesSquareIcon, NewspaperIcon } from "lucide-react";
 import Logo from "./custom/Logo";
-import {
-  AlbumIcon,
-  HeartIcon,
-  MessagesSquareIcon,
-  NewspaperIcon,
-  UserIcon,
-} from "lucide-react";
 // components
 import Link from "next/link";
 import LoginButton from "./LoginButton";
 // hooks / utils
-import { Session } from "next-auth";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { useState } from "react";
-import { classNames } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { type Session } from "next-auth";
 // ts
 import { HomeConfig } from "@/types";
 // styles
-import "../css/nav.css";
-import Button from "./ui/Button";
 import { usePathname } from "next/navigation";
 import ProfileLink from "./ProfileLink";
-import { useQueryStore } from "@/lib/state/media-queries-generation";
+import Button from "./ui/Button";
 
 interface NavbarProps {
   session: Session | null;
@@ -61,7 +52,6 @@ const homeConfig: HomeConfig = {
 };
 
 export default function Navbar({ session }: NavbarProps) {
-  const { isMobile } = useQueryStore();
   const isLarge = useMediaQuery("(min-width: 1120px)");
   const pathname = usePathname();
 
@@ -70,21 +60,8 @@ export default function Navbar({ session }: NavbarProps) {
       <div className="container-md mx-auto flex w-[95%] items-end justify-between gap-4 lg:gap-8">
         <Logo className="scale-90" />
 
-        <nav
-          className={classNames(
-            isMobile
-              ? "fixed bottom-0 left-0 right-0 w-full bg-white"
-              : "flex !translate-x-0 items-end justify-center"
-          )}
-        >
-          <ul
-            className={classNames(
-              !isMobile
-                ? "justify-center tracking-tight lg:gap-2"
-                : "w-full border-t border-text",
-              "flex list-none items-center"
-            )}
-          >
+        <nav className="fixed bottom-0 left-0 right-0 w-full bg-white nav:static nav:flex nav:w-fit nav:!translate-x-0 nav:items-end nav:justify-center nav:bg-transparent">
+          <ul className="flex w-full list-none items-center border-t border-text nav:w-fit nav:justify-center nav:border-none nav:tracking-tight nav:lg:gap-2">
             {homeConfig.mainNav.map((navEl) => {
               return (
                 <Button
@@ -92,20 +69,14 @@ export default function Navbar({ session }: NavbarProps) {
                   size="small"
                   key={navEl.title}
                   name={navEl.title}
-                  className={classNames(
-                    navEl.disabled ? "text-gray-300" : "text-white",
-                    isMobile
-                      ? pathname?.includes(navEl.href)
-                        ? "flex-1 rounded-none bg-blue-100 text-sm text-gray-700 even:border-x even:border-text md:text-lg"
-                        : "flex-1 rounded-none text-sm text-text_readable even:border-x even:border-text md:text-lg"
-                      : "text-[17px] font-normal",
-                    "hover:bg-[#00000010]"
+                  className={cn(
+                    pathname?.includes(navEl.href) ? "bg-blue-100" : "",
+                    "flex-1 rounded-none text-sm text-text_readable  even:border-x even:border-text hover:bg-[#00000010] md:text-lg nav:rounded-md nav:border-none nav:bg-transparent nav:text-[17px] nav:font-normal nav:text-gray-100"
                   )}
                 >
                   <Link
-                    className={classNames(
-                      "flex h-full w-full items-center justify-center",
-                      isMobile ? "flex-col" : ""
+                    className={cn(
+                      "flex h-full w-full flex-col items-center justify-center nav:flex-row"
                     )}
                     title={navEl.title}
                     href={navEl.href}
@@ -129,18 +100,6 @@ export default function Navbar({ session }: NavbarProps) {
           <ProfileLink username={session?.user.username} isLarge={isLarge} />
           <LoginButton session={session} />
         </section>
-
-        {/* {!isMobile ? null : (
-          <button
-            onClick={handleMenuToggle}
-            className={classNames(
-              isMenuOpen ? "menu-toggle-active" : "",
-              "menu-toggle"
-            )}
-          >
-            <span></span>
-          </button>
-        )} */}
       </div>
     </header>
   );

@@ -1,5 +1,4 @@
 import User, { TrainerType } from "@/model/user";
-import { getServerSession } from "next-auth";
 import initMongoose from "@/lib/db";
 import LandingPage from "@/components/landing/LandingPage";
 import Article, { ArticleType } from "@/model/article";
@@ -37,14 +36,9 @@ const getPageData = async (): Promise<[TrainerType[], ArticleType[]]> => {
 const Page = async ({}: pageProps) => {
   // await new Promise((resolve) => setTimeout(resolve, 1000));
   const [trainersData, articles] = await getPageData();
-  const session = await getServerSession();
 
   return (
-    <LandingPage
-      articles={articles}
-      session={session}
-      jsonData={JSON.stringify(trainersData)}
-    />
+    <LandingPage articles={articles} jsonData={JSON.stringify(trainersData)} />
   );
 };
 

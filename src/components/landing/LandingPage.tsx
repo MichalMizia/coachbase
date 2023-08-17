@@ -5,8 +5,6 @@ import Button from "@/components/ui/Button";
 // import { MultiSelect } from "react-multi-select-component";
 // types
 import { TrainerType, UserRolesType } from "@/model/user";
-// utils
-import { Session } from "next-auth";
 // hooks
 import SearchBarOffers from "@/components/landing/OffersSearchbar";
 // images
@@ -21,7 +19,6 @@ import { ArticleType } from "@/model/article";
 const PhotoSection = dynamic(() => import("./PhotoSection"));
 
 interface LandingPageProps {
-  session: Session | null;
   jsonData: string;
   articles: ArticleType[];
 }
@@ -34,7 +31,7 @@ export interface RolesType {
 }
 
 // export const sortingOptions = ["Najnowsze", "Najlepiej oceniane", "Najbliżej"];
-const LandingPage = ({ session, jsonData, articles }: LandingPageProps) => {
+const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
   const trainers: TrainerType[] = JSON.parse(jsonData);
 
   return (
