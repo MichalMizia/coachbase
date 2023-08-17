@@ -47,13 +47,13 @@ const ArticleCard = ({
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
 
   return (
-    <article className="flex max-w-xl items-center justify-between rounded-md border p-4 shadow shadow-[#00000030] transition-all hover:shadow-lg hover:shadow-[#00000030]">
+    <article className="flex max-w-xl items-center justify-between rounded-md border bg-white p-4 shadow shadow-[#00000030] transition-all hover:shadow-lg hover:shadow-[#00000030]">
       <main className="grid gap-1">
-        <a href={`/edytor/${id}`} className="group">
+        <Link title="Edytuj Artykuł" href={`/edytor/${id}`} className="group">
           <h3 className="text-h4 font-[500] text-gray-800 underline decoration-transparent underline-offset-[3px] transition-all duration-300 group-hover:decoration-current">
             {title}
           </h3>
-        </a>
+        </Link>
         <p>{formatDate(date)}</p>
       </main>
       <DropdownMenu>
@@ -66,9 +66,13 @@ const ArticleCard = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <a href={`/edytor/${id}`} className="flex w-full">
+            <Link
+              title="Edytuj Artykuł"
+              href={`/edytor/${id}`}
+              className="flex w-full"
+            >
               Edit
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem

@@ -52,6 +52,7 @@
     "google-auth-library": "^8.8.0",
     "googleapis": "^118.0.0",
     "isomorphic-dompurify": "^1.8.0",
+    "jsdom": "^22.1.0",
     "jsonwebtoken": "^9.0.1",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.171.0",

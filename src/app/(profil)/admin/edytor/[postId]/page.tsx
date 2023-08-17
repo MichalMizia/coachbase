@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 import Editor from "./@components/Editor";
 import initMongoose from "@/lib/db";
 import Article, { ArticleType } from "@/model/article";
