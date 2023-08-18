@@ -1,7 +1,3 @@
-import {
-  TrainerDataType,
-  TrainerMediaType,
-} from "./../../../model/trainerData";
 import initMongoose from "@/lib/db";
 import TrainerData from "@/model/trainerData";
 import User from "@/model/user";

@@ -13,6 +13,7 @@ const LatestUserArticles = dynamic(
       <div className="flex flex-col items-stretch justify-start">
         {[...Array(4).keys()].map((ind) => (
           <li
+            key={ind}
             className={cn(
               "flex h-20 w-full items-center space-x-4 border-b border-black/10 px-4 py-4 lg:px-6",
               ind % 2 ? "bg-bg" : "bg-white"

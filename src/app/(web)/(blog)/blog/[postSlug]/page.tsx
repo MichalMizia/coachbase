@@ -10,7 +10,6 @@ import Article, { PopulatedArticleType } from "@/model/article";
 import Image from "next/image";
 import AvatarSvg from "@/../public/assets/avatar.svg";
 import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
-import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 // dynamic imports
 import dynamic from "next/dynamic";
@@ -21,6 +20,7 @@ const LatestUserArticles = dynamic(
       <div className="flex flex-col items-stretch justify-start">
         {[...Array(4).keys()].map((ind) => (
           <li
+            key={ind}
             className={cn(
               "flex h-20 w-full items-center space-x-4 border-b border-black/10 px-4 py-4 lg:px-6",
               ind % 2 ? "bg-bg" : "bg-white"
