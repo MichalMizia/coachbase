@@ -27,51 +27,51 @@ interface MongooseQuery {
 }
 
 // page metadata
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | undefined };
-}) {
-  const city = searchParams?.city?.toString();
-  const tag = searchParams?.tag?.toString();
+// export async function generateMetadata({
+//   params,
+//   searchParams,
+// }: {
+//   params: { slug: string };
+//   searchParams?: { [key: string]: string | undefined };
+// }) {
+//   const city = searchParams?.city?.toString();
+//   const tag = searchParams?.tag?.toString();
 
-  let keywords: string[] = [
-    "Trener",
-    "Dietetyk",
-    "Fizjoterapeuta",
-    "Ekspert",
-    "Usługi",
-    "Oferty",
-    "Trening personalny",
-    "Instruktor fitness",
-    "Siłownia",
-    "Sport",
-  ];
-  let title = "Oferty - Coachbase";
-  let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
+//   let keywords: string[] = [
+//     "Trener",
+//     "Dietetyk",
+//     "Fizjoterapeuta",
+//     "Ekspert",
+//     "Usługi",
+//     "Oferty",
+//     "Trening personalny",
+//     "Instruktor fitness",
+//     "Siłownia",
+//     "Sport",
+//   ];
+//   let title = "Oferty - Coachbase";
+//   let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
 
-  if (city && tag) {
-    title = `Oferty, ${city}, ${tag} - Coachbase`;
-    description = description.concat(`w mieście ${city}`);
-    keywords = keywords.concat([city, tag]);
-  } else if (city) {
-    title = `Oferty, ${city} - Coachbase`;
-    keywords = keywords.concat(city);
-    description = description.concat(`w mieście ${city}`);
-  } else if (tag) {
-    title = `Oferty, ${tag} - Coachbase`;
-    keywords = keywords.concat(tag);
-  }
+//   if (city && tag) {
+//     title = `Oferty, ${city}, ${tag} - Coachbase`;
+//     description = description.concat(`w mieście ${city}`);
+//     keywords = keywords.concat([city, tag]);
+//   } else if (city) {
+//     title = `Oferty, ${city} - Coachbase`;
+//     keywords = keywords.concat(city);
+//     description = description.concat(`w mieście ${city}`);
+//   } else if (tag) {
+//     title = `Oferty, ${tag} - Coachbase`;
+//     keywords = keywords.concat(tag);
+//   }
 
-  const metadata: Metadata = {
-    title: title,
-    description: description,
-    keywords: keywords,
-  };
-  return metadata;
-}
+//   const metadata: Metadata = {
+//     title: title,
+//     description: description,
+//     keywords: keywords,
+//   };
+//   return metadata;
+// }
 
 const getTrainers = async (
   city?: string | null,
