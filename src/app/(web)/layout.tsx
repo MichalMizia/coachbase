@@ -11,6 +11,11 @@ import Logo from "@/components/custom/Logo";
 import { Suspense } from "react";
 // analytics
 import { Analytics } from "@vercel/analytics/react";
+// fonts
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin-ext"] });
 
 export const metadata = {
   title: "CoachBase",
@@ -88,7 +93,9 @@ export default async function RootLayout({
 
   return (
     <html lang="pl">
-      <body className="web-body relative bg-bg text-text">
+      <body
+        className={cn("web-body relative bg-bg text-text", inter.className)}
+      >
         <Providers>
           <Suspense
             fallback={

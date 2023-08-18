@@ -120,13 +120,8 @@ const Page = async ({}: pageProps) => {
             >
               Artykuły
             </h1>
-
             <p className="max-w-2xl" style={{ fontSize: "var(--size-step-0)" }}>
-              Nie chcesz inwestować w trenera? Dalej możesz korzystać z wiedzy
-              dodanej przez naszych specjalistów
-              {/* {trainers?.length
-                ? "Znajdź specjalistę pasującego do Ciebie!"
-                : "Niestety nie mamy tego czego szukasz :("} */}
+              Korzystaj z wiedzy zbieranej przez naszych specjalistów.
             </p>
           </header>
           {articles?.length ? (
@@ -143,15 +138,17 @@ const Page = async ({}: pageProps) => {
                       className="flex flex-col items-stretch justify-end"
                     >
                       <header className="flex items-center justify-start gap-2 px-4 py-2">
-                        <Image
-                          width={54}
-                          height={54}
-                          className="aspect-square rounded-full object-cover shadow-md shadow-black/20"
-                          src={article.userId?.avatar || AvatarSvg}
-                          alt={`Avatar ${
-                            article.userId?.username || article.title
-                          }`}
-                        />
+                        <div className="relative aspect-square h-[54px] w-[54px] max-w-[54px] flex-1 rounded-full shadow-md shadow-black/20">
+                          <Image
+                            fill
+                            className="aspect-square rounded-full object-cover"
+                            src={article.userId?.avatar || AvatarSvg}
+                            alt={`Avatar ${
+                              article.userId?.username || article.title
+                            }`}
+                          />
+                        </div>
+
                         <div className="flex flex-col items-start justify-center">
                           <h4
                             style={{ fontSize: "var(--size-step-0)" }}
@@ -204,7 +201,11 @@ const Page = async ({}: pageProps) => {
               })}
             </ul>
           ) : (
-            <div className="h-20 w-full bg-white"></div>
+            <div className="h-20 w-full bg-white">
+              <p className="text-xl text-gray-800">
+                Niestety nie mamy tego czego szukasz :(
+              </p>
+            </div>
           )}
         </main>
         {/* <aside

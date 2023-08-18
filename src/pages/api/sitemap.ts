@@ -1,13 +1,13 @@
 import cities from "@/config/data/search-cities.json";
-import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
 import { NextApiRequest, NextApiResponse } from "next";
 import { tagOptions } from "@/config/global";
+import initMongoose from "@/lib/db";
+import TrainerData, { TrainerDataType } from "@/model/trainerData";
 
 const getTrainers = async () => {
-  const trainers: PopulatedTrainerDataType[] = await TrainerData.find()
-    .populate("userId")
-    .lean()
-    .exec();
+  await initMongoose();
+
+  const trainers: TrainerDataType[] = await TrainerData.find({}).lean().exec();
 
   return trainers;
 };

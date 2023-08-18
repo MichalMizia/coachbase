@@ -180,13 +180,22 @@ const Footer = ({}: FooterProps) => {
           <div className="" id="copyright">
             ©2023 CoachBase - All Rights Reserved.
           </div>
-          <Link
-            className="underline decoration-transparent underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom hover:decoration-2 "
-            title="Polityka Prywatności"
-            href="/polityka-prywatnosci"
-          >
-            Polityka prywatności
-          </Link>
+          <div className="flex items-end justify-end gap-4">
+            <Link
+              className="underline decoration-transparent underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom hover:decoration-2 "
+              title="Polityka Prywatności"
+              href="/polityka-prywatnosci"
+            >
+              Polityka prywatności
+            </Link>
+            <Link
+              className="underline decoration-transparent underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom hover:decoration-2 "
+              title="Mapa Strony"
+              href="/api/sitemap"
+            >
+              Mapa Strony
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

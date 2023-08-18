@@ -11,7 +11,7 @@ const FaqContent = ({ active }: FaqContentProps) => {
   }, []);
 
   return (
-  <div className="container-md small-article lede flow max-w-4xl py-10">
+    <div className="container-md small-article flow max-w-4xl py-10 !text-slate-900">
       {allItems.find((item) => item.item === active)?.content}
     </div>
   );

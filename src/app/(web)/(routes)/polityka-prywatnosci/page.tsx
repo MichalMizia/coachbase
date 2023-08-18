@@ -312,30 +312,47 @@ const Page = ({}: PageProps) => {
               instrukcjami:
               <ul>
                 <li>
-                  <a href="https://support.microsoft.com/pl-pl/help/10607/microsoft-edge-view-delete-browser-history">
+                  <a
+                    rel="nofollow"
+                    href="https://support.microsoft.com/pl-pl/help/10607/microsoft-edge-view-delete-browser-history"
+                  >
                     Edge
                   </a>
                 </li>
                 <li>
-                  <a href="https://support.microsoft.com/pl-pl/help/278835/how-to-delete-cookie-files-in-internet-explorer">
+                  <a
+                    rel="nofollow"
+                    href="https://support.microsoft.com/pl-pl/help/278835/how-to-delete-cookie-files-in-internet-explorer"
+                  >
                     Internet Explorer
                   </a>
                 </li>
                 <li>
-                  <a href="http://support.google.com/chrome/bin/answer.py?hl=pl&amp;answer=95647">
+                  <a
+                    rel="nofollow"
+                    href="http://support.google.com/chrome/bin/answer.py?hl=pl&amp;answer=95647"
+                  >
                     Chrome
                   </a>
                 </li>
                 <li>
-                  <a href="http://support.apple.com/kb/PH5042">Safari</a>
+                  <a rel="nofollow" href="http://support.apple.com/kb/PH5042">
+                    Safari
+                  </a>
                 </li>
                 <li>
-                  <a href="http://support.mozilla.org/pl/kb/W%C5%82%C4%85czanie%20i%20wy%C5%82%C4%85czanie%20obs%C5%82ugi%20ciasteczek">
+                  <a
+                    rel="nofollow"
+                    href="http://support.mozilla.org/pl/kb/W%C5%82%C4%85czanie%20i%20wy%C5%82%C4%85czanie%20obs%C5%82ugi%20ciasteczek"
+                  >
                     Firefox
                   </a>
                 </li>
                 <li>
-                  <a href="http://help.opera.com/Windows/12.10/pl/cookies.html">
+                  <a
+                    rel="nofollow"
+                    href="http://help.opera.com/Windows/12.10/pl/cookies.html"
+                  >
                     Opera
                   </a>
                 </li>
@@ -343,17 +360,26 @@ const Page = ({}: PageProps) => {
               <p>Urządzenia mobilne:</p>
               <ul>
                 <li>
-                  <a href="http://support.google.com/chrome/bin/answer.py?hl=pl&amp;answer=95647">
+                  <a
+                    rel="nofollow"
+                    href="http://support.google.com/chrome/bin/answer.py?hl=pl&amp;answer=95647"
+                  >
                     Android
                   </a>
                 </li>
                 <li>
-                  <a href="http://support.apple.com/kb/HT1677?viewlocale=pl_PL">
+                  <a
+                    rel="nofollow"
+                    href="http://support.apple.com/kb/HT1677?viewlocale=pl_PL"
+                  >
                     Safari (iOS)
                   </a>
                 </li>
                 <li>
-                  <a href="http://www.windowsphone.com/pl-pl/how-to/wp7/web/changing-privacy-and-other-browser-settings">
+                  <a
+                    rel="nofollow"
+                    href="http://www.windowsphone.com/pl-pl/how-to/wp7/web/changing-privacy-and-other-browser-settings"
+                  >
                     Windows Phone
                   </a>
                 </li>

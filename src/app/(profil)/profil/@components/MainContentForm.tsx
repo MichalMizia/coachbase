@@ -19,7 +19,6 @@ import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 // styles
-import "react-quill/dist/quill.snow.css";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 const RichEditor = dynamic(() => import("@/components/custom/RichEditor"));
 

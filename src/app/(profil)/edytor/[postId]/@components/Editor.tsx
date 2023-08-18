@@ -31,6 +31,7 @@ import { Label } from "@/components/ui/label";
 import { MultiSelect, Option } from "react-multi-select-component";
 import { tagOptions } from "@/config/global";
 import "@/components/forms/css/mediaform.css";
+import RichEditor from "@/components/custom/RichEditor";
 
 interface EditorProps {
   className: string;
@@ -73,8 +74,6 @@ const Editor = ({ className, post, userId }: EditorProps) => {
   async function onSubmit(data: FormData) {
     setIsLoading(true);
 
-    console.log(data.summary, data.title, "title");
-
     try {
       const res = await axios.patch("/api/artykuly", {
         published: published,
@@ -83,7 +82,7 @@ const Editor = ({ className, post, userId }: EditorProps) => {
         photoUrl: photoUrl,
         content: article,
         articleId: post._id,
-        tags: selectedTags.map((tagOption) => tagOption.value),
+        tags: selectedTags.map((tagOption) => tagOption.label),
       });
       console.log(res);
     } catch (e) {
@@ -147,7 +146,7 @@ const Editor = ({ className, post, userId }: EditorProps) => {
                 }
               }}
             >
-              <SelectTrigger className="col-span-2 gap-2 self-stretch border-2 border-secondary_custom/60 text-gray-700 min-[360px]:w-fit">
+              <SelectTrigger className="col-span-2 gap-2 self-stretch text-gray-700 outline-2 outline-secondary_custom/60 min-[360px]:w-fit">
                 <SelectValue placeholder="Status Artykułu" />
               </SelectTrigger>
               <SelectContent>
@@ -226,7 +225,19 @@ const Editor = ({ className, post, userId }: EditorProps) => {
             {errors.summary.message?.toString()}
           </p>
         )}
-        <QuillEditor
+        <RichEditor
+          id="article"
+          key="article"
+          // className="flex w-full flex-col rounded-md border border-gray-300 bg-gray-50 text-gray-900 ring-offset-background file:border-0 file:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
+          className={cn(
+            "flex h-[80vh] min-h-full flex-col items-stretch justify-start xs:static xs:w-full",
+            className
+          )}
+          value={article}
+          // @ts-expect-error
+          setValue={setArticle}
+        />
+        {/* <QuillEditor
           id="article"
           key="article"
           // className="flex w-full flex-col rounded-md border border-gray-300 bg-gray-50 text-gray-900 ring-offset-background file:border-0 file:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
@@ -238,7 +249,7 @@ const Editor = ({ className, post, userId }: EditorProps) => {
           onChange={(e) => {
             setArticle(e);
           }}
-        />
+        /> */}
       </div>
     </form>
   );

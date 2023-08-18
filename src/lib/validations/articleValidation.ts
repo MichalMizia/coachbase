@@ -4,10 +4,10 @@ import * as z from "zod";
 export const articleUploadSchema = z.object({
   title: z
     .string()
-    .max(40, "Tytuł nie może być dłuższy niż 40 znaków")
+    .max(80, "Tytuł nie może być dłuższy niż 80 znaków")
     .min(5, "Tytuł nie może być krótszy niż 5 znaków"),
   summary: z
     .string()
-    .max(200, "Podusmowanie nie może być dłuższe niż 200 znaków")
+    .max(260, "Podusmowanie nie może być dłuższe niż 260 znaków")
     .min(30, "Podusmowanie nie może być krótsze niż 30 znaków"),
 });

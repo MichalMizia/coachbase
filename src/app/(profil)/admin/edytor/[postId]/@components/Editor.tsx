@@ -147,7 +147,7 @@ const Editor = ({ className, post, userId }: EditorProps) => {
                 }
               }}
             >
-              <SelectTrigger className="col-span-2 gap-2 self-stretch border-2 border-secondary_custom/60 text-gray-700 min-[360px]:w-fit">
+              <SelectTrigger className="col-span-2 gap-2 self-stretch border border-secondary_custom/60 text-gray-700 outline outline-1 outline-secondary_custom/60 min-[360px]:w-fit">
                 <SelectValue placeholder="Status Artykułu" />
               </SelectTrigger>
               <SelectContent>

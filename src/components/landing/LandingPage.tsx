@@ -231,7 +231,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
               Załóż darmowe konto trenera i stwórz swoją prywatną stronę
               internetową
             </p>
-            <a href="/rejestracja-trenera">
+            <Link title="Załóż konto trenerskie" href="/rejestracja-trenera">
               <Button
                 variant="primary"
                 size="large"
@@ -241,7 +241,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                 <Icons.user className="mr-2 h-5 w-5" />
                 Załóż Konto Biznesowe
               </Button>
-            </a>
+            </Link>
           </div>
         </main>
         <Image

@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import Quill from "react-quill";
 import { cn } from "@/lib/utils";
+import "react-quill/dist/quill.snow.css";
 
 // Undo and redo functions for Custom Toolbar
 function undoChange() {
@@ -61,6 +62,7 @@ interface RichEditorProps extends HTMLProps<HTMLDivElement> {
   isLoading?: boolean;
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  editorClassName?: string;
 }
 // Quill Toolbar component
 export const RichEditor = ({
@@ -68,6 +70,7 @@ export const RichEditor = ({
   className,
   value,
   setValue,
+  editorClassName,
   ...props
 }: RichEditorProps) => {
   const quillRef = useRef<any>(null);
@@ -198,7 +201,10 @@ export const RichEditor = ({
         placeholder={"Napisz coś wielkiego..."}
         modules={modules}
         formats={formats}
-        className={`small-article h-full max-h-full flex-1 !overflow-y-auto !text-gray-800`}
+        className={cn(
+          `small-article h-full max-h-full flex-1 !overflow-y-auto !text-gray-800`,
+          editorClassName
+        )}
       />
     </div>
   );

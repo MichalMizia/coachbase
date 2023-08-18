@@ -8,7 +8,6 @@
 
   display: inline-block;
   font-size: var(--star-size);
-  font-family: cursive;
   line-height: 1;
 }
 

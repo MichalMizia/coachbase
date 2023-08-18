@@ -1,7 +1,4 @@
-import authOptions from "@/lib/auth";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import { notFound } from "next/navigation";
 import RequestCard from "./RequestCard";
 import { PendingRequestType } from "@/model/pendindRequest";
 import { fetchAllPendingRequests } from "@/lib/fetching/fetchPendingRequests";
@@ -11,7 +8,7 @@ import AvatarSvg from "@/../public/assets/avatar.svg";
 import { NewArticleButton } from "./edytor/[postId]/@components/NewArticleButton";
 import { Separator } from "@/components/ui/separator";
 import Article, { ArticleType } from "@/model/article";
-import ArticleCard from "../profil/artykuly/@components/ArticleCard";
+import ArticleCard from "./edytor/[postId]/@components/ArticleCard";
 
 export const metadata: Metadata = {
   title: "Admin Page",
@@ -36,19 +33,6 @@ const getArticles = async () => {
 };
 
 const Page = async ({}) => {
-  const session = await getServerSession(authOptions);
-
-  const whitelisted_emails = process.env.WHITELISTED_EMAILS?.split(
-    ", "
-  ) as string[];
-  if (
-    !session ||
-    !session.user.email ||
-    !whitelisted_emails.includes(session.user.email)
-  ) {
-    return notFound();
-  }
-
   const articles = await getArticles();
   const pendingRequests: PendingRequestType[] = await fetchAllPendingRequests();
 

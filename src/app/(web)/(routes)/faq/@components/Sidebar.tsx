@@ -25,7 +25,7 @@ export default function Sidebar({
       </div>
       <div className="px-3 py-2">
         <h2 className="mb-2  px-4 text-lg font-semibold tracking-tight text-black">
-          Profil
+          Projekt
         </h2>
         <div className="">
           {faqItemsHeader.map((item) => (
@@ -52,7 +52,7 @@ export default function Sidebar({
       </div>
       <div className="px-3 py-2">
         <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
-          Ustawienia
+          Dla Trenera
         </h2>
         {faqItemsMain.map((item) => (
           <button

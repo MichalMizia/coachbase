@@ -1,5 +1,6 @@
 import initMongoose from "@/lib/db";
 import Article, { ArticleType } from "@/model/article";
+import Link from "next/link";
 
 interface LatestArticlesProps {
   amount?: number;
@@ -31,9 +32,13 @@ const LatestArticles = async ({ amount }: LatestArticlesProps) => {
     <ul className="mt-2 flex flex-col items-stretch justify-start">
       {articles.map((article) => {
         return (
-          <a key={article.slug} href={article.slug}>
+          <Link
+            title={article.title}
+            key={`/blog/${article.slug}`}
+            href={article.slug}
+          >
             {article.title}
-          </a>
+          </Link>
         );
       })}
     </ul>

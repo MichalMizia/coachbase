@@ -199,6 +199,11 @@ body.web-body {
   font-size: 14px;
 }
 
+.ql-editor::before {
+  @apply !font-sans !text-base !text-slate-500;
+  font-style: normal !important;
+}
+
 @media (max-width: 640px) {
   .ql-editor {
     padding: 8px !important;

@@ -65,6 +65,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-error-boundary": "^4.0.9",
+    "react-google-recaptcha": "^3.1.0",
     "react-hook-form": "^7.45.2",
     "react-hot-toast": "^2.4.0",
     "react-multi-select-component": "^4.3.4",
@@ -89,6 +90,7 @@
     "@types/lodash.debounce": "^4.0.7",
     "@types/multiparty": "^0.0.33",
     "@types/nodemailer": "^6.4.9",
+    "@types/react-google-recaptcha": "^2.1.5",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0"
   }

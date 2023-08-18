@@ -5,6 +5,7 @@ import PendingRequest from "@/model/pendindRequest";
 import User, { TrainerType, UserRolesType } from "@/model/user";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose, { HydratedDocument, ObjectId } from "mongoose";
+import { sendAcceptEmail } from "./sendAcceptEmail";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     city: string;
   } = await req.json();
 
+  let username = null;
   try {
     const user: HydratedDocument<TrainerType> = await User.findOneAndUpdate(
       { email: email },
@@ -47,6 +49,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         isTrainer: true,
       }
     ).exec();
+    username = user.username;
     const id = new mongoose.Types.ObjectId(user._id);
     const TrainerDataProps: Omit<TrainerDataType, "_id"> = {
       userSlug: slug,
@@ -76,6 +79,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         status: 400,
       }
     );
+  }
+
+  if (username) {
+    await sendAcceptEmail({ email: email, username: username });
   }
 
   return NextResponse.json({
