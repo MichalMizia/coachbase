@@ -11,6 +11,7 @@ interface LatestUserArticlesProps extends HTMLProps<HTMLUListElement> {
   username: string;
   limit?: number;
   liClassName?: string;
+  omit?: string[];
 }
 
 const getArticles = async (
@@ -38,6 +39,7 @@ const LatestUserArticles = async ({
   limit,
   className,
   liClassName,
+  omit,
   ...props
 }: LatestUserArticlesProps) => {
   const articles = await getArticles(userId, limit);
@@ -58,11 +60,14 @@ const LatestUserArticles = async ({
       )}
     >
       {articles.map((article) => {
+        if (omit && omit.includes(article.title)) {
+          return null;
+        }
         return (
           <li
             key={article._id}
             className={cn(
-              "flex w-full items-stretch justify-stretch border-b border-black/10 py-2",
+              "relative flex w-full items-stretch justify-stretch overflow-x-hidden border-b border-black/10 py-2 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:-translate-x-full after:bg-secondary_custom/75 after:transition-all after:duration-500 hover:after:translate-x-0",
               liClassName
             )}
           >
@@ -72,7 +77,7 @@ const LatestUserArticles = async ({
               href={`/blog/${article.slug}`}
             >
               <article className="flex items-center justify-start gap-2">
-                <div className="relative aspect-square h-14 w-14">
+                <div className="relative aspect-square h-14 w-14 max-w-[56px] flex-1">
                   <Image
                     fill
                     className="aspect-square rounded-full object-cover shadow-md shadow-black/20"
@@ -81,7 +86,7 @@ const LatestUserArticles = async ({
                   />
                 </div>
                 <div className="flex flex-col items-start justify-center">
-                  <h3 className="text-h5 font-semibold leading-7 text-gray-800">
+                  <h3 className="line-clamp-2 text-h5 font-semibold leading-7 text-gray-800">
                     {article.title}
                   </h3>
                   <p className="text-sm text-text_readable">

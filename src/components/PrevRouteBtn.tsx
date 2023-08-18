@@ -52,6 +52,7 @@ export default function PrevRouteBtn({
 
   return (
     <button
+      type="button"
       className={classNames(buttonVariants({ variant, size }), className!)}
       disabled={isLoading}
       {...props}

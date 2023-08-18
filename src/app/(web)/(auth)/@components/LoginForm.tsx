@@ -53,6 +53,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     }
 
     toast.success("Zalogowano");
+    router.refresh();
     router.push("/");
   }
 

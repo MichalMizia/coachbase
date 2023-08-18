@@ -1,29 +1,61 @@
 // components
-import StarsRating from "@/components/custom/StarsRating";
-import SocialMediaDisplay from "@/components/custom/SocialMediaDisplay";
+import AvatarSvg from "@/../public/assets/avatar.svg";
 import OfferHeaderNav from "@/app/(web)/oferty/[slug]/@components/OfferHeaderNav";
 import OfferTabs from "@/app/(web)/oferty/[slug]/@components/OfferTabs";
+import SocialMediaDisplay from "@/components/custom/SocialMediaDisplay";
+import StarsRating from "@/components/custom/StarsRating";
 import { Separator } from "@/components/ui/separator";
-import { Info, Loader2, Loader2Icon, LucideUser } from "lucide-react";
-import LatestUserArticles from "./@components/LatestUserArticles";
-import AvatarSvg from "@/../public/assets/avatar.svg";
+import { Info } from "lucide-react";
+const LatestUserArticles = dynamic(
+  () => import("@/app/(web)/oferty/[slug]/@components/LatestUserArticles"),
+  {
+    loading: () => (
+      <div className="flex flex-col items-stretch justify-start">
+        {[...Array(4).keys()].map((ind) => (
+          <li
+            className={cn(
+              "flex h-20 w-full items-center space-x-4 border-b border-black/10 px-4 py-4 lg:px-6",
+              ind % 2 ? "bg-bg" : "bg-white"
+            )}
+          >
+            <Skeleton
+              style={{ animationDelay: `calc(100ms*${ind})` }}
+              className="h-12 w-12 rounded-full"
+            />
+            <div className="space-y-2">
+              <Skeleton
+                style={{ animationDelay: `calc(100ms*${ind})` }}
+                className="h-4 w-[250px]"
+              />
+              <Skeleton
+                style={{ animationDelay: `calc(100ms*${ind})` }}
+                className="h-4 w-[200px] rounded-md bg-blue-100"
+              />
+            </div>
+          </li>
+        ))}
+      </div>
+    ),
+  }
+);
 // utils
-import { Suspense } from "react";
-import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
-import initMongoose from "@/lib/db";
-import { Tabs } from "@/components/ui/tabs";
-import Image from "next/image";
 import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
-import { getServerSession } from "next-auth";
-import authOptions from "@/lib/auth";
-import Link from "next/link";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Metadata } from "next";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs } from "@/components/ui/tabs";
+import authOptions from "@/lib/auth";
+import initMongoose from "@/lib/db";
+import TrainerData, { PopulatedTrainerDataType } from "@/model/trainerData";
 import { sanitize } from "isomorphic-dompurify";
+import { getServerSession } from "next-auth";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface pageProps {
   params: {
@@ -44,51 +76,6 @@ const getData = async (
 
   return trainerData;
 };
-
-// trainer metadata
-export async function generateMetadata({ params }: pageProps) {
-  const { slug } = params;
-  const trainerData = await getData(slug);
-  const trainer = trainerData?.userId;
-
-  let keywords: string[] = [
-    "Profil biznesowy",
-    "Trener",
-    "Dietetyka",
-    "Ekspert",
-    "Usługi",
-    "Oferta",
-    "Trening personalny",
-    "Instruktor fitness",
-    "Siłownia",
-    "Sport",
-    "Blog",
-    "Artykuły",
-  ];
-  if (trainer?.tags) {
-    keywords = keywords.concat(trainer.tags);
-  }
-  if (trainer?.username) {
-    keywords = keywords.concat(trainer.username);
-  }
-  if (trainer?.city) {
-    keywords = keywords.concat(trainer.city);
-  }
-
-  const metadata: Metadata = {
-    title: `Profil Biznesowy - ${trainer?.username}`,
-    description:
-      trainer?.summary && trainer.summary.length > 150
-        ? trainer?.summary.concat(` Miasto: ${trainer?.city}`)
-        : `${trainer?.username} to ${trainer?.roles.join(
-            ", "
-          )} oferujący swoje usługi w mieście ${
-            trainer?.city
-          }, oto co ma do powiedzenia o sobie. ${trainer?.summary}`,
-    keywords: keywords,
-  };
-  return metadata;
-}
 
 const Page = async ({ params }: pageProps) => {
   const { slug } = params;
@@ -183,8 +170,8 @@ const Page = async ({ params }: pageProps) => {
                     <div className="mt-1 flex items-center justify-start gap-2">
                       <StarsRating
                         className="relative -left-1 w-fit"
-                        rating={trainer.rating}
-                        amount={trainerData.reviews.length}
+                        rating={trainer.rating || 0}
+                        amount={trainerData.reviews?.length}
                       />
                       <SocialMediaDisplay
                         instagram={trainerData.socialMedia?.instagram}
@@ -228,7 +215,7 @@ const Page = async ({ params }: pageProps) => {
                     );
                   })}
               </ul> */}
-              <OfferHeaderNav shouldShowFaq={trainerData.faq.length > 0} />
+              <OfferHeaderNav shouldShowFaq={trainerData.faq?.length > 0} />
             </header>
 
             <OfferTabs session={session} trainerData={trainerData} />
@@ -239,16 +226,11 @@ const Page = async ({ params }: pageProps) => {
           <div className="flex items-center justify-between">
             <div className="">
               <h2 className="text-h3 font-semibold text-gray-800">Artykuły</h2>
-              <Suspense
-                fallback={
-                  <Loader2 className="mx-auto mt-10 h-12 w-12 animate-spin text-center" />
-                }
-              >
-                <LatestUserArticles
-                  userId={trainer._id}
-                  username={trainer.username}
-                />
-              </Suspense>
+
+              <LatestUserArticles
+                userId={trainer._id}
+                username={trainer.username}
+              />
             </div>
           </div>
           <Separator className="my-4 bg-gray-300" />
@@ -382,3 +364,48 @@ const Page = async ({ params }: pageProps) => {
 };
 
 export default Page;
+
+// trainer metadata
+export async function generateMetadata({ params }: pageProps) {
+  const { slug } = params;
+  console.log("slug: ", slug);
+  const trainerData = await getData(slug);
+  const trainer = trainerData?.userId;
+
+  let keywords: string[] = [
+    "Profil biznesowy",
+    "Trener",
+    "Dietetyka",
+    "Ekspert",
+    "Usługi",
+    "Oferta",
+    "Trening personalny",
+    "Instruktor fitness",
+    "Siłownia",
+    "Sport",
+    "Blog",
+    "Artykuły",
+  ];
+  if (trainer?.tags) {
+    keywords = keywords.concat(trainer.tags);
+  }
+  if (trainer?.username) {
+    keywords = keywords.concat(trainer.username);
+  }
+  if (trainer?.city) {
+    keywords = keywords.concat(trainer.city);
+  }
+
+  return {
+    title: `Profil Biznesowy - ${trainer?.username}`,
+    description:
+      trainer?.summary && trainer.summary?.length > 150
+        ? trainer?.summary.concat(` Miasto: ${trainer?.city}`)
+        : `${trainer?.username} to ${trainer?.roles.join(
+            ", "
+          )} oferujący swoje usługi w mieście ${
+            trainer?.city
+          }, oto co ma do powiedzenia o sobie. ${trainer?.summary}`,
+    keywords: keywords,
+  };
+}

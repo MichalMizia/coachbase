@@ -1,6 +1,6 @@
 // utils
 import initMongoose from "@/lib/db";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { sanitize } from "isomorphic-dompurify";
 // components
 import Link from "next/link";
@@ -10,7 +10,42 @@ import Article, { PopulatedArticleType } from "@/model/article";
 import Image from "next/image";
 import AvatarSvg from "@/../public/assets/avatar.svg";
 import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
-import LatestUserArticles from "@/app/(web)/oferty/[slug]/@components/LatestUserArticles";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+// dynamic imports
+import dynamic from "next/dynamic";
+const LatestUserArticles = dynamic(
+  () => import("@/app/(web)/oferty/[slug]/@components/LatestUserArticles"),
+  {
+    loading: () => (
+      <div className="flex flex-col items-stretch justify-start">
+        {[...Array(4).keys()].map((ind) => (
+          <li
+            className={cn(
+              "flex h-20 w-full items-center space-x-4 border-b border-black/10 px-4 py-4 lg:px-6",
+              ind % 2 ? "bg-bg" : "bg-white"
+            )}
+          >
+            <Skeleton
+              style={{ animationDelay: `calc(100ms*${ind})` }}
+              className="h-12 w-12 rounded-full"
+            />
+            <div className="space-y-2">
+              <Skeleton
+                style={{ animationDelay: `calc(100ms*${ind})` }}
+                className="h-4 w-[250px]"
+              />
+              <Skeleton
+                style={{ animationDelay: `calc(100ms*${ind})` }}
+                className="h-4 w-[200px] rounded-md bg-blue-100"
+              />
+            </div>
+          </li>
+        ))}
+      </div>
+    ),
+  }
+);
 
 interface pageProps {
   params: {
@@ -30,8 +65,9 @@ const getArticle = async (
     .populate("userId")
     .lean()
     .exec();
+  console.log(article);
 
-  return article || null;
+  return article;
 };
 
 const Page = async ({ params }: pageProps) => {
@@ -49,13 +85,15 @@ const Page = async ({ params }: pageProps) => {
       <article className="w-full flex-[2]">
         <div className="mx-auto max-w-3xl">
           <header className="flex items-center justify-start gap-4 px-4 py-2">
-            <Image
-              width={72}
-              height={72}
-              className="aspect-square self-start rounded-full object-cover shadow-md shadow-black/20"
-              src={article.userId?.avatar || AvatarSvg}
-              alt={`Avatar ${article.userId?.username || article.title}`}
-            />
+            <div className="relative aspect-square h-[72px] w-[72px] max-w-[72px] flex-1 rounded-full shadow-md">
+              <Image
+                fill
+                className="aspect-square self-start rounded-full object-cover shadow-black/20"
+                src={article.userId?.avatar || AvatarSvg}
+                alt={`Avatar ${article.userId?.username || article.title}`}
+              />
+            </div>
+
             <div className="flex flex-col items-start justify-center">
               <h1
                 style={{ fontSize: "var(--size-step-2)" }}
@@ -94,19 +132,20 @@ const Page = async ({ params }: pageProps) => {
         <header className="w-full border-b border-gray-300 px-4 py-2 lg:px-6">
           <h3
             style={{ fontSize: "var(--size-step-1)" }}
-            className="font-semibold leading-10 text-gray-800"
+            className="py-2 font-semibold leading-7 text-gray-800"
           >
-            Artykuły tego użytkownika
+            Pozostałe artykuły - {article.userId.username}
           </h3>
         </header>
-        <div className="w-full px-4 lg:px-6">
+        <div className="w-full">
           <LatestUserArticles
             userId={article.userId?._id}
             username={article.userId?.username}
-            liClassName="py-4"
+            liClassName="py-4 border-black/10 px-4 lg:px-6"
+            omit={[article.title]}
           />
         </div>
-        <div className="w-full border-b border-t border-gray-300 px-4 py-2 lg:px-6">
+        {/* <div className="w-full border-b border-t border-gray-300 px-4 py-2 lg:px-6">
           <h3
             style={{ fontSize: "var(--size-step-1)" }}
             className="font-semibold leading-10 text-gray-800"
@@ -114,7 +153,14 @@ const Page = async ({ params }: pageProps) => {
             Zobacz także
           </h3>
         </div>
-        <div className="w-full px-4 lg:px-6"></div>
+        <div className="w-full">
+          <LatestArticles
+            userId={article.userId?._id}
+            username={article.userId?.username}
+            liClassName="py-4 border-black/10 px-4 lg:px-6"
+            omit={[article.title]}
+          />
+        </div> */}
       </aside>
     </main>
   );

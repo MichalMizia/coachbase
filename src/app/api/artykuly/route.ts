@@ -153,7 +153,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   article.tags = tags;
   if (published) {
     article.published = true;
-    article.slug = slugify(title.toLowerCase());
+    article.slug = slugify(title.toLowerCase(), { strict: true, lower: true });
   }
   if (photoUrl) {
     article.photoUrl = photoUrl;

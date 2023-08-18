@@ -63,13 +63,13 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     user.username = username;
     if (user.isTrainer) {
       // @ts-expect-error
-      user.slug = slugify(username);
+      user.slug = slugify(username, { strict: true, lower: true });
       // @ts-expect-error
       const trainerData: HydratedDocument<TrainerDataType> =
         await TrainerData.findOne({
-          userSlug: slugify(defaultName),
+          userSlug: slugify(defaultName, { strict: true, lower: true }),
         });
-      trainerData.userSlug = slugify(username);
+      trainerData.userSlug = slugify(username, { strict: true, lower: true });
     }
     const pendingRequest: HydratedDocument<PendingRequestType> | null =
       await PendingRequest.findOne({

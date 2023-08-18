@@ -25,7 +25,7 @@ const RequestCard = ({
   city,
 }: RequestCardProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const slug = slugify(name.toLocaleLowerCase());
+  const slug = slugify(name.toLocaleLowerCase(), { strict: true, lower: true });
 
   async function handleAccept(e: FormEvent) {
     e.preventDefault();
