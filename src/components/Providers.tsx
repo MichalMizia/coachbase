@@ -1,7 +1,7 @@
 "use client";
 
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { useQueryStore } from "@/lib/state/media-queries-generation";
+// import useMediaQuery from "@/lib/hooks/useMediaQuery";
+// import { useQueryStore } from "@/lib/state/media-queries-generation";
 import { classNames } from "@/lib/utils";
 import { XIcon } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
@@ -12,16 +12,16 @@ interface ProvidersProps {
 }
 
 const Providers = ({ children }: ProvidersProps) => {
-  const isMobile = useMediaQuery("(max-width: 800px)");
-  const isLarge = useMediaQuery("(min-width: 960px)");
+  // const isMobile = useMediaQuery("(max-width: 800px)");
+  // const isLarge = useMediaQuery("(min-width: 960px)");
 
-  const { setIsMobile, setIsLarge } = useQueryStore();
-  useEffect(() => {
-    setIsMobile(isMobile);
-  }, [isMobile]);
-  useEffect(() => {
-    setIsLarge(isLarge);
-  }, [isLarge]);
+  // const { setIsMobile, setIsLarge } = useQueryStore();
+  // useEffect(() => {
+  //   setIsMobile(isMobile);
+  // }, [isMobile]);
+  // useEffect(() => {
+  //   setIsLarge(isLarge);
+  // }, [isLarge]);
 
   const [active, setActive] = useState(false);
 

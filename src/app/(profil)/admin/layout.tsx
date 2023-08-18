@@ -1,13 +1,9 @@
 import authOptions from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import { ReactNode } from "react";
 
-export default async function ProfileLayout({
-  children,
-}: {
-  children: React.ReactNode;
-  components: React.ReactNode;
-}) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const session = await getServerSession(authOptions);
 
   const whitelisted_emails = process.env.WHITELISTED_EMAILS?.split(
