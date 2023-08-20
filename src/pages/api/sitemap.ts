@@ -21,10 +21,7 @@ export default async function handler(
 
   const trainers = await getTrainers();
 
-  const date = new Date(Date.now());
-  const currentDate = `${date.getFullYear().toString()}-${date
-    .getMonth()
-    .toString()}-${date.getDate().toString()}`;
+  const currentDate = `${new Date(Date.now()).toISOString().split("T")[0]}`;
 
   // Instructing the Vercel edge to cache the file
   res.setHeader("Cache-control", "stale-while-revalidate, s-maxage=3600");
@@ -40,18 +37,14 @@ export default async function handler(
         <loc>https://coachbase.pl/oferty</loc>
         <lastmod>${currentDate}</lastmod>
       </url>
-      ${tagOptions.map(
-        (opt) => `<url>
-        <loc>https://coachbase.pl/oferty?tag=${opt.value}</loc>
+      <url>
+        <loc>https://coachbase.pl/oferty?city=rzeszow</loc>
         <lastmod>${currentDate}</lastmod>
-      </url>`
-      )}
-      ${cities.map(
-        (city) => `<url>
-        <loc>https://coachbase.pl/oferty?city=${city.value.toLowerCase()}</loc>
+      </url>
+      <url>
+        <loc>https://coachbase.pl/oferty?tag=trener</loc>
         <lastmod>${currentDate}</lastmod>
-      </url>`
-      )}
+      </url>
       <url>
         <loc>https://coachbase.pl/blog</loc>
         <lastmod>${currentDate}</lastmod>
@@ -70,3 +63,18 @@ export default async function handler(
 
   res.end(xml);
 }
+
+// paste later
+
+// ${tagOptions.map(
+//   (opt) => `<url>
+//   <loc>https://coachbase.pl/oferty?tag=${opt.value}</loc>
+//   <lastmod>${currentDate}</lastmod>
+// </url>`
+// )}
+// ${cities.map(
+//   (city) => `<url>
+//   <loc>https://coachbase.pl/oferty?city=${city.value.toLowerCase()}</loc>
+//   <lastmod>${currentDate}</lastmod>
+// </url>`
+// )}

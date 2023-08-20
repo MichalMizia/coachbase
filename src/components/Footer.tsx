@@ -95,8 +95,9 @@ const Footer = ({}: FooterProps) => {
             </Link>
             <a
               className="ml-1 underline decoration-transparent decoration-2 underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom "
-              title="FAQ"
+              title="Wyszukaj Trenera"
               href="/#search-section"
+              rel="nofollow"
             >
               Wyszukiwarka
             </a>
@@ -107,6 +108,7 @@ const Footer = ({}: FooterProps) => {
               className="ml-1 underline decoration-transparent decoration-2 underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom "
               title="Profil"
               href="/profil"
+              rel="nofollow"
             >
               Profil
             </Link>
@@ -192,6 +194,7 @@ const Footer = ({}: FooterProps) => {
               className="underline decoration-transparent underline-offset-2 transition-all duration-300 hover:text-white hover:decoration-secondary_custom hover:decoration-2 "
               title="Mapa Strony"
               href="/api/sitemap"
+              rel="sitemap"
             >
               Mapa Strony
             </Link>

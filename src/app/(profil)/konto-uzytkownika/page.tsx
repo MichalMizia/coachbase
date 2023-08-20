@@ -44,6 +44,7 @@ const Page = async () => {
             imgSrc={user.avatar}
             id={user._id}
             username={user.username}
+            imageClassName="!static !h-14 !w-14 !translate-y-0"
           />
           <div className="">
             <h2 className="text-h4 font-semibold text-gray-800">
@@ -69,10 +70,12 @@ const Page = async () => {
         defaultName={user.username}
         defaultEmail={user.email}
       />
-      <p className="max-w-lg text-sm text-red-600">
-        Uwaga: Po zaakceptowaniu konta trenerskiego będziesz musiał zalogować
-        się ponownie aby zobaczyć swój profil biznesowy
-      </p>
+      {request && (
+        <p className="max-w-lg text-sm text-red-600">
+          Uwaga: Po zaakceptowaniu konta trenerskiego będziesz musiał zalogować
+          się ponownie aby zobaczyć swój profil biznesowy
+        </p>
+      )}
     </div>
   );
 };

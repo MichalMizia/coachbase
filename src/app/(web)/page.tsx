@@ -37,8 +37,28 @@ const Page = async ({}: pageProps) => {
   // await new Promise((resolve) => setTimeout(resolve, 1000));
   const [trainersData, articles] = await getPageData();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    url: "https://coachbase.pl/",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://coachbase.pl/search?query={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
-    <LandingPage articles={articles} jsonData={JSON.stringify(trainersData)} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LandingPage
+        articles={articles}
+        jsonData={JSON.stringify(trainersData)}
+      />
+    </>
   );
 };
 

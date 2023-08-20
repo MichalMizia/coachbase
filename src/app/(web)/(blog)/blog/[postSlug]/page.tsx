@@ -104,13 +104,19 @@ const Page = async ({ params }: pageProps) => {
               <p className="text-h6 leading-5">
                 {formatDate(article.createdAt)}
                 {", "}
-                <Link
-                  href={`/oferty/${article.slug}`}
-                  title={`Oferta ${article.userId?.username}`}
-                  className="inline text-body text-gray-700 hover:opacity-90"
-                >
-                  {article.userId?.username}
-                </Link>
+                {article.userId.slug ? (
+                  <Link
+                    href={`/oferty/${article.userId.slug}`}
+                    title={`Oferta ${article.userId?.username}`}
+                    className="inline text-body text-gray-700 hover:opacity-90"
+                  >
+                    {article.userId?.username}
+                  </Link>
+                ) : (
+                  <p className="inline text-body text-gray-700">
+                    {article.userId?.username}
+                  </p>
+                )}
               </p>
             </div>
           </header>

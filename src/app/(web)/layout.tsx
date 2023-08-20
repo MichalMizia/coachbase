@@ -41,6 +41,11 @@ export const metadata = {
     "Wiedza",
     "Nauka",
     "Trening",
+    "CoachBase",
+    "Trener personalny Rzeszów",
+    "Trening personalny Rzeszów",
+    "Dietetyk Rzeszów",
+    "Rzeszów",
   ],
 
   icons: {

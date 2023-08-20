@@ -12,6 +12,7 @@ import cities from "@/config/data/search-cities.json";
 // config
 import { tagOptions } from "@/config/global";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export interface mongooseTrainersData extends TrainerType {
   createdAt: Date;
@@ -25,53 +26,6 @@ interface MongooseQuery {
   username?: any;
   isTrainer: true;
 }
-
-// page metadata
-// export async function generateMetadata({
-//   params,
-//   searchParams,
-// }: {
-//   params: { slug: string };
-//   searchParams?: { [key: string]: string | undefined };
-// }) {
-//   const city = searchParams?.city?.toString();
-//   const tag = searchParams?.tag?.toString();
-
-//   let keywords: string[] = [
-//     "Trener",
-//     "Dietetyk",
-//     "Fizjoterapeuta",
-//     "Ekspert",
-//     "Usługi",
-//     "Oferty",
-//     "Trening personalny",
-//     "Instruktor fitness",
-//     "Siłownia",
-//     "Sport",
-//   ];
-//   let title = "Oferty - Coachbase";
-//   let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
-
-//   if (city && tag) {
-//     title = `Oferty, ${city}, ${tag} - Coachbase`;
-//     description = description.concat(`w mieście ${city}`);
-//     keywords = keywords.concat([city, tag]);
-//   } else if (city) {
-//     title = `Oferty, ${city} - Coachbase`;
-//     keywords = keywords.concat(city);
-//     description = description.concat(`w mieście ${city}`);
-//   } else if (tag) {
-//     title = `Oferty, ${tag} - Coachbase`;
-//     keywords = keywords.concat(tag);
-//   }
-
-//   const metadata: Metadata = {
-//     title: title,
-//     description: description,
-//     keywords: keywords,
-//   };
-//   return metadata;
-// }
 
 const getTrainers = async (
   city?: string | null,
@@ -151,54 +105,14 @@ const Page = async ({
           <ul className="offers-grid mt-4 grid gap-4 md:mt-6 lg:mt-8 lg:gap-3">
             {trainers?.map((trainer) => {
               return (
-                <a
+                <Link
                   key={trainer._id}
                   href={`/oferty/${trainer.slug}`}
+                  rel="dofollow"
+                  hrefLang="pl"
                   className="max-w-md"
                 >
-                  {/* <li className="group relative isolate h-full w-full overflow-hidden rounded-md bg-white p-4 shadow-md transition-all hover:shadow-lg hover:shadow-black/30 sm:p-6">
-                    <span className="absolute left-0 top-0 isolate -z-10 h-full w-full -translate-x-3/4 rounded-full bg-blue-600/20" />
-                    <header className="flex items-start justify-start gap-4">
-                      <div className="relative h-20 w-20 overflow-hidden rounded-full border bg-blue-200 shadow-md sm:h-32 sm:w-32">
-                        {trainer.image ? (
-                          <img
-                            src={trainer.image}
-                            alt={`Zdjęcie Profilowe ${trainer.username}`}
-                            className="absolute inset-0 h-full w-full scale-105 rounded-full object-cover"
-                          />
-                        ) : (
-                          <LucideUser className="absolute inset-0 m-auto h-[50%] w-1/2 text-gray-700" />
-                        )}
-                      </div>
-                      <div className="mt-4">
-                        <ul className="tags flex w-fit flex-wrap items-center justify-start gap-1 md:gap-2">
-                          {trainer.roles?.map((role, ind) => (
-                            <li
-                              className="rounded-sm bg-blue-100 px-2 py-[2px] text-[11px] font-[600] uppercase text-gray-800 md:text-xs md:font-bold md:text-gray-700 lg:text-[10px]"
-                              key={ind}
-                            >
-                              {role}
-                            </li>
-                          ))}
-                        </ul>
-                        <h3
-                          className="font-semibold text-gray-800"
-                          style={{ fontSize: "var(--size-step-1)" }}
-                        >
-                          {trainer.username}
-                        </h3>
-                        <StarsRating />
-                      </div>
-                    </header>
-                    <p
-                      id="description"
-                      className="mt-4 max-w-sm px-2 text-h6 text-gray-700"
-                    >
-                      {trainer.summary}
-                    </p>
-                  </li> */}
                   <li className="group relative flex h-full flex-col items-stretch justify-end rounded-md bg-white shadow-sm transition-all hover:shadow-md">
-                    {/* <div className="absolute"></div> */}
                     <header className="flex h-[70px] items-center justify-start gap-4 px-4 py-3">
                       <div className="relative flex aspect-square h-10 items-center justify-center overflow-hidden rounded-full border border-violet-300 bg-blue-400 p-1 text-sm font-semibold text-white shadow-lg shadow-[#00000030]">
                         {trainer.avatar ? (
@@ -247,13 +161,6 @@ const Page = async ({
                       </header>
 
                       <div className="mt-2 flex items-stretch justify-start gap-4">
-                        {/* <Button
-                        
-                          variant="primary"
-                          className="text-h5 tracking-wide text-white"
-                        >
-                          Oferta
-                        </Button> */}
                         <button className="mt-2 flex items-center justify-center gap-1 rounded-sm px-2 py-1 text-sm text-gray-700 ring-1 ring-gray-400 transition-all duration-300 hover:ring-2 hover:ring-gray-600 hover:ring-offset-1 focus:ring-2 focus:ring-gray-600 focus:ring-offset-1 md:gap-2">
                           <SendIcon size={16} className="translate-y-[1px]" />
                           Zobacz ofertę
@@ -261,7 +168,7 @@ const Page = async ({
                       </div>
                     </main>
                   </li>
-                </a>
+                </Link>
               );
             })}
           </ul>
@@ -292,3 +199,52 @@ const Page = async ({
 };
 
 export default Page;
+
+// page metadata
+export async function generateMetadata({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  const city = searchParams?.city?.toString();
+  const tag = searchParams?.tag?.toString();
+
+  let keywords: string[] = [
+    "Trener",
+    "Dietetyk",
+    "Fizjoterapeuta",
+    "Ekspert",
+    "Usługi",
+    "Oferty",
+    "Trening personalny",
+    "Instruktor fitness",
+    "Siłownia",
+    "Sport",
+    "CoachBase",
+    "CoachBase Oferty",
+  ];
+  let title = "Oferty - Coachbase";
+  let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;
+
+  if (city && tag) {
+    title = `Oferty, ${city}, ${tag} - Coachbase`;
+    description = description.concat(`w mieście ${city}`);
+    keywords = keywords.concat([city, tag]);
+  } else if (city) {
+    title = `Oferty, ${city} - Coachbase`;
+    keywords = keywords.concat(city);
+    description = description.concat(`w mieście ${city}`);
+  } else if (tag) {
+    title = `Oferty, ${tag} - Coachbase`;
+    keywords = keywords.concat(tag);
+  }
+
+  // const metadata: Metadata =
+  return {
+    title: title,
+    description: description,
+    keywords: keywords,
+  };
+}

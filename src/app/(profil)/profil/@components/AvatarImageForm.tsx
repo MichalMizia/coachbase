@@ -14,7 +14,6 @@ import { HTMLProps, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import axios, { AxiosError } from "axios";
-import { classNames } from "@/lib/utils";
 // shadcn
 import { Icons } from "@/components/ui/icons";
 import {
@@ -25,11 +24,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 interface AvatarImageFormProps extends HTMLProps<HTMLFormElement> {
   imgSrc: string | null | undefined;
   id: string;
   username: string;
+  imageClassName?: string;
 }
 
 type FormData = z.infer<typeof fileUploadSchema>;
@@ -39,6 +40,7 @@ const AvatarImageForm = ({
   id,
   className,
   username,
+  imageClassName,
   ...props
 }: AvatarImageFormProps) => {
   const {
@@ -97,7 +99,10 @@ const AvatarImageForm = ({
           <Image
             width={76}
             height={76}
-            className="absolute top-0 aspect-square -translate-y-[55%] cursor-pointer rounded-full border-2 border-indigo_custom/75 object-cover shadow-black/20 xs:static xs:h-14 xs:w-14 xs:transform-none xs:border-0 xs:shadow-md"
+            className={cn(
+              imageClassName,
+              "absolute top-0 aspect-square -translate-y-[55%] cursor-pointer rounded-full border-2 border-indigo_custom/75 object-cover shadow-black/20 xs:static xs:h-14 xs:w-14 xs:transform-none xs:border-0 xs:shadow-md"
+            )}
             src={imgSrc || AvatarSvg}
             alt={`Avatar ${username}`}
           />

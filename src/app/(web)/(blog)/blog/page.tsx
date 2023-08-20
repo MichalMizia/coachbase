@@ -73,6 +73,9 @@ export async function generateMetadata({
     "Artykuły",
     "Artykuły treningowe",
     "Artykuły dietetyczne",
+    "CoachBase",
+    "CoachBase Artykuły",
+    "CoachBase",
   ];
   // let title = "Oferty - Coachbase";
   // let description = `Lista ofert trenerów personalnych, dietetyków i fizjoterapeutów, osiągnij z nimi swój cel`;

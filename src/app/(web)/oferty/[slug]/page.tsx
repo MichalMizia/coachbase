@@ -386,6 +386,9 @@ export async function generateMetadata({ params }: pageProps) {
     "Sport",
     "Blog",
     "Artykuły",
+    "CoachBase",
+    "CoachBase Oferta Trenera",
+    "CoachBase Oferta",
   ];
   if (trainer?.tags) {
     keywords = keywords.concat(trainer.tags);

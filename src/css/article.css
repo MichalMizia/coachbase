@@ -124,7 +124,10 @@
 }
 
 .small-article.flow > * + * {
-  margin-block-end: var(--flow-space, 1.1em);
+  margin-block-start: var(--flow-space, 0.5em);
+}
+.small-article.flow > *:first-of-type {
+  margin-block-end: var(--flow-space, 0.5em);
 }
 
 .small-article img {

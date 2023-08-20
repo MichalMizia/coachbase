@@ -38,15 +38,14 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
     <main className="text-gray-200">
       <section
         id="search-section"
-        className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000060] py-16"
+        className="relative isolate flex h-[calc(100dvh-67px)] w-full items-center bg-[#00000080] py-16"
       >
         <Image
-          className="absolute inset-0 -z-10 object-cover brightness-[0.4]"
+          className="-z-10 object-cover brightness-[0.4]"
           src={HeroImg}
           alt="Mężczyzna trenujący crossfit przy zachodzącym słońcu"
           fill
           priority
-          loading="eager"
           placeholder="blur"
         />
         <div className="container-md flex h-full flex-col items-center justify-around lg:max-h-[22rem]">
@@ -181,11 +180,12 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                       {trainer.city}
                     </div>
                     {trainer.image && (
-                      <img
+                      <Image
                         src={trainer.image}
-                        placeholder="blur"
+                        priority
+                        fill
                         alt={`Zdjęcie Profilowe ${trainer.username}`}
-                        className="absolute inset-0 -z-[2] h-full w-full object-cover brightness-[0.8] transition-all duration-200 group-hover:scale-105"
+                        className="-z-[2] object-cover brightness-[0.8] transition-all duration-200 group-hover:scale-105"
                       />
                     )}
                     <main className="w-full bg-gradient-to-b from-black/20 to-black/80 p-4">
@@ -248,6 +248,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
           src={DumbellImg}
           alt="Sala treningowa wypełniona hantlami"
           fill
+          priority
           placeholder="blur"
           className="absolute inset-0 -z-[2] object-cover brightness-50"
         />

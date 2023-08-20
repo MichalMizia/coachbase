@@ -28,6 +28,7 @@ export const metadata = {
     "Wiedza",
     "Nauka",
     "Trening",
+    "CoachBase"
   ],
 
   icons: {
