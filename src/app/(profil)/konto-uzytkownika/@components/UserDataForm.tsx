@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
 import { Save } from "lucide-react";
 // hooks
-import React from "react";
+import React, { ReactNode } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +18,7 @@ interface UserDataFormProps {
   defaultName: string;
   defaultEmail: string;
   userId: string;
+  header?: ReactNode;
 }
 
 const ProfileUpdateSchema = z.object({
@@ -30,6 +31,7 @@ type FormData = z.infer<typeof ProfileUpdateSchema>;
 export function UserDataForm({
   defaultName,
   defaultEmail,
+  header,
   userId,
 }: UserDataFormProps) {
   const {
@@ -79,12 +81,18 @@ export function UserDataForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="">
         <div className="mb-4 flex flex-col items-center justify-between gap-x-4 sm:flex-row">
-          <div className="space-y-0.5">
-            <h2 className="text-xl font-semibold text-gray-800">
-              Dane Profilowe
-            </h2>
-            <p>Nazwa użytkownika używana jest przy dodawaniu pytań lub ocen.</p>
-          </div>
+          {header ? (
+            header
+          ) : (
+            <div className="space-y-0.5">
+              <h2 className="text-xl font-semibold text-gray-800">
+                Dane Profilowe
+              </h2>
+              <p>
+                Nazwa użytkownika używana jest przy dodawaniu pytań lub ocen.
+              </p>
+            </div>
+          )}
           <Button
             className="hidden sm:flex"
             type="submit"

@@ -1,5 +1,5 @@
 import "@/css/globals.css";
-import "@/css/article.css";
+import "@/css/editor/editor.css";
 import Providers from "@/components/Providers";
 // auth
 import { Analytics } from "@vercel/analytics/react";
@@ -28,7 +28,7 @@ export const metadata = {
     "Wiedza",
     "Nauka",
     "Trening",
-    "CoachBase"
+    "CoachBase",
   ],
 
   icons: {

@@ -1,5 +1,5 @@
-import "@/css/article.css";
 import "@/css/globals.css";
+import "@/css/editor/editor.css";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";

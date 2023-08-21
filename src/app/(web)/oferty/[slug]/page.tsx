@@ -57,6 +57,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import LatestUserNews from "./@components/LatestUserNews";
 
 interface pageProps {
   params: {
@@ -93,7 +94,7 @@ const Page = async ({ params }: pageProps) => {
     <main className="profile-gradient relative min-h-screen bg-white bg-gradient-to-b text-gray-800">
       <section className="container-md flex max-w-6xl items-start justify-center gap-4 py-4 lg:gap-8 lg:py-6">
         <div className="relative flex max-w-3xl flex-[2] flex-col items-stretch justify-start">
-          <Tabs defaultValue="Oferty">
+          <Tabs defaultValue="Doświadczenie">
             <header className="max-w-full rounded-sm bg-white pb-0 shadow-md shadow-black/25 outline outline-1 outline-black/5 md:p-6 md:pb-0">
               <div className="mx-auto flex flex-col justify-around gap-4 md:flex-row md:gap-8">
                 <div className="relative flex aspect-video max-h-[30vh] flex-[0.5] items-center justify-center rounded-md md:self-stretch">
@@ -223,18 +224,42 @@ const Page = async ({ params }: pageProps) => {
           </Tabs>
         </div>
 
-        <aside className="hidden min-h-[400px] flex-1 self-stretch rounded-sm bg-white p-3 px-4 shadow-md shadow-black/25 outline outline-1 outline-black/5 lg:block">
-          <div className="flex items-center justify-between">
-            <div className="">
-              <h2 className="text-h3 font-semibold text-gray-800">Artykuły</h2>
-
+        <aside className="hidden min-h-[400px] flex-1 self-stretch rounded-sm bg-white shadow-md shadow-black/25 outline outline-1 outline-black/5 lg:block">
+          <div className="">
+            <header className="w-full border-b border-gray-300 px-4 py-2 lg:px-6">
+              <h3
+                style={{ fontSize: "var(--size-step-1)" }}
+                className="py-2 font-semibold leading-7 text-gray-800"
+              >
+                Artykuły - {trainer.username}
+              </h3>
+            </header>
+            <div className="w-full">
               <LatestUserArticles
                 userId={trainer._id}
                 username={trainer.username}
+                liClassName="py-4 border-black/10 px-4 lg:px-6"
               />
             </div>
           </div>
-          <Separator className="my-4 bg-gray-300" />
+          <div className="">
+            <header className="w-full border-b border-gray-300 px-4 py-2 lg:px-6">
+              <h3
+                style={{ fontSize: "var(--size-step-1)" }}
+                className="py-2 font-semibold leading-7 text-gray-800"
+              >
+                Aktualności - {trainer.username}
+              </h3>
+            </header>
+            <div className="w-full">
+              <LatestUserNews
+                userId={trainer._id}
+                username={trainer.username}
+                userAvatar={trainer.avatar}
+                liClassName="py-4 border-black/10 px-4 lg:px-6"
+              />
+            </div>
+          </div>
         </aside>
       </section>
 

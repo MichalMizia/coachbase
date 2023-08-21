@@ -143,7 +143,7 @@ const TrainerTestimonialCard = ({
                 event.preventDefault();
                 setIsDeleteLoading(true);
 
-                const res = await axios.delete("/api/efekty", {
+                const res = await axios.delete("/api/doswiadczenie/efekty", {
                   data: {
                     testimonialId: _id,
                     userId,

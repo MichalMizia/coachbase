@@ -3,7 +3,6 @@ import initMongoose from "@/lib/db";
 import Article, { ArticleType } from "@/model/article";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
-import styles from "./@components/editor.module.css";
 
 const getPost = async (postId: string): Promise<ArticleType | null> => {
   await initMongoose();
@@ -35,7 +34,7 @@ const Page = async ({ params }: pageProps) => {
 
   return (
     <Editor
-      className={`${styles.editor} ${styles.flow} article-editor`}
+      className={`article-editor`}
       post={post}
       userId={session.user._id}
     />

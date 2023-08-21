@@ -72,27 +72,14 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                         O mnie
                       </button>
                     </Link>
-                    <Link href="/profil/oferty" title="Oferty">
-                      <button
-                        className={cn(
-                          "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                          pathname?.includes("oferty")
-                            ? " bg-indigo_custom/90 text-white"
-                            : "hover:bg-indigo_custom/20"
-                        )}
-                      >
-                        <Command className="mr-2 h-4 w-4" />
-                        Oferty
-                      </button>
-                    </Link>
                     <Link
-                      href="/profil/efekty"
-                      title="Efekty współpracy z trenerem."
+                      href="/profil/doswiadczenie"
+                      title="Doświadczenie trenerskie"
                     >
                       <button
                         className={cn(
                           "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                          pathname?.includes("efekty")
+                          pathname?.includes("doswiadczenie")
                             ? " bg-indigo_custom/90 text-white"
                             : "hover:bg-indigo_custom/20"
                         )}
@@ -112,9 +99,23 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                           <path d="M3 3v18h18" />
                           <path d="m19 9-5 5-4-4-3 3" />
                         </svg>
-                        Efekty
+                        Doświadczenie
                       </button>
                     </Link>
+                    <Link href="/profil/oferty" title="Oferty">
+                      <button
+                        className={cn(
+                          "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                          pathname?.includes("oferty")
+                            ? " bg-indigo_custom/90 text-white"
+                            : "hover:bg-indigo_custom/20"
+                        )}
+                      >
+                        <Command className="mr-2 h-4 w-4" />
+                        Oferty
+                      </button>
+                    </Link>
+
                     <Link href="/profil/artykuly" title="Artykuły">
                       <button
                         className={cn(

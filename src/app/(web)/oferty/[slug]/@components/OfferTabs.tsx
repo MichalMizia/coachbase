@@ -27,6 +27,8 @@ import {
 import { Icons } from "@/components/ui/icons";
 import { cn, formatDate } from "@/lib/utils";
 import StarsRating from "@/components/custom/StarsRating";
+import { Separator } from "@/components/ui/separator";
+import { sanitize } from "isomorphic-dompurify";
 
 interface OfferTabsProps {
   trainerData: PopulatedTrainerDataType;
@@ -176,13 +178,26 @@ const OfferTabs = ({ trainerData, session }: OfferTabsProps) => {
   </section> */}
         </div>
       </TabsContent>
-      <TabsContent value="Efekty">
+      <TabsContent value="Doświadczenie">
         <div className="relative mx-auto max-h-[600px] max-w-3xl overflow-y-auto">
           <header className="sticky top-0 z-[2] flex items-end justify-between border-b border-gray-300 bg-white px-6 py-2">
-            <h2 className="text-h3 font-[600]">
-              Efekty klientów: {trainerData.testimonials.length}
-            </h2>
+            <h2 className="text-h3 font-[600]">Doświadczenie</h2>
           </header>
+          <section className="border-b border-gray-300 px-6 py-4">
+            {!!trainerData.experience?.length ? (
+              <article
+                className="xsmall-article flow"
+                dangerouslySetInnerHTML={{
+                  __html: sanitize(trainerData.experience),
+                }}
+              ></article>
+            ) : (
+              <p>Ten trener nie dodał jeszcze opisu swojego doświadczenia.</p>
+            )}
+          </section>
+          <h3 className="bg-white px-6 pt-4 text-h4 font-[600]">
+            Efekty klientów: {trainerData.testimonials.length}
+          </h3>
           <section className="border-b border-gray-300 px-6 py-4">
             <main className="max-w-xl">
               {trainerData.testimonials?.length ? (

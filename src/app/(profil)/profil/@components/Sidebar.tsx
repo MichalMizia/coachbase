@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CalendarDays, FileText } from "lucide-react";
+import { CalendarDays, FileText, Mailbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/custom/Logo";
 import { Icons } from "@/components/ui/icons";
@@ -57,24 +57,14 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
                 O mnie
               </button>
             </Link>
-            <Link href="/profil/oferty" title="Oferty">
+            <Link
+              href="/profil/doswiadczenie"
+              title="Doświadczenie trenerskie."
+            >
               <button
                 className={cn(
                   "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                  pathname?.includes("oferty")
-                    ? " bg-indigo_custom/90 text-white"
-                    : "hover:bg-indigo_custom/20"
-                )}
-              >
-                <Icons.logo className="mr-2 h-4 w-4" />
-                Oferty
-              </button>
-            </Link>
-            <Link href="/profil/efekty" title="Efekty współpracy z trenerem.">
-              <button
-                className={cn(
-                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                  pathname?.includes("efekty")
+                  pathname?.includes("doswiadczenie")
                     ? " bg-indigo_custom/90 text-white"
                     : "hover:bg-indigo_custom/20"
                 )}
@@ -94,9 +84,23 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
                   <path d="M3 3v18h18" />
                   <path d="m19 9-5 5-4-4-3 3" />
                 </svg>
-                Efekty
+                Doświadczenie
               </button>
             </Link>
+            <Link href="/profil/oferty" title="Oferty">
+              <button
+                className={cn(
+                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                  pathname?.includes("oferty")
+                    ? " bg-indigo_custom/90 text-white"
+                    : "hover:bg-indigo_custom/20"
+                )}
+              >
+                <Icons.logo className="mr-2 h-4 w-4" />
+                Oferty
+              </button>
+            </Link>
+
             {/* <Link href="/profil/faq" title="Twoje FAQ">
               <button
                 className={cn(
@@ -110,19 +114,7 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
                 Twoje FAQ
               </button>
             </Link> */}
-            <Link href="/profil/artykuly" title="Artykuły">
-              <button
-                className={cn(
-                  "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                  pathname?.includes("artykuly")
-                    ? " bg-indigo_custom/90 text-white"
-                    : "hover:bg-indigo_custom/20"
-                )}
-              >
-                <FileText size={16} className="mr-2 h-4 w-4" />
-                Artykuły
-              </button>
-            </Link>
+
             <HoverCard>
               <HoverCardTrigger asChild>
                 <Link
@@ -149,10 +141,10 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
                       Informacje Profilowe
                     </h4>
                     <p className="text-sm">
-                      W tej sekcji możesz dodać swoje specjalizacje czyli tagi
-                      które pomagają uplasować się wyżej w wynikach
-                      wyszukiwania, zmienić lokalizację czy dodać linki do
-                      swoich mediów
+                      W tej sekcji możesz dodać <strong>tagi</strong> które
+                      pomagają uplasować się wyżej w wynikach wyszukiwania,{" "}
+                      <strong>zmienić lokalizację</strong> czy dodać{" "}
+                      <strong>linki do swoich mediów.</strong>
                     </p>
                     <div className="flex items-center pt-2">
                       <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
@@ -168,10 +160,67 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
         </div>
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
+            Co u ciebie?
+          </h2>
+          <Link href="/profil/artykuly" title="Artykuły">
+            <button
+              className={cn(
+                "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                pathname?.includes("artykuly")
+                  ? " bg-indigo_custom/90 text-white"
+                  : "hover:bg-indigo_custom/20"
+              )}
+            >
+              <FileText size={16} className="mr-2 h-4 w-4" />
+              Artykuły
+            </button>
+          </Link>
+          <Link href="/profil/aktualnosci" title="Aktualności">
+            <button
+              className={cn(
+                "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                pathname?.includes("aktualnosci")
+                  ? " bg-indigo_custom/90 text-white"
+                  : "hover:bg-indigo_custom/20"
+              )}
+            >
+              <Mailbox size={16} className="mr-2 h-4 w-4" />
+              Aktualności
+            </button>
+          </Link>
+        </div>
+        <div className="px-3 py-2">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
             Ustawienia
           </h2>
-          <div className="mx-2 min-h-[180px] rounded-md bg-slate-100 shadow-md">
-            {/* <Button
+          <Link href="/profil/ustawienia" title="Ustawienia Konta">
+            <button
+              className={cn(
+                "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                pathname?.endsWith("ustawienia")
+                  ? " bg-indigo_custom/90 text-white"
+                  : "hover:bg-indigo_custom/20"
+              )}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mr-2 h-4 w-4 text-current"
+              >
+                <path d="m16 6 4 14" />
+                <path d="M12 6v14" />
+                <path d="M8 8v12" />
+                <path d="M4 4v16" />
+              </svg>
+              Konto
+            </button>
+          </Link>
+          {/* <Button
               size="large"
               variant="text"
               className="w-full justify-start text-text_readable"
@@ -276,7 +325,6 @@ export default function Sidebar({ className, ...props }: SidebarProps) {
               </svg>
               Albums
             </Button> */}
-          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, {
   Dispatch,
-  FormEvent,
   HTMLProps,
   SetStateAction,
   useEffect,
@@ -115,11 +114,11 @@ export const RichEditor = ({
   return (
     <div
       className={cn(
-        "text-editor mt-4 flex h-full max-h-full flex-1 flex-col items-stretch !overflow-y-auto",
+        "text-editor mt-4 flex h-full max-h-full flex-1 flex-col items-stretch justify-start !overflow-y-auto",
         className
       )}
     >
-      <div id="toolbar">
+      <div id="toolbar" className="!h-auto">
         <span className="ql-formats">
           {/* <select className="ql-font" defaultValue="arial">
         <option value="arial">Arial</option>
@@ -202,7 +201,7 @@ export const RichEditor = ({
         modules={modules}
         formats={formats}
         className={cn(
-          `small-article h-full max-h-full flex-1 !overflow-y-auto !text-gray-800`,
+          `article-editor !overflow-y-auto !text-gray-800`,
           editorClassName
         )}
       />

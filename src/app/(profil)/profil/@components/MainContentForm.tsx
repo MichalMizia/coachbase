@@ -4,15 +4,13 @@ import Button from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { sanitize } from "isomorphic-dompurify";
 import { Edit, Save } from "lucide-react";
-import { FormEvent, Suspense, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 // lazy loaded
 import dynamic from "next/dynamic";
 import { toast } from "react-hot-toast";
@@ -20,7 +18,9 @@ import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 // styles
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
-const RichEditor = dynamic(() => import("@/components/custom/RichEditor"));
+const RichEditor = dynamic(() => import("@/components/custom/RichEditor"), {
+  loading: () => <div></div>,
+});
 
 interface MainContentFormProps {
   userId: string;
@@ -133,23 +133,17 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
             <DialogTitle className="text-gray-800">Edytuj opis</DialogTitle>
           </DialogHeader>
 
-          <Suspense
-            fallback={
-              <div className="mt-4 h-full w-full animate-pulse border border-black/10 bg-slate-100"></div>
-            }
-          >
-            <RichEditor
-              isLoading={isLoading}
-              className="mt-4"
-              value={currentDescription}
-              // @ts-expect-error
-              setValue={setCurrentDescription}
-            />
-          </Suspense>
+          <RichEditor
+            isLoading={isLoading}
+            className="mt-4"
+            value={currentDescription}
+            // @ts-expect-error
+            setValue={setCurrentDescription}
+          />
           <Button
             isLoading={isLoading}
             type="submit"
-            className="absolute bottom-6 right-6"
+            className="mt-4 self-end"
             size="large"
           >
             {!isLoading && <Save className="mr-1 h-5 w-5 text-xl" />}

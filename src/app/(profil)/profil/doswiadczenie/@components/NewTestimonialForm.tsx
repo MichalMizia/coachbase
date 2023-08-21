@@ -82,7 +82,7 @@ const NewTestimonialForm = ({ userId }: NewTestimonialFormProps) => {
 
     console.log(fileRes);
     try {
-      await axios.post("/api/efekty", {
+      await axios.post("/api/doswiadczenie/efekty", {
         userId,
         title: data.name,
         description: data.description,

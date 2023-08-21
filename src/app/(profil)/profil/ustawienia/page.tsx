@@ -12,19 +12,17 @@ import { Separator } from "@/components/ui/separator";
 import { redirect } from "next/navigation";
 import initMongoose from "@/lib/db";
 // components
-import ImageUpdateForm from "@/components/forms/ImageUpdateForm";
-import MobileImageUpdateForm from "./@components/MobileImageUpdateForm";
-import TrainerFAQCard from "./@components/TrainerFaqCard";
+import { UserDataForm } from "../../konto-uzytkownika/@components/UserDataForm";
 // lazy loaded stuff
 import dynamic from "next/dynamic";
-const MainContentForm = dynamic(() => import("./@components/MainContentForm"), {
-  loading: () => <div></div>,
-});
-const AvatarImageForm = dynamic(() => import("./@components/AvatarImageForm"), {
-  loading: () => (
-    <div className="h-14 w-14 animate-pulse rounded-full bg-gray-100"></div>
-  ),
-});
+const AvatarImageForm = dynamic(
+  () => import("../@components/AvatarImageForm"),
+  {
+    loading: () => (
+      <div className="h-14 w-14 animate-pulse rounded-full bg-gray-100"></div>
+    ),
+  }
+);
 
 export interface PageProps {
   user?: TrainerType;
@@ -56,17 +54,11 @@ const Page = async () => {
   if (!userData) {
     throw new Error("Brak danych powiązanych z tym trenerem");
   }
+
   const user = userData?.userId;
   // when the user is logged in as a trainer
   return (
-    <div className="flex h-full flex-col items-stretch justify-start overflow-y-auto px-4 pb-6 pt-0 xs:pt-6 lg:px-8">
-      <div className="border-1 mx-auto aspect-video w-screen -translate-x-4 cursor-pointer rounded-t-[24px] border-b-0 border-white shadow-md shadow-black/20 xs:hidden">
-        <MobileImageUpdateForm
-          imgSrc={user.image}
-          id={user._id}
-          className="rounded-t-[24px]"
-        />
-      </div>
+    <div className="flex h-full flex-col items-stretch justify-start overflow-auto px-4 pb-6 pt-0 xs:pt-6 lg:px-8">
       <div className="relative flex items-center justify-between">
         <div className="z-[2] flex flex-col items-start gap-2 pt-8 xs:flex-row xs:items-center xs:pt-0">
           <AvatarImageForm
@@ -75,57 +67,33 @@ const Page = async () => {
             username={user.username}
           />
           <div className="">
-            <h2 className="text-h4 font-semibold text-gray-800">
-              Cześć, {user.username.split(" ")[0]}
-            </h2>
+            <h2 className="text-h4 font-semibold text-gray-800">Ustawienia</h2>
             <p className="max-w-md text-sm text-text_readable sm:text-h6">
-              Uzupełniaj swój profil i przyciągaj klientów
+              <span className="font-[500]">Status Konta: Trener</span>
             </p>
           </div>
         </div>
+        <p className="hidden self-start text-sm text-blue-500 md:block">
+          Zmień zdjęcie klikając w nie
+        </p>
       </div>
+      <p className="ml-2 translate-y-2 self-start text-sm text-blue-500 md:hidden">
+        Zmień zdjęcie klikając w nie
+      </p>
       <Separator className="my-4 bg-gray-300" />
 
-      <div className="hidden xs:block">
-        <div className="mb-2 flex items-center justify-between gap-4">
+      <UserDataForm
+        userId={JSON.stringify(user._id)}
+        defaultName={user.username}
+        defaultEmail={user.email}
+        header={
           <div className="space-y-0.5">
             <h2 className="text-xl font-semibold text-gray-800">
-              Zdjęcie Profilowe
+              Dane Profilowe
             </h2>
           </div>
-        </div>
-        <ImageUpdateForm imgSrc={user.image} id={user._id} />
-      </div>
-      <Separator className="my-4 hidden bg-gray-300 xs:block" />
-      {/* <div className="">
-        <div className="mb-2 flex items-center justify-between gap-4">
-          <div className="space-y-0.5">
-            <h2 className="text-xl font-semibold text-gray-800">
-              Najczęściej zadawane pytania
-            </h2>
-            {userData.faq.length > 0 ? (
-              <p>
-                Dodawaj kolejne pytania do swojego FAQ aby zwiększać zasięgi
-              </p>
-            ) : (
-              <p>Nie masz jeszcze żadnych pytań w swoim FAQ, dodaj pierwsze!</p>
-            )}
-          </div>
-        </div>
-        {!!userData.faq.length && (
-          <ul className="w-full space-y-2">
-            {userData.faq.map((question) => (
-              <TrainerFAQCard
-                key={question.question}
-                question={question.question}
-                answer={question.answer}
-                userId={user._id}
-              />
-            ))}
-          </ul>
-        )}
-      </div> */}
-      <MainContentForm userId={user._id} content={userData.content || ""} />
+        }
+      />
     </div>
   );
 };

@@ -97,7 +97,7 @@ const TrainerFAQCard = ({ userId, question, answer }: TrainerFAQCardProps) => {
                 event.preventDefault();
                 setIsDeleteLoading(true);
 
-                const res = await axios.delete("/api/efekty", {
+                const res = await axios.delete("/api/doswiadczenie/efekty", {
                   data: {
                     userId,
                   },

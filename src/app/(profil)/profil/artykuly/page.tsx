@@ -32,9 +32,7 @@ const Page = async () => {
   if (!session?.user.email) {
     redirect("/login");
   }
-  const user: TrainerType = await fetchTrainerFromEmail(session.user?.email);
-  const articles = await getUserArticles(user._id);
-  console.log(articles);
+  const articles = await getUserArticles(session.user._id);
 
   // when the user is logged in as a trainer
   return (
@@ -59,7 +57,7 @@ const Page = async () => {
               title={article.title}
               photoUrl={article.photoUrl || null}
               date={article.updatedAt}
-              userId={user._id}
+              userId={session.user._id}
             />
           ))}
         </ul>

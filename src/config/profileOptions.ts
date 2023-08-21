@@ -1,11 +1,11 @@
 export type ProfileNavigationOptionType =
   | "Oferty"
   | "Opinie"
-  | "Efekty"
+  | "Doświadczenie"
   | "FAQ";
 export const profileNavigationOptions: ProfileNavigationOptionType[] = [
+  "Doświadczenie",
   "Oferty",
   "Opinie",
-  "Efekty",
   "FAQ",
 ];

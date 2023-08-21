@@ -14,38 +14,37 @@ import {
 } from "@/components/ui/dialog";
 // components
 import Button from "@/components/ui/Button";
-import { Edit, Loader2Icon } from "lucide-react";
-import {
-  Dispatch,
-  HTMLAttributes,
-  SetStateAction,
-  memo,
-  useRef,
-  useState,
-} from "react";
+import { HTMLAttributes, ReactNode, memo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
+import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
+import Image from "next/image";
 
-interface ArticleImageFormProps extends HTMLAttributes<HTMLDivElement> {
+interface AddImagePopupFormProps extends HTMLAttributes<HTMLDivElement> {
   photoUrl: string;
   setPhotoUrl: (value: string) => void;
-  postId: string;
-  userId: string;
+  imageClassName?: string;
+  children: ReactNode;
+  formTitle?: string;
+  defaultSuccessMessage?: string;
+  defaultErrorMessage?: string;
 }
 
 type FormData = z.infer<typeof fileUploadSchema>;
 
-const ArticleImageForm = ({
+const AddImagePopupForm = ({
   photoUrl,
   setPhotoUrl,
-  userId,
-  postId,
   className,
+  children,
+  imageClassName,
+  formTitle,
+  defaultSuccessMessage,
+  defaultErrorMessage,
   ...props
-}: ArticleImageFormProps) => {
+}: AddImagePopupFormProps) => {
   const {
     register,
     handleSubmit,
@@ -90,13 +89,15 @@ const ArticleImageForm = ({
         toast.error("Formularz wypełniony niepoprawnie");
         return null;
       }
-      toast.error("Coś poszło nie tak podczas dodawania zdjęcia");
+      toast.error(
+        defaultErrorMessage || "Coś poszło nie tak podczas dodawania zdjęcia"
+      );
       return null;
     } finally {
       setIsLoading(false);
     }
 
-    toast.success("Dodano zdjęcie jako miniaturkę artykułu");
+    toast.success(defaultSuccessMessage || "Dodano zdjęcie");
     dialogBtnRef.current?.click();
   }
 
@@ -105,56 +106,18 @@ const ArticleImageForm = ({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <div>
-          <div className="absolute left-0 top-0 w-screen border-b bg-bg py-3 shadow-inner xs:py-4 md:hidden">
-            <div className="container-md">
-              <Button
-                type="button"
-                variant="outlined"
-                className="w-full border-2 border-secondary_custom/60 bg-white text-gray-700 hover:border-secondary_custom/60"
-              >
-                <Icons.media className="mr-2 h-4 w-4 text-secondary_custom/90" />
-                Miniatura Artykułu
-              </Button>
-            </div>
-          </div>
-
-          <div
-            className={cn(
-              "relative isolate hidden h-40 w-40 flex-1 cursor-pointer self-start overflow-hidden rounded-[35%] bg-slate-100 md:block",
-              className
-            )}
-            {...props}
-          >
-            {photoUrl?.length ? (
-              <>
-                <img
-                  src={photoUrl}
-                  alt="Miniaturka Artykułu"
-                  className="mx-auto h-full w-full max-w-[240px] rounded-md object-cover"
-                  loading="lazy"
-                />
-                <Loader2Icon className="absolute inset-0 -z-10 m-auto h-1/3 w-1/3 animate-timed-spin text-gray-700" />
-              </>
-            ) : (
-              <div className="absolute inset-0 m-auto flex flex-col items-center justify-center gap-2">
-                <Icons.post className="h-8 w-8" />
-                <h4 className="text-sm font-semibold">Zdjęcie</h4>
-              </div>
-            )}
-          </div>
-        </div>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-[460px] sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)} className="static">
           <DialogHeader>
-            <DialogTitle className="text-gray-800">Dodaj zdjęcie</DialogTitle>
+            <DialogTitle className="text-gray-800">
+              {formTitle || "Dodaj zdjęcie"}
+            </DialogTitle>
           </DialogHeader>
 
           <div
             className={cn(
-              "relative isolate mx-auto my-9 h-40 max-w-[160px] flex-1 cursor-pointer overflow-hidden rounded-full bg-slate-100",
+              "relative isolate mx-auto my-9 flex-1 cursor-pointer overflow-hidden rounded-full bg-slate-100",
               className
             )}
           >
@@ -180,20 +143,28 @@ const ArticleImageForm = ({
                     : photoUrl
                 }
                 alt="Zdjęcie Profilowe"
-                className="h-full w-full rounded-md object-cover"
-              />
-            ) : currentFiles &&
-              currentFiles.length &&
-              URL.createObjectURL(currentFiles[0]) ? (
-              <img
-                alt="Preview zdjęcia profilowego"
-                src={URL.createObjectURL(currentFiles[0])}
-                className="h-full w-full rounded-md object-cover"
+                className={cn(
+                  "h-full w-full rounded-md object-cover",
+                  imageClassName
+                )}
               />
             ) : (
-              <div className="absolute inset-0 m-auto flex flex-col items-center justify-center gap-2">
-                <Icons.post className="h-8 w-8" />
-                <h4 className="text-sm font-semibold">Zdjęcie</h4>
+              <div className="relative isolate h-full w-full">
+                <Image
+                  alt="Preview zdjęcia profilowego"
+                  fill
+                  src={
+                    currentFiles &&
+                    currentFiles.length &&
+                    URL.createObjectURL(currentFiles[0])
+                      ? URL.createObjectURL(currentFiles[0])
+                      : ImagePlaceholder
+                  }
+                  className={cn(
+                    "h-full w-full rounded-md object-cover",
+                    imageClassName
+                  )}
+                />
               </div>
             )}
           </div>
@@ -225,4 +196,4 @@ const ArticleImageForm = ({
   );
 };
 
-export default memo(ArticleImageForm);
+export default memo(AddImagePopupForm);

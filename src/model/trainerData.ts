@@ -56,6 +56,7 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
       default: [],
     },
     content: String,
+    experience: String,
     // sections: {
     //   type: [
     //     {
@@ -145,6 +146,7 @@ export interface TrainerDataType {
   testimonials: TrainerTestimonialType[];
   // this is the main markdown content
   content: string;
+  experience?: string;
   // all images that a trainer has posted and their social media links
   images: Image[];
   socialMedia: SocialMediaType;

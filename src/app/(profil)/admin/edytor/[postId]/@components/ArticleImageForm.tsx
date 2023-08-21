@@ -135,7 +135,7 @@ const ArticleImageForm = ({
                   className="mx-auto h-full w-full max-w-[240px] rounded-md object-cover"
                   loading="lazy"
                 />
-                <Loader2Icon className="absolute inset-0 -z-10 m-auto h-1/3 w-1/3 animate-pulse animate-timed-spin text-gray-700" />
+                <Loader2Icon className="absolute inset-0 -z-10 m-auto h-1/3 w-1/3 animate-timed-spin text-gray-700" />
               </>
             ) : (
               <div className="absolute inset-0 m-auto flex flex-col items-center justify-center gap-2">

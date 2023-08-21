@@ -1,13 +1,22 @@
 import authOptions from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import User, { IUser, TrainerType, UserType } from "@/model/user";
+import User, { IUser } from "@/model/user";
 
 import { Separator } from "@/components/ui/separator";
 import initMongoose from "@/lib/db";
-import AvatarImageForm from "../profil/@components/AvatarImageForm";
 import { UserDataForm } from "./@components/UserDataForm";
 import PendingRequest, { PendingRequestType } from "@/model/pendindRequest";
+// lazy loaded stuff
+import dynamic from "next/dynamic";
+const AvatarImageForm = dynamic(
+  () => import("../profil/@components/AvatarImageForm"),
+  {
+    loading: () => (
+      <div className="h-14 w-14 animate-pulse rounded-full bg-gray-100"></div>
+    ),
+  }
+);
 
 const getUser = async (
   id: string
