@@ -327,11 +327,9 @@ body.web-body {
 }
 
 .xsmall-article.flow > * + * {
-  margin-block-start: var(--flow-space, 0.5em);
+  margin-block-start: var(--flow-space, 0.4em);
 }
-.xsmall-article.flow > *:first-of-type {
-  margin-block-end: var(--flow-space, 0.5em);
-}
+
 .xsmall-article h1 {
   @apply text-h3 font-semibold;
 }

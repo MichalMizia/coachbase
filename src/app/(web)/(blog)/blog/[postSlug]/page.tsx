@@ -17,7 +17,7 @@ const LatestUserArticles = dynamic(
   () => import("@/app/(web)/oferty/[slug]/@components/LatestUserArticles"),
   {
     loading: () => (
-      <div className="flex flex-col items-stretch justify-start">
+      <ul className="flex flex-col items-stretch justify-start">
         {[...Array(4).keys()].map((ind) => (
           <li
             key={ind}
@@ -42,7 +42,7 @@ const LatestUserArticles = dynamic(
             </div>
           </li>
         ))}
-      </div>
+      </ul>
     ),
   }
 );

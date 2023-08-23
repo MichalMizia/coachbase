@@ -23,6 +23,7 @@ import { classNames } from "@/lib/utils";
 import RegistrationStatus from "./RegistrationStatus";
 import { UserRolesType } from "@/model/user";
 import { useState } from "react";
+import { useErrorValidation } from "@/lib/hooks/useErrorValidation";
 
 type FormData = z.infer<typeof trainerRegisterSchema>;
 
@@ -98,18 +99,29 @@ const RegisterTrainerForm = ({}: RegisterTrainerFormProps) => {
         });
       }
     } catch (e) {
-      if (
-        e instanceof AxiosError &&
-        e.response?.status?.toString()[0] === "4" &&
-        e.response?.data?.message
-      ) {
-        toast.error(e.response.data.message);
+      if (e instanceof Error && e.message) {
+        toast.error(e.message);
         return null;
-      } else if (e instanceof ZodError) {
+      } else if (e instanceof z.ZodError) {
         toast.error("Formularz wypełniony niepoprawnie");
         return null;
       }
-      toast.error("Coś poszło nie tak podczas rejestracji");
+      toast.error(
+        (t) => (
+          <div className="space-y-1">
+            <h4 className="text-xl font-semibold">
+              Coś poszło nie tak podczas rejestracji konta trenerskiego
+            </h4>
+            <p>
+              Upewnij się że poprawnie wypełniłeś formularz i spróbuj ponownie.
+            </p>
+          </div>
+        ),
+        {
+          className: "custom",
+          duration: 6000,
+        }
+      );
       return null;
     } finally {
       setIsLoading(false);
@@ -255,17 +267,17 @@ const RegisterTrainerForm = ({}: RegisterTrainerFormProps) => {
               </div>
               <div className="relative my-4 flex justify-center text-xs uppercase">
                 <span className="bg-bg px-2 text-slate-600">
-                  Krótki Opis &#40;max 250 znaków&#41;
+                  Krótki Opis &#40;max 300 znaków&#41;
                 </span>
               </div>
             </div>
             <div>
               <label htmlFor="description" className="sr-only">
-                Krótki Opis &#40;max 250 znaków&#41;
+                Krótki Opis &#40;max 300 znaków&#41;
               </label>
               <TextareaAutosize
                 // defaultValue="Nazywam się Michał Mizia i jestem potęznym trenerem personalnym"
-                maxLength={250}
+                maxLength={300}
                 {...register("description")}
                 id="description"
                 placeholder="Opis"

@@ -164,10 +164,10 @@ const RegisterForm = ({}: RegisterFormProps) => {
             <span className="w-full border-t border-slate-300" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-bg px-2 text-slate-600">lub dołącz przez</span>
+            <span className="bg-bg px-2 text-slate-600">lub</span>
           </div>
         </div>
-        <Button
+        {/* <Button
           variant="outlined"
           isLoading={isGoogleLoading || isLoading}
           type="button"
@@ -209,7 +209,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
             </svg>
           )}{" "}
           Google
-        </Button>
+        </Button> */}
 
         <p className="px-8 text-center text-sm text-slate-500">
           <Link

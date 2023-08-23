@@ -3,7 +3,7 @@
 // icons
 import Logo from "@/components/custom/Logo";
 import { cn } from "@/lib/utils";
-import { Command, FileText, Settings } from "lucide-react";
+import { Command, FileText, Mailbox, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HTMLAttributes } from "react";
@@ -116,20 +116,6 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                       </button>
                     </Link>
 
-                    <Link href="/profil/artykuly" title="Artykuły">
-                      <button
-                        className={cn(
-                          "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
-                          pathname?.includes("artykuly")
-                            ? " bg-indigo_custom/90 text-white"
-                            : "hover:bg-indigo_custom/20"
-                        )}
-                      >
-                        <FileText size={16} className="mr-2 h-4 w-4" />
-                        Artykuły
-                      </button>
-                    </Link>
-
                     <Link
                       href="/profil/informacje"
                       title="Tagi/Lokalizacja/Social Media"
@@ -150,115 +136,66 @@ const MobileDrawer = ({ className, ...props }: MobileDrawerProps) => {
                 </div>
                 <div className="px-3 py-2">
                   <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
+                    Co u ciebie?
+                  </h2>
+                  <Link href="/profil/artykuly" title="Artykuły">
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                        pathname?.includes("artykuly")
+                          ? " bg-indigo_custom/90 text-white"
+                          : "hover:bg-indigo_custom/20"
+                      )}
+                    >
+                      <FileText size={16} className="mr-2 h-4 w-4" />
+                      Artykuły
+                    </button>
+                  </Link>
+                  <Link href="/profil/aktualnosci" title="Aktualności">
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                        pathname?.includes("aktualnosci")
+                          ? " bg-indigo_custom/90 text-white"
+                          : "hover:bg-indigo_custom/20"
+                      )}
+                    >
+                      <Mailbox size={16} className="mr-2 h-4 w-4" />
+                      Aktualności
+                    </button>
+                  </Link>
+                </div>
+                <div className="px-3 py-2">
+                  <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight text-black">
                     Ustawienia
                   </h2>
-                  <div className="mx-2 min-h-[180px] rounded-md bg-slate-100 shadow-md">
-                    {/* <Button
-              size="large"
-              variant="text"
-              className="w-full justify-start text-text_readable"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4 text-slate-500"
-              >
-                <path d="M21 15V6" />
-                <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                <path d="M12 12H3" />
-                <path d="M16 6H3" />
-                <path d="M12 18H3" />
-              </svg>
-              Playlists
-            </Button>
-            <Button
-              size="large"
-              variant="text"
-              className="w-full justify-start text-text_readable"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4 text-slate-500"
-              >
-                <circle cx="8" cy="18" r="4" />
-                <path d="M12 18V2l7 4" />
-              </svg>
-              Songs
-            </Button>
-            <Button
-              size="large"
-              variant="text"
-              className="w-full justify-start text-text_readable"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4 text-slate-500"
-              >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              Made for You
-            </Button>
-            <Button
-              size="large"
-              variant="text"
-              className="w-full justify-start text-text_readable"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4 text-slate-500"
-              >
-                <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12" />
-                <circle cx="17" cy="7" r="5" />
-              </svg>
-              Artists
-            </Button>
-            <Button
-              size="large"
-              variant="text"
-              className="w-full justify-start text-text_readable"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4 text-slate-500"
-              >
-                <path d="m16 6 4 14" />
-                <path d="M12 6v14" />
-                <path d="M8 8v12" />
-                <path d="M4 4v16" />
-              </svg>
-              Albums
-            </Button> */}
-                  </div>
+                  <Link href="/profil/ustawienia" title="Ustawienia Konta">
+                    <button
+                      className={cn(
+                        "flex w-full items-center justify-stretch rounded-md px-6 py-3 font-semibold text-gray-700 outline-none transition-all",
+                        pathname?.endsWith("ustawienia")
+                          ? " bg-indigo_custom/90 text-white"
+                          : "hover:bg-indigo_custom/20"
+                      )}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="mr-2 h-4 w-4 text-current"
+                      >
+                        <path d="m16 6 4 14" />
+                        <path d="M12 6v14" />
+                        <path d="M8 8v12" />
+                        <path d="M4 4v16" />
+                      </svg>
+                      Konto
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

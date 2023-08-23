@@ -7,7 +7,6 @@ import initMongoose from "@/lib/db";
 // components
 import { Separator } from "@/components/ui/separator";
 // types
-import { NewNewsButton } from "./@components/NewNewsButton";
 import News, { NewsType } from "@/model/news";
 import TrainerNewsCard from "./@components/TrainerNewsCard";
 4;
@@ -53,14 +52,15 @@ const Page = async () => {
             imgSrc={session.user.image}
             id={session.user._id}
             username={session.user.username}
+            className="!h-32 !w-32"
           />
           <div className="space-y-1">
-            <h2 className="ml-1 text-2xl font-semibold text-gray-800">
+            <h2 className="ml-1.5 text-2xl font-semibold text-gray-800">
               Aktualności
             </h2>
             <AddNewsDialog
               dialogTrigger={
-                <div className="flex max-w-lg items-center justify-start rounded-[1000px] border border-black/10 py-3 pl-4 pr-12 text-sm text-text_readable shadow-md outline outline-1 outline-transparent transition-all hover:border-indigo_custom/30 hover:outline-indigo_custom/40 sm:text-h6">
+                <div className="flex max-w-lg items-center justify-start rounded-[1000px] border border-black/10 py-2 pl-3 pr-12 text-sm text-text_readable shadow-md outline outline-1 outline-transparent transition-all hover:border-indigo_custom/30 hover:outline-indigo_custom/40 sm:text-h6">
                   <PencilIcon className="mr-2 h-5 w-5 text-secondary_dark" />
                   <span>
                     Cześć {session.user.username.split(" ")[0]}, co u Ciebie?
@@ -75,7 +75,7 @@ const Page = async () => {
       <Separator className="my-4 bg-gray-300" />
 
       {!!trainerNews?.length ? (
-        <ul className="w-full space-y-2">
+        <ul className="grid w-full max-w-5xl grid-cols-1 items-stretch justify-center space-y-2 lg:grid-cols-2">
           {trainerNews.map((post) => (
             <TrainerNewsCard
               key={post._id.toString()}
@@ -84,6 +84,7 @@ const Page = async () => {
               photoUrl={post.photoUrl || null}
               date={post.updatedAt}
               userId={session.user._id}
+              content={post.content}
             />
           ))}
         </ul>

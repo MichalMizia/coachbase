@@ -1,7 +1,7 @@
 // utils
 import initMongoose from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import mongoose, { Document } from "mongoose";
+import mongoose, { Document, HydratedDocument } from "mongoose";
 // auth
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
@@ -98,59 +98,61 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     return NextResponse.json({}, { status: 400 });
   }
 }
-// export async function PATCH(req: NextRequest, res: NextResponse) {
-//   try {
-//     await initMongoose();
-//   } catch (e) {
-//     console.log("Failed connecting to database: ", e);
-//     return NextResponse.json(
-//       { message: "Failed connecting to database" },
-//       { status: 500 }
-//     );
-//   }
+export async function PATCH(req: NextRequest, res: NextResponse) {
+  await initMongoose();
 
-//   const { newsId, photoUrl, title, summary, content, published, tags } =
-//     await req.json();
+  const { newsId, photoUrl, title, content, userId } = await req.json();
 
-//   console.log("tags: ", tags, title, summary);
+  if (!title?.length || !content?.length) {
+    return NextResponse.json(
+      { message: "Tytuł, i opis aktualności są wymagane" },
+      { status: 400 }
+    );
+  }
 
-//   if (
-//     !title?.length ||
-//     !summary.length ||
-//     !content?.length ||
-//     !Array.isArray(tags)
-//   ) {
-//     return NextResponse.json(
-//       { message: "Tytuł, podsumowanie i kontent artykułu są wymagane" },
-//       { status: 400 }
-//     );
-//   }
+  if (!newsId) {
+    return NextResponse.json(
+      { message: "Nie ma takiego wpisu w aktualnościach" },
+      { status: 400 }
+    );
+  }
 
-//   const news: HydratedDocument<NewsType> = await News.findById(newsId).exec();
+  const session = await getServerSession(authOptions);
 
-//   if (!news) {
-//     return NextResponse.json(
-//       { message: "Nie ma takiego artykułu" },
-//       { status: 400 }
-//     );
-//   }
+  if (!userId) {
+    return NextResponse.json(
+      {
+        message: "Ten użytkownik nie istnieje",
+      },
+      { status: 400 }
+    );
+  }
+  if (session?.user?._id !== userId) {
+    return NextResponse.json(
+      { message: "Nie masz uprawnień do edycji tego wpisu" },
+      { status: 403 }
+    );
+  }
 
-//   news.title = title;
-//   news.summary = summary;
-//   news.content = content;
-//   news.tags = tags;
-//   if (published) {
-//     news.published = true;
-//     news.slug = slugify(title.toLowerCase(), { strict: true, lower: true });
-//   }
-//   if (photoUrl) {
-//     news.photoUrl = photoUrl;
-//   }
+  const news: HydratedDocument<NewsType> = await News.findById(newsId).exec();
 
-//   try {
-//     await news.save();
-//     return NextResponse.json({}, { status: 200 });
-//   } catch (e) {
-//     return NextResponse.json({}, { status: 400 });
-//   }
-// }
+  if (!news) {
+    return NextResponse.json(
+      { message: "Nie ma takiego wpisu w aktualnościach" },
+      { status: 400 }
+    );
+  }
+
+  news.title = title;
+  news.content = content;
+  if (photoUrl) {
+    news.photoUrl = photoUrl;
+  }
+
+  try {
+    await news.save();
+    return NextResponse.json({}, { status: 200 });
+  } catch (e) {
+    return NextResponse.json({}, { status: 400 });
+  }
+}

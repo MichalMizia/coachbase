@@ -2,6 +2,7 @@ import { Option } from "react-multi-select-component";
 
 export const allTags: string[] = [
   "Trener",
+  "Dietetyk",
   "Dietetyk kliniczny",
   "Fizjoterapeuta",
   "Sztuki Walki",

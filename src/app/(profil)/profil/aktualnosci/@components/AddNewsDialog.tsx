@@ -56,8 +56,8 @@ const AddNewsDialog = ({ userId, dialogTrigger }: AddNewsDialogProps) => {
     e.preventDefault();
 
     try {
-      if (!content.length) {
-        return toast.error("Opis jest wymagany");
+      if (!content.length || !title.length) {
+        return toast.error("Opis i tytuł są wymagane");
       }
 
       const res = await axios.post("/api/aktualnosci", {
@@ -150,7 +150,7 @@ const AddNewsDialog = ({ userId, dialogTrigger }: AddNewsDialogProps) => {
                 id="content"
                 key="content"
                 modules={modules}
-                className="article-editor max-h-full min-h-[50vh] w-full overflow-y-auto rounded-2xl border border-black/10 px-0.5 shadow-md outline outline-1 outline-transparent transition-all focus-within:outline-indigo_custom/40 hover:border-indigo_custom/30"
+                className="article-editor max-h-full min-h-[50vh] w-full overflow-y-auto rounded-2xl border border-black/10 px-0.5 !text-gray-800 shadow-md outline outline-1 outline-transparent transition-all focus-within:outline-indigo_custom/40 hover:border-indigo_custom/30"
                 placeholder="Żeby edytować styl elementu tekstowego, zaznacz go"
                 value={content}
                 onChange={setContent}

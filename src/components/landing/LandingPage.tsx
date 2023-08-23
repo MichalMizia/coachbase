@@ -2,7 +2,6 @@
 
 // components
 import Button from "@/components/ui/Button";
-// import { MultiSelect } from "react-multi-select-component";
 // types
 import { TrainerType, UserRolesType } from "@/model/user";
 // hooks
@@ -16,7 +15,21 @@ import { Icons } from "@/components/ui/icons";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArticleType } from "@/model/article";
-const PhotoSection = dynamic(() => import("./PhotoSection"));
+import { Skeleton } from "../ui/skeleton";
+import { Separator } from "../ui/separator";
+const PhotoSection = dynamic(() => import("./PhotoSection"), {
+  loading: () => (
+    <div className="grid grid-cols-1 md:grid-cols-2">
+      {[...Array(4).keys()].map((ind) => (
+        <Skeleton
+          key={ind}
+          style={{ animationDelay: `calc(100ms*${ind})` }}
+          className="mx-auto aspect-video w-full max-w-[650px] rounded-lg shadow-md  shadow-black/20 lg:col-span-3 lg:mx-0 lg:aspect-auto"
+        />
+      ))}
+    </div>
+  ),
+});
 
 interface LandingPageProps {
   jsonData: string;
@@ -65,6 +78,68 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
             </p>
           </header>
           <SearchBarOffers />
+        </div>
+        <div className="absolute bottom-0 left-0 z-10 w-full bg-black/20 py-2 text-sm tracking-wide text-white">
+          <div className="container-md flex items-center justify-between gap-12">
+            <ul className="flex items-center justify-start">
+              <li className="flex items-stretch justify-stretch  px-2">
+                <a
+                  href="#zostan-trenerem"
+                  title="Zostań Trenerem"
+                  className="transition-all duration-200 hover:opacity-75 "
+                >
+                  Zostań Trenerem
+                </a>
+              </li>
+              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+                <a
+                  href="#zostan-trenerem"
+                  title="Zostań Trenerem"
+                  className="transition-all duration-200 hover:opacity-75"
+                >
+                  Załóż konto
+                </a>
+              </li>
+            </ul>
+            <ul className="flex items-center justify-start">
+              <li className="flex items-stretch justify-stretch  px-2">
+                <Link
+                  href="/oferty?city=rzeszow"
+                  title="Oferty w Rzeszowie"
+                  className="transition-all duration-200 hover:opacity-75 "
+                >
+                  Rzeszów
+                </Link>
+              </li>
+              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+                <Link
+                  href="/oferty?city=krakow"
+                  title="Oferty w Krakowie"
+                  className="transition-all duration-200 hover:opacity-75 "
+                >
+                  Kraków
+                </Link>
+              </li>
+              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+                <Link
+                  href="/oferty?city=warszawa"
+                  title="Oferty w Warszawie"
+                  className="transition-all duration-200 hover:opacity-75 "
+                >
+                  Warszawa
+                </Link>
+              </li>
+              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+                <Link
+                  href="/oferty?city=wroclaw"
+                  title="Oferty we Wrocławiu"
+                  className="transition-all duration-200 hover:opacity-75 "
+                >
+                  Wrocław
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -185,7 +260,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                         priority
                         fill
                         alt={`Zdjęcie Profilowe ${trainer.username}`}
-                        className="-z-[2] object-cover brightness-[0.8] transition-all duration-200 group-hover:scale-105"
+                        className="-z-[2] object-cover brightness-[0.8] transition-all duration-500 group-hover:scale-110"
                       />
                     )}
                     <main className="w-full bg-gradient-to-b from-black/20 to-black/80 p-4">
@@ -215,7 +290,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
         </div>
       </section>
 
-      <section className="relative isolate py-6 lg:py-8">
+      <section className="relative isolate py-6 lg:py-8" id="zostan-trenerem">
         <main className="container-md">
           <div className="">
             <h2
@@ -253,8 +328,6 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
           className="absolute inset-0 -z-[2] object-cover brightness-50"
         />
       </section>
-
-      {/* <OffersSection data={currentTrainers} /> */}
     </main>
   );
 };

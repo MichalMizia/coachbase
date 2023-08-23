@@ -39,6 +39,36 @@ const LatestUserArticles = dynamic(
     ),
   }
 );
+const LatestUserNews = dynamic(() => import("./@components/LatestUserNews"), {
+  loading: () => (
+    <div className="flex flex-col items-stretch justify-start">
+      {[...Array(4).keys()].map((ind) => (
+        <li
+          key={ind}
+          className={cn(
+            "flex h-20 w-full items-center space-x-4 border-b border-black/10 px-4 py-4 lg:px-6",
+            ind % 2 ? "bg-bg" : "bg-white"
+          )}
+        >
+          <Skeleton
+            style={{ animationDelay: `calc(100ms*${ind})` }}
+            className="h-12 w-12 rounded-full"
+          />
+          <div className="space-y-2">
+            <Skeleton
+              style={{ animationDelay: `calc(100ms*${ind})` }}
+              className="h-4 w-[250px]"
+            />
+            <Skeleton
+              style={{ animationDelay: `calc(100ms*${ind})` }}
+              className="h-4 w-[200px] rounded-md bg-blue-100"
+            />
+          </div>
+        </li>
+      ))}
+    </div>
+  ),
+});
 // utils
 import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
 import {
@@ -57,7 +87,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import LatestUserNews from "./@components/LatestUserNews";
 
 interface pageProps {
   params: {

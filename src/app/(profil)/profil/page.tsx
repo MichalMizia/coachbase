@@ -17,6 +17,7 @@ import MobileImageUpdateForm from "./@components/MobileImageUpdateForm";
 import TrainerFAQCard from "./@components/TrainerFaqCard";
 // lazy loaded stuff
 import dynamic from "next/dynamic";
+import { DescriptionUpdateForm } from "@/components/forms/DescriptionUpdateForm";
 const MainContentForm = dynamic(() => import("./@components/MainContentForm"), {
   loading: () => <div></div>,
 });
@@ -95,6 +96,7 @@ const Page = async () => {
           </div>
         </div>
         <ImageUpdateForm imgSrc={user.image} id={user._id} />
+        <DescriptionUpdateForm id={user._id} summary={user.summary} />
       </div>
       <Separator className="my-4 hidden bg-gray-300 xs:block" />
       {/* <div className="">

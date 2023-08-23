@@ -116,9 +116,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
           <span className="w-full border-t border-slate-300" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-bg px-2 text-slate-600">
-            lub zaloguj się przez
-          </span>
+          <span className="bg-bg px-2 text-slate-600">lub</span>
         </div>
       </div>
       <div className="space-y-1.5">
@@ -127,7 +125,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             Utwórz Konto Trenera
           </Link>
         </Button>
-        <Button
+        {/* <Button
           variant="outlined"
           isLoading={isGoogleLoading}
           type="button"
@@ -170,7 +168,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             </svg>
           )}{" "}
           Google(not yet)
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

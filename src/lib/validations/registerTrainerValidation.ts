@@ -15,7 +15,7 @@ export const trainerRegisterSchemaPart1 = z.object({
     .refine((str) => numberRegex.test(str), "Hasło powinno zawierać cyfrę"),
   description: z
     .string()
-    .max(250, "Opis powinien zawierać maksimum 250 znaków")
+    .max(300, "Opis powinien zawierać maksimum 300 znaków")
     .min(40, "Opis powinien zawierać minimum 40 znaków"),
   isFormInInitialStateCurrently: z.literal(true),
 });
