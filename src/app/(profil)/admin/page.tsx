@@ -9,6 +9,7 @@ import { NewArticleButton } from "./edytor/[postId]/@components/NewArticleButton
 import { Separator } from "@/components/ui/separator";
 import Article, { ArticleType } from "@/model/article";
 import ArticleCard from "./edytor/[postId]/@components/ArticleCard";
+import CloseMongooseConnBtn from "./@components/CloseMongooseConnBtn";
 
 export const metadata: Metadata = {
   title: "Admin Page",
@@ -102,6 +103,12 @@ const Page = async ({}) => {
               ))}
           </ul>
         </div>
+      </div>
+      <div className="space-y-2">
+        <div className="space-y-1">
+          <h3 className="text-h4 font-semibold text-gray-800">Admin Utils</h3>
+        </div>
+        <CloseMongooseConnBtn />
       </div>
     </main>
   );

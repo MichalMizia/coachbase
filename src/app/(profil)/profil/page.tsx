@@ -96,8 +96,8 @@ const Page = async () => {
           </div>
         </div>
         <ImageUpdateForm imgSrc={user.image} id={user._id} />
-        <DescriptionUpdateForm id={user._id} summary={user.summary} />
       </div>
+      <DescriptionUpdateForm id={user._id} summary={user.summary} />
       <Separator className="my-4 hidden bg-gray-300 xs:block" />
       {/* <div className="">
         <div className="mb-2 flex items-center justify-between gap-4">

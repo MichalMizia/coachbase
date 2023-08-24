@@ -93,7 +93,7 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
   return (
     <Dialog>
       <div className="max-w-5xl">
-        <div className="mb-2 flex items-center justify-between gap-4">
+        <div className="mb-2 flex flex-col items-start justify-between gap-4 gap-y-2 sm:flex-row sm:items-center">
           <div className="space-y-0.5">
             <h2 className="text-xl font-semibold text-gray-800">O mnie</h2>
             <p className="max-w-2xl">

@@ -80,7 +80,7 @@ const ExperienceEditor = ({
         {...props}
         id="doswiadczenie"
       >
-        <div className="relative flex items-center justify-between">
+        <div className="relative flex flex-col items-start justify-between gap-y-2 sm:flex-row sm:items-center">
           <div className="z-[2] flex flex-col items-start gap-2 pt-8 xs:flex-row xs:items-center xs:pt-0">
             <div className="">
               <h2 className="text-h4 font-semibold text-gray-800">
