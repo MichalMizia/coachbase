@@ -92,7 +92,7 @@ const NewOfferForm = ({ userId }: NewOfferFormProps) => {
         toast.error("Formularz wypełniony niepoprawnie");
         return null;
       }
-      toast.error("Sorki to jeszcze nie działa, już niedługo");
+      toast.error("Coś poszło nie tak podczas dodawania oferty");
       return null;
     } finally {
       setIsLoading(false);

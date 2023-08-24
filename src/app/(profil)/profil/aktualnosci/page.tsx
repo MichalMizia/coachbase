@@ -52,7 +52,7 @@ const Page = async () => {
             imgSrc={session.user.image}
             id={session.user._id}
             username={session.user.username}
-            className="!h-32 !w-32"
+            className="!relative !translate-y-0 xs:h-[70px] xs:w-[70px]"
           />
           <div className="space-y-1">
             <h2 className="ml-1.5 text-2xl font-semibold text-gray-800">

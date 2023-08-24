@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils";
 import { SendIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { HTMLProps } from "react";
+import ImagePlaceholder from "@/../public/assets/image-placeholder.jpg";
 
 interface OfferCardProps extends HTMLProps<HTMLLIElement> {
   username: string;
@@ -23,21 +25,21 @@ const OfferCard = ({
   summary,
 }: OfferCardProps) => {
   return (
-    <li className="flex max-w-md items-stretch justify-stretch">
+    <li className="flex w-full max-w-md items-stretch justify-stretch">
       <Link
-        key={id}
         href={`/oferty/${slug}`}
         rel="dofollow"
         hrefLang="pl"
-        className="group relative flex h-full flex-col items-stretch justify-end rounded-md bg-white shadow-sm transition-all hover:shadow-md"
+        className="group relative flex h-full w-full flex-col items-stretch justify-start rounded-md bg-white shadow-sm transition-all hover:shadow-md"
       >
-        <header className="flex h-[70px] items-center justify-start gap-4 px-4 py-3">
-          <div className="relative flex aspect-square h-10 items-center justify-center overflow-hidden rounded-full border border-violet-300 bg-blue-400 p-1 text-sm font-semibold text-white shadow-lg shadow-[#00000030]">
+        <header className="flex h-[70px] items-center justify-start gap-2 px-4 py-3">
+          <div className="relative flex aspect-square h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-violet-300 bg-blue-400 bg-gradient-to-tr from-orange-500/50 via-blue-500 to-blue-400 p-1 text-sm font-semibold text-white shadow-lg shadow-[#00000030]">
             {avatar ? (
-              <img
+              <Image
                 src={avatar}
-                alt={`Zdjęcie Profilowe ${username}`}
-                className="absolute inset-0 h-full w-full object-cover"
+                alt={`Avatar ${username}`}
+                className=" object-cover"
+                fill
               />
             ) : (
               username
@@ -57,15 +59,15 @@ const OfferCard = ({
             <p className="relative -top-1 text-h6">{city}</p>
           </div>
         </header>
-        {image ? (
-          <img
-            className="aspect-video h-full w-full flex-1 border-l-2 border-r-2 border-white bg-blue-100 object-cover"
-            src={image}
+        <div className="relative isolate aspect-video w-full border-l-2 border-r-2 border-white shadow-md">
+          <Image
+            className="object-cover"
+            src={image || ImagePlaceholder}
+            alt={`Zdjęcie Profilowe ${username}`}
+            fill
           />
-        ) : (
-          <div className="aspect-video h-full w-full flex-1 border-l-2 border-r-2 border-white bg-blue-100" />
-        )}
-        <main className={cn("flex flex-col justify-between p-4")}>
+        </div>
+        <main className={cn("flex h-full flex-1 flex-col justify-between p-4")}>
           <header>
             {/* <StarsRating className="mb-1" rating={.rating} /> */}
             <p

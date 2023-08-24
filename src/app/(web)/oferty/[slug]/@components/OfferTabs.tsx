@@ -184,7 +184,7 @@ const OfferTabs = ({ trainerData, session }: OfferTabsProps) => {
             <h2 className="text-h3 font-[600]">Doświadczenie</h2>
           </header>
           <section className="border-b border-gray-300 px-6 py-4">
-            {!!trainerData.experience?.length ? (
+            {trainerData.experience && !!trainerData.experience.length ? (
               <article
                 className="xsmall-article flow"
                 dangerouslySetInnerHTML={{

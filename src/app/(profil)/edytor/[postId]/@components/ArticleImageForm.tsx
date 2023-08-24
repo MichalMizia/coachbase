@@ -15,19 +15,11 @@ import {
 // components
 import Button from "@/components/ui/Button";
 import { Edit, Loader2Icon } from "lucide-react";
-import {
-  Dispatch,
-  HTMLAttributes,
-  SetStateAction,
-  memo,
-  useRef,
-  useState,
-} from "react";
+import { HTMLAttributes, memo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios, { AxiosError } from "axios";
 import { Icons } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
-import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
 interface ArticleImageFormProps extends HTMLAttributes<HTMLDivElement> {
   photoUrl: string;
@@ -132,8 +124,7 @@ const ArticleImageForm = ({
                 <img
                   src={photoUrl}
                   alt="Miniaturka Artykułu"
-                  className="mx-auto h-full w-full max-w-[240px] rounded-md object-cover"
-                  loading="lazy"
+                  className="mx-auto aspect-video h-full w-full max-w-[240px] rounded-md object-cover"
                 />
                 <Loader2Icon className="absolute inset-0 -z-10 m-auto h-1/3 w-1/3 animate-timed-spin text-gray-700" />
               </>
@@ -180,7 +171,7 @@ const ArticleImageForm = ({
                     : photoUrl
                 }
                 alt="Zdjęcie Profilowe"
-                className="h-full w-full rounded-md object-cover"
+                className="aspect-video h-full w-full rounded-md object-cover"
               />
             ) : currentFiles &&
               currentFiles.length &&
@@ -188,10 +179,10 @@ const ArticleImageForm = ({
               <img
                 alt="Preview zdjęcia profilowego"
                 src={URL.createObjectURL(currentFiles[0])}
-                className="h-full w-full rounded-md object-cover"
+                className="aspect-video h-full  w-full rounded-md object-cover"
               />
             ) : (
-              <div className="absolute inset-0 m-auto flex flex-col items-center justify-center gap-2">
+              <div className="absolute inset-0  m-auto flex aspect-video flex-col items-center justify-center gap-2">
                 <Icons.post className="h-8 w-8" />
                 <h4 className="text-sm font-semibold">Zdjęcie</h4>
               </div>

@@ -55,8 +55,8 @@ const TrainerDataSchema = new Schema<TrainerDataType>(
       required: true,
       default: [],
     },
-    content: String,
-    experience: String,
+    content: { String, required: false, default: "" },
+    experience: { String, required: false, default: "" },
     // sections: {
     //   type: [
     //     {

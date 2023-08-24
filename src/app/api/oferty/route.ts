@@ -1,23 +1,16 @@
-import User from "@/model/user";
 import initMongoose from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import TrainerData, {
-  PopulatedTrainerDataType,
-  TrainerDataType,
-} from "@/model/trainerData";
-import mongoose, { HydratedDocument } from "mongoose";
+import TrainerData, { TrainerDataType } from "@/model/trainerData";
+import { HydratedDocument } from "mongoose";
 import { TrainerOfferType } from "@/model/trainerDataSubSchemas/trainerOffer";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";
 
-interface PostRequestType {
-  userId: string;
+// Konsultacje Treningowe z Mistrzem Europy w Wyciskaniu i Mistrzem Polski w trójboju, w skład wchodzą:
+//   1. Dogłębna ocena techniki bojów i analiza słabych punktów.
+//   2. Poprawa wad w wzorcach ruchowych związanych z mobilnością czy koordynacją.
+//   3. Ułożenie wytycznych do dalszego treningu
 
-  title: string;
-  description: string;
-  price: number;
-  pricePer: string;
-}
 interface PatchRequestType {
   userId: string;
   offerId: string;
@@ -27,6 +20,15 @@ interface PatchRequestType {
   price: number;
   pricePer: string;
 }
+interface PostRequestType {
+  userId: string;
+
+  title: string;
+  description: string;
+  price: number;
+  pricePer: string;
+}
+
 
 export async function POST(req: NextRequest, res: NextResponse) {
   await initMongoose();
@@ -74,7 +76,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     // ts is salty because i didnt provide object id but mongoose does this automatically
     // @ts-expect-error
-    trainerData.offers = [...trainerData.offers, newOffer];
+    trainerData.offers.push(newOffer);
     await trainerData.save();
 
     return NextResponse.json({}, { status: 200 });

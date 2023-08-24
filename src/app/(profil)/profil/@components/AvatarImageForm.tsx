@@ -96,16 +96,23 @@ const AvatarImageForm = ({
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Image
-            width={76}
-            height={76}
+          <div
             className={cn(
-              imageClassName,
-              "absolute top-0 aspect-square -translate-y-[55%] cursor-pointer rounded-full border-2 border-indigo_custom/75 object-cover shadow-black/20 xs:static xs:h-14 xs:w-14 xs:transform-none xs:border-0 xs:shadow-md"
+              "absolute top-0 isolate aspect-square h-[76px] w-[76px] flex-1 -translate-y-[55%] cursor-pointer rounded-full border-2 border-indigo_custom/75 shadow-black/20 xs:relative xs:h-14 xs:w-14 xs:transform-none xs:border-0 xs:shadow-md",
+              className
             )}
-            src={imgSrc || AvatarSvg}
-            alt={`Avatar ${username}`}
-          />
+          >
+            <Image
+              fill
+              className={cn(
+                "aspect-square rounded-full object-cover",
+                imageClassName
+              )}
+              priority
+              src={imgSrc || AvatarSvg}
+              alt={`Avatar ${username}`}
+            />
+          </div>
         </DialogTrigger>
         <DialogContent className="max-w-sm rounded-md">
           <form {...props} onSubmit={handleSubmit(onSubmit)} className="static">
