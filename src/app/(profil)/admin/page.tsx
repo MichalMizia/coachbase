@@ -106,7 +106,9 @@ const Page = async ({}) => {
       </div>
       <div className="space-y-2">
         <div className="space-y-1">
-          <h3 className="text-h4 font-semibold text-gray-800">Admin Utils</h3>
+          <h3 className="text-h4 font-semibold text-gray-800">
+            Admin Utils(nie dotykaj xD)
+          </h3>
         </div>
         <CloseMongooseConnBtn />
       </div>

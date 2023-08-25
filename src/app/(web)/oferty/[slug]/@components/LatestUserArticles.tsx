@@ -46,7 +46,7 @@ const LatestUserArticles = async ({
 
   if (!articles?.length) {
     return (
-      <p className="text-h6 text-text_readable">
+      <p className={cn("text-h6 text-text_readable", liClassName)}>
         {username} nie dodał jeszcze żadnych artykułów.
       </p>
     );

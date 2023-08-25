@@ -111,7 +111,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                   Rzeszów
                 </Link>
               </li>
-              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+              <li className="flex items-stretch justify-stretch border-l px-2">
                 <Link
                   href="/oferty?city=krakow"
                   title="Oferty w Krakowie"
@@ -120,7 +120,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                   Kraków
                 </Link>
               </li>
-              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+              <li className="hidden items-stretch justify-stretch border-l px-2 xs:flex">
                 <Link
                   href="/oferty?city=warszawa"
                   title="Oferty w Warszawie"
@@ -129,7 +129,7 @@ const LandingPage = ({ jsonData, articles }: LandingPageProps) => {
                   Warszawa
                 </Link>
               </li>
-              <li className="hidden items-stretch justify-stretch border-l px-2 md:flex">
+              <li className="hidden items-stretch justify-stretch border-l px-2 sm:flex">
                 <Link
                   href="/oferty?city=wroclaw"
                   title="Oferty we Wrocławiu"

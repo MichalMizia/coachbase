@@ -31,23 +31,25 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
   const DialogTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    toast.success(
-      (t) => (
-        <div className="flex flex-col">
-          <h4 className="text-xl font-semibold text-black">Sekcja O Tobie</h4>
-          <p className="mt-1 text-gray-700">
-            Czy wiesz że uzupełniając swój profil zdecydowanie zwiększasz swoje
-            szanse na pozyskanie klientów? Wyróżnij się na tle innych trenerów i
-            dodaj opis który pomoże Ci osiągnąć Twój cel.
-          </p>
-        </div>
-      ),
-      {
-        duration: 10000,
-        className: "custom max-w-500",
-        position: "bottom-right",
-      }
-    );
+    if (!content?.length) {
+      toast.success(
+        (t) => (
+          <div className="flex flex-col">
+            <h4 className="text-xl font-semibold text-black">Sekcja O Tobie</h4>
+            <p className="mt-1 text-gray-700">
+              Czy wiesz że uzupełniając swój profil zdecydowanie zwiększasz
+              swoje szanse na pozyskanie klientów? Wyróżnij się na tle innych
+              trenerów i dodaj opis który pomoże Ci osiągnąć Twój cel.
+            </p>
+          </div>
+        ),
+        {
+          duration: 10000,
+          className: "custom max-w-500",
+          position: "bottom-right",
+        }
+      );
+    }
   }, []);
 
   const [currentDescription, setCurrentDescription] = useLocalStorage<string>(
@@ -93,10 +95,10 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
   return (
     <Dialog>
       <div className="max-w-5xl">
-        <div className="mb-2 flex flex-col items-start justify-between gap-4 gap-y-2 sm:flex-row sm:items-center">
+        <div className="mb-4 flex items-center justify-between gap-4 gap-y-2">
           <div className="space-y-0.5">
             <h2 className="text-xl font-semibold text-gray-800">O mnie</h2>
-            <p className="max-w-2xl">
+            <p className="hidden max-w-2xl sm:block">
               Dodając unikalny opis do swojego Profilu Trenera wyróżniasz się i
               drastycznie zwiększasz swoje szanse na pozyskanie klientów.
             </p>
@@ -119,7 +121,7 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
         )}
       </div>
 
-      <DialogContent className=" !h-[95vh] !w-[95vw] max-w-none overflow-hidden">
+      <DialogContent className="!h-[95vh] !w-screen max-w-none overflow-hidden !px-0.5 sm:!w-[95vw] sm:px-6">
         <form
           onSubmit={(e) => handleSubmit(e)}
           className="static flex h-full max-h-full flex-col justify-start overflow-hidden"
@@ -129,7 +131,7 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
                   <Loader2 className="h-full w-full animate-spin" />
                 </div>
               )} */}
-          <DialogHeader className="">
+          <DialogHeader className="px-6 sm:px-0">
             <DialogTitle className="text-gray-800">Edytuj opis</DialogTitle>
           </DialogHeader>
 
@@ -140,15 +142,17 @@ const MainContentForm = ({ content, userId }: MainContentFormProps) => {
             // @ts-expect-error
             setValue={setCurrentDescription}
           />
-          <Button
-            isLoading={isLoading}
-            type="submit"
-            className="mt-4 self-end"
-            size="large"
-          >
-            {!isLoading && <Save className="mr-1 h-5 w-5 text-xl" />}
-            Zapisz
-          </Button>
+          <div className="px-6 sm:px-0">
+            <Button
+              isLoading={isLoading}
+              type="submit"
+              className="z-10 mt-4 w-full self-end sm:w-fit"
+              size="large"
+            >
+              {!isLoading && <Save className="mr-1 h-5 w-5 text-xl " />}
+              Zapisz
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

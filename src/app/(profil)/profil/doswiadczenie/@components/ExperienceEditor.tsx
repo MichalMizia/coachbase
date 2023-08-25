@@ -80,22 +80,18 @@ const ExperienceEditor = ({
         {...props}
         id="doswiadczenie"
       >
-        <div className="relative flex flex-col items-start justify-between gap-y-2 sm:flex-row sm:items-center">
-          <div className="z-[2] flex flex-col items-start gap-2 pt-8 xs:flex-row xs:items-center xs:pt-0">
-            <div className="">
-              <h2 className="text-h4 font-semibold text-gray-800">
-                Opis Twojego Doświadczenie
-              </h2>
-            </div>
-          </div>
+        <div className="relative flex flex-col items-start justify-between gap-y-2 xs:flex-row xs:items-center">
+          <h2 className="text-h4 font-semibold text-gray-800">
+            Opis Twojego Doświadczenia
+          </h2>
           <DialogTrigger asChild>
             <Button>
               <Edit className="mr-2 h-4 w-4" />
-              Edytuj Opis
+              Edytuj <span className="hidden sm:block">Opis</span>
             </Button>
           </DialogTrigger>
         </div>
-        {experience?.length ? (
+        {!!experience?.length ? (
           <article
             className="small-article flow"
             dangerouslySetInnerHTML={{ __html: sanitize(experience) }}

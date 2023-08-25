@@ -1,12 +1,14 @@
-import {
-  TrainerRequestType,
-  trainerController,
-} from "@/controllers/trainerController";
 import initMongoose from "@/lib/db";
+import { isStringUnsafe } from "@/lib/utils";
 import PendingRequest from "@/model/pendindRequest";
-import User from "@/model/user";
+import User, { TrainerType } from "@/model/user";
 import { NextApiRequest, NextApiResponse } from "next";
 const bcrypt = require("bcrypt");
+
+export interface TrainerRequestType extends TrainerType {
+  link?: string;
+  city: string;
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,8 +23,8 @@ export default async function handler(
       return res.status(500).json({ message: "Failed connecting to database" });
     }
 
-    console.log("Mongoose connected while registering a trainer");
-    await trainerController.addNewTrainer(req, res);
+    // console.log("Mongoose connected while registering a trainer");
+    // await trainerController.addNewTrainer(req, res);
     const {
       username,
       email,
@@ -45,6 +47,10 @@ export default async function handler(
 
     if (!username || !email || !password || !city) {
       return res.status(400).json({ message: "Wszystkie pola są wymagane" });
+    }
+
+    if (isStringUnsafe([username, city, summary, ...roles])) {
+      return res.status(400).json({ message: "No hack here buddy" });
     }
 
     if (!roles || roles.length === 0 || !Array.isArray(roles)) {
@@ -93,7 +99,7 @@ export default async function handler(
         city,
       });
 
-      const [user, pendindRequest] = await Promise.all([
+      const [user, pendindRequest] = await Promise.allSettled([
         userPromise,
         pendingRequestPromise,
       ]);
@@ -104,10 +110,14 @@ export default async function handler(
           .status(201)
           .json({ message: `Utworzono konto trenera: ${username}` });
       } else {
-        return res.status(400).json({ message: "Nieudało się utworzyć konta" });
+        return res
+          .status(400)
+          .json({ message: "Błąd podczas tworzenia konta trenerskiego" });
       }
     } catch (e) {
-      return res.status(400).json({ message: "Błąd przy tworzeniu konta" });
+      return res
+        .status(400)
+        .json({ message: "Błąd podczas tworzenia konta trenerskiego" });
     }
   }
   //   else if (req.method === "PATCH") {

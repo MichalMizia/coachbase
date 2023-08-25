@@ -59,11 +59,11 @@ const Page = async ({}: PageProps) => {
   return (
     <div className="flex h-full flex-col items-stretch justify-start overflow-y-auto px-4 py-6 lg:px-8">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div className="space-y-1">
+        <div className="space-y-0.5">
           <h2 className="text-2xl font-semibold text-gray-800">
             Twoje Doświadczenie jako {user.roles.join(", ")}
           </h2>
-          <p className="text-h6 text-text_readable">
+          <p className="text-text_readable">
             Opowiedz o swoim doświadczeniu potencjalnym klientom.
           </p>
         </div>
@@ -77,12 +77,12 @@ const Page = async ({}: PageProps) => {
 
       <section className="space-y-4" id="efekty">
         <div className="relative flex flex-col items-start justify-between gap-y-2 sm:flex-row sm:items-center">
-          <div className="z-[2] flex flex-col items-start gap-2 pt-8 xs:flex-row xs:items-center xs:pt-0">
+          <div className="z-[2] flex flex-col items-start gap-2 xs:flex-row xs:items-center">
             <div className="">
               <h2 className="text-h4 font-semibold text-gray-800">
                 Efekty Twoich podopiecznych
               </h2>
-              <p className="max-w-md text-sm text-text_readable sm:text-h6">
+              <p className="max-w-md text-text_readable">
                 Dodając efekty współpracy z klientami zwiększasz swoją
                 wiarygodność.
               </p>

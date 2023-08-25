@@ -74,12 +74,12 @@ export function DescriptionUpdateForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-4 max-w-4xl space-y-2"
+      className="max-w-4xl space-y-2 sm:mt-4"
     >
-      <div className="flex max-w-4xl items-start justify-between gap-2 sm:items-center">
-        <div className="">
+      <div className="flex max-w-4xl items-start justify-between gap-2 sm:flex-row sm:items-center">
+        <div className="mb-2 space-y-0.5 sm:mb-0">
           <h2 className="text-xl font-semibold text-gray-800">Opis</h2>
-          <p className="max-w-2xl">
+          <p className="max-w-lg">
             Krótki opis(max 300 znaków) wyświetla się gdy użytkownicy
             przeglądają listę ofert.
           </p>
@@ -87,6 +87,7 @@ export function DescriptionUpdateForm({
         <Button
           isLoading={isLoading}
           disabled={!currentSummary || currentSummary === summary}
+          className="hidden sm:flex"
         >
           <SaveIcon className="mr-2 h-5 w-5" />
           Zapisz
@@ -101,6 +102,15 @@ export function DescriptionUpdateForm({
       {errors.summary && (
         <p className="text-sm text-red-500">{errors.summary.message}</p>
       )}
+      <Button
+        isLoading={isLoading}
+        disabled={!currentSummary || currentSummary === summary}
+        size="large"
+        className="w-full sm:hidden"
+      >
+        <SaveIcon className="mr-2 h-5 w-5" />
+        Zapisz
+      </Button>
     </form>
   );
 }
