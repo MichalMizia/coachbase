@@ -1,7 +1,7 @@
 import initMongoose from "../db";
-import PendingRequest from "@/model/pendindRequest";
+import PendingRequest, { PendingRequestType } from "@/model/pendindRequest";
 
-export async function fetchAllPendingRequests() {
+export async function fetchAllPendingRequests(): Promise<PendingRequestType[]> {
   try {
     await initMongoose();
   } catch (e) {
@@ -11,7 +11,7 @@ export async function fetchAllPendingRequests() {
 
   console.log("Mongoose connected");
   try {
-    const requests = await PendingRequest.find({});
+    const requests = await PendingRequest.find({}).lean().exec();
     return requests;
   } catch (e) {
     // return null

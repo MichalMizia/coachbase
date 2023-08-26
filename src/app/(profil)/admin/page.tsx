@@ -7,9 +7,16 @@ import Image from "next/image";
 import AvatarSvg from "@/../public/assets/avatar.svg";
 import { NewArticleButton } from "./edytor/[postId]/@components/NewArticleButton";
 import { Separator } from "@/components/ui/separator";
-import Article, { ArticleType } from "@/model/article";
-import ArticleCard from "./edytor/[postId]/@components/ArticleCard";
 import CloseMongooseConnBtn from "./@components/CloseMongooseConnBtn";
+import authOptions from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+// lazy loaded articles
+import dynamic from "next/dynamic";
+import { Loader2 } from "lucide-react";
+const AdminArticles = dynamic(() => import("./@components/AdminArticles"), {
+  loading: () => <Loader2 className="h-8 w-8 animate-spin text-text" />,
+});
 
 export const metadata: Metadata = {
   title: "Admin Page",
@@ -23,18 +30,20 @@ export const metadata: Metadata = {
 
 const adminId = process.env.ADMIN_ID as string;
 
-const getArticles = async () => {
-  const articles: ArticleType[] = await Article.find({
-    userId: adminId,
-  })
-    .lean()
-    .exec();
-
-  return articles;
-};
-
 const Page = async ({}) => {
-  const articles = await getArticles();
+  const session = await getServerSession(authOptions);
+
+  const whitelisted_emails = process.env.WHITELISTED_EMAILS?.split(
+    ", "
+  ) as string[];
+  if (
+    !session ||
+    !session.user.email ||
+    !whitelisted_emails.includes(session.user.email)
+  ) {
+    redirect("/");
+  }
+
   const pendingRequests: PendingRequestType[] = await fetchAllPendingRequests();
 
   return (
@@ -58,59 +67,43 @@ const Page = async ({}) => {
             </div>
           </div>
           <NewArticleButton id={adminId} />
+
+          <Separator className="my-4 h-[2px] w-full bg-slate-300" />
+
+          <div className="space-y-2">
+            <div className="space-y-1">
+              <h3 className="text-h4 font-semibold text-gray-800">
+                Requesty Trenerskie
+              </h3>
+            </div>
+            <ul className="requests grid grid-flow-row grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
+              {pendingRequests.map((request) => (
+                <RequestCard
+                  key={request.email}
+                  roles={request.roles}
+                  description={request.summary}
+                  name={request.username}
+                  email={request.email}
+                  link={request.link}
+                  city={request.city}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
 
         <Separator className="my-4 h-[2px] w-full bg-slate-300" />
+
+        <AdminArticles adminId={adminId} />
 
         <div className="space-y-2">
           <div className="space-y-1">
             <h3 className="text-h4 font-semibold text-gray-800">
-              Requesty Trenerskie
+              Admin Utils(nie dotykaj xD)
             </h3>
           </div>
-          <ul className="requests grid grid-flow-row grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
-            {pendingRequests.map((request) => (
-              <RequestCard
-                key={request.email}
-                roles={request.roles}
-                description={request.summary}
-                name={request.username}
-                email={request.email}
-                link={request.link}
-                city={request.city}
-              />
-            ))}
-          </ul>
+          <CloseMongooseConnBtn />
         </div>
-
-        <Separator className="my-4 h-[2px] w-full bg-slate-300" />
-
-        <div className="space-y-2">
-          <div className="space-y-1">
-            <h3 className="text-h4 font-semibold text-gray-800">Artykuły</h3>
-          </div>
-          <ul className="requests grid grid-flow-row grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-2 xl:grid-cols-3">
-            {articles.length &&
-              articles.map((article) => (
-                <ArticleCard
-                  key={article._id.toString()}
-                  id={article._id.toString()}
-                  title={article.title}
-                  photoUrl={article.photoUrl || null}
-                  date={article.updatedAt}
-                  userId={adminId}
-                />
-              ))}
-          </ul>
-        </div>
-      </div>
-      <div className="space-y-2">
-        <div className="space-y-1">
-          <h3 className="text-h4 font-semibold text-gray-800">
-            Admin Utils(nie dotykaj xD)
-          </h3>
-        </div>
-        <CloseMongooseConnBtn />
       </div>
     </main>
   );
